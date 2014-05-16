@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <GoogleAds-IMA-iOS-SDK/IMAAdsLoader.h>
-#import <GoogleAds-IMA-iOS-SDK/IMAAdsRenderingSettings.h>
+#import "IMAAdsLoader.h"
+#import "IMAAdsRenderingSettings.h"
 
 #import "BCOVPlayerSDK.h"
 

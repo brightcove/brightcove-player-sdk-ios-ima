@@ -5,7 +5,7 @@
 		<title>BCOVIMA Reference</title>
 		<link rel="stylesheet" type="text/css" href="css/styles.css" media="all" />
 		<link rel="stylesheet" type="text/css" media="print" href="css/stylesPrint.css" />
-		<meta name="generator" content="appledoc 2.2 (build 961)" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
 	</head>
 	<body>
 		<header id="top_header">
@@ -34,9 +34,103 @@
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>BCOVIMA</h1>
+						<h1>BCOVIMA Plugin for Brightcove Player SDK for iOS, version 1.0.7.211</h1>
 
-<p>TODO: Document information for clients of the BCOVIMA distributable in this file.</p>
+<h1>Installation</h1>
+
+<p>The easiest way to get started with BCOVIMA is to install using <a href="[http://cocoapods.org](http://cocoapods.org)">CocoaPods</a>. Simply add the <code>Brightcove-Player-SDK-IMA</code> pod to your Podfile:</p>
+
+<pre><code>platform :ios, '6.1'
+
+pod 'Brightcove-Player-SDK-IMA'
+</code></pre>
+
+<p>If you don&rsquo;t use CocoaPods, you can download BCOVIMA from the <a href="[https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases](https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases)">release page</a> and manually install the archive and header files into your Xcode project manually, as you would with any other static library. You must also manually install <a href="[https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/](https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/)">Google&rsquo;s IMA iOS SDK v3</a>, following their installation instructions.</p>
+
+<h1>Quick Start</h1>
+
+<p>BCOVIMA is a bridge between <a href="[https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/](https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/)">Google&rsquo;s IMA iOS SDK v3</a> and the <a href="[https://github.com/brightcove/brightcove-player-sdk-ios](https://github.com/brightcove/brightcove-player-sdk-ios)">Brightcove Player SDK for iOS</a>. Currently (as of 2014-05-16) it works only with server-side ad rules. Its use is relatively straightforward:</p>
+
+<p>```objc</p>
+
+<pre><code>[1] IMASettings *imaSettings = [[IMASettings alloc] init];
+    imaSettings.ppid = kViewControllerIMAPublisherID;
+    imaSettings.language = kViewControllerIMALanguage;
+
+    IMAAdsRenderingSettings *renderSettings = [[IMAAdsRenderingSettings alloc] init];
+    renderSettings.webOpenerPresentingController = self;
+
+    BCOVPlayerSDKManager *manager = [BCOVPlayerSDKManager sharedManager];
+    id&lt;BCOVPlaybackController&gt; controller =
+[2]         [manager createIMAPlaybackControllerWithSettings:imaSettings
+                    adsRenderingSettings:renderSettings
+[3]                 viewStrategy:[manager BCOVIMAAdViewStrategy]];
+    controller.delegate = self;
+
+    [self.view addSubview:controller.view];  
+
+    NSString *token;      // (Brightcove Media API token with URL access)
+    NSString *playlistID; // (ID of the playlist you wish to use)
+    BCOVCatalogService *catalog = [[BCOVCatalogService alloc] initWithToken:token];
+    [catalog findPlaylistWithPlaylistID:playlistID
+                             parameters:nil
+                             completion:^(BCOVPlaylist *playlist,
+                                          NSDictionary *jsonResponse,
+                                          NSError      *error) {
+
+[4]     BCOVPlaylist *playlistWithAdTags = myUpdatePlaylistWithAdTags(playlist);
+        [controller setVideos:playlist];
+        [controller play];
+
+    }];
+</code></pre>
+
+<p>```</p>
+
+<p>Let&rsquo;s break this code down into steps, to make it a bit simpler to digest:</p>
+
+<ol>
+<li>You create the same IMA settings and ads rendering settings that you would create if you were using Google&rsquo;s IMA iOS SDK directly, and these are required.</li>
+<li>BCOVIMA adds some category methods to BCOVPlaybackManager. The first of these is <code>-createIMAPlaybackControllerWithSettings:adsRenderingSettings:viewStrategy:</code>. Use this method to create your playback controller.</li>
+<li>The second category method added to BCOVPlaybackManager is <code>-BCOVIMAAdViewStrategy</code>. You must either pass this view strategy into the method you call to create a playback controller, or compose it into your own view strategy. If you don&rsquo;t include this view strategy, you won&rsquo;t see any ads.</li>
+<li>Each BCOVVideo passed to the <code>[BCOVPlaybackController setVideos:]</code> method (for which you wish to show ads) must have a property whose name is <code>kBCOVIMAAdTag</code>, and whose value is your ad tag. For brevity, this example does this in a helper function called <code>myUpdatePlaylistWithAdTags()</code>, but the <a href="[https://github.com/BrightcoveOS/SampleBCOVIMA/blob/master/SampleBCOVIMA/ViewController.m](https://github.com/BrightcoveOS/SampleBCOVIMA/blob/master/SampleBCOVIMA/ViewController.m)#L175-L202">sample code shows in detail how this is done</a>.</li>
+</ol>
+
+
+<p>If you have questions or need help, we have a support forum for Brightcove&rsquo;s native Player SDKs at <a href="[https://groups.google.com/forum/](https://groups.google.com/forum/)#!forum/brightcove-native-player-sdks">[https://groups.google.com/forum/](https://groups.google.com/forum/)#!forum/brightcove-native-player-sdks</a> .</p>
+
+<h1>Customizing Plugin Behavior</h1>
+
+<p>There are a couple of configuration points in BCOVIMA. You can combine BCOVIMA with another plugin for the Brightcove Player SDK for iOS, you can create a custom view strategy, and you can supply a custom ads request policy.</p>
+
+<h2>View Strategy</h2>
+
+<p>You can provide a custom view strategy to the BCOVPlaybackManager when you are constructing your playback controller or session provider, rather than specify the BCOVIMAAdViewStrategy directly. However, your custom view strategy must compose the BCOVIMAAdViewStrategy. In other words, at some point your view strategy must pass the <code>view</code> that it is given to the BCOVIMAAdViewStrategy, and the view that the strategy gives you must be composed into the view hierarchy that your strategy returns. You can see an example of what this looks like in the <a href="[https://github.com/BrightcoveOS/SampleBCOVIMA/blob/master/SampleBCOVIMA/ViewController.m](https://github.com/BrightcoveOS/SampleBCOVIMA/blob/master/SampleBCOVIMA/ViewController.m)#L246-L268">SampleBCOVIMA example code</a>.</p>
+
+<h2>Composing Session Providers</h2>
+
+<p>If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the <code>[BCOVPlayerSDKManager createPlaybackControllerWithSessionProvider:viewStrategyWithFrame:]</code> method. You can see an example of what this looks like in the <a href="[https://github.com/BrightcoveOS/SampleBCOVIMAWidevine/blob/master/SampleBCOVIMAWidevine/ViewController.m](https://github.com/BrightcoveOS/SampleBCOVIMAWidevine/blob/master/SampleBCOVIMAWidevine/ViewController.m)#L101-L108">SampleBCOVIMAWidevine example code</a>.</p>
+
+<h2>Ads Request Policy</h2>
+
+<p>BCOVIMA gives you a lot of control over how ads requests are made, via the <a href="Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a> class. The primary use case for using a specific policy is to use companion ads. Once you obtain an instance of the policy (there are three class factory methods on <a href="Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a> for this purpose), you specify it in the <a href="Classes/BCOVIMASessionProviderOptions.html">BCOVIMASessionProviderOptions</a> that you pass to the BCOVPlayerSDKManager when creating a <a href="Classes/BCOVIMASessionProvider.html">BCOVIMASessionProvider</a>. The three factory methods are described in more detail below:</p>
+
+<ul>
+<li><code>+videoPropertiesVMAPAdTagUrlAdsRequestPolicy</code>: This method returns the default ads request policy, which looks for the <code>kBCOVIMAAdTag</code> in each BCOVVideo&rsquo;s properties to determine the VMAP ad tag that should be used to request ads.</li>
+<li><code>+videoPropertiesVMAPAdTagUrlAdsRequestPolicyWithCompanionAdSlots:</code>: This method returns an ads request policy which behaves like <code>+videoPropertiesVMAPAdTagUrlAdsRequestPolicy</code>, but also populates each ads request with the specified IMACompanionAdSlots. For more information on using IMACompanionAdSlots, see <a href="[https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/ads](https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/ads)#companions">Google&rsquo;s IMA iOS SDK documentation</a>.</li>
+<li><code>+adsRequestPolicyWithVMAPAdTagUrl:companionAdSlots:</code>: This method returns an ads request policy that always uses the same ad tag for every video. If you use this policy, you do not have to put the ad tag in the BCOVVideos' properties. This is the easiest way to specify an ad tag if you know your ad tag will never change for the lifetime of the application session.</li>
+</ul>
+
+
+<h1>Frequently Asked Questions</h1>
+
+<p><strong> I&rsquo;m trying to use a VAST ad tag, but I don&rsquo;t see any ads. What gives? </strong></p>
+
+<p>BCOVIMA currently (as of 2014-05-16) works only with ad tags that return server-side ad rules. For example, VMAP or server-side ad rules for DFP.</p>
+
+<p><strong> I can hear the ads, but I can&rsquo;t see them playing. </strong></p>
+
+<p>This usually happens when you have not properly composed <code>[BCOVPlayerSDKManager BCOVIMAAdViewStrategy]</code> into the view strategy you passed when creating the playback controller.</p>
 						
 						
 					</div>
@@ -80,9 +174,9 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Brightcove. All rights reserved. (Last updated: 2014-03-10)</span><br />
+						<p><span class="copyright">&copy; 2014 Brightcove. All rights reserved. (Last updated: 2014-05-16)</span><br />
 						
-						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 961)</a>.</span></p>
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
 						
 	
 					</div>

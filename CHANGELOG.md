@@ -1,3 +1,11 @@
+# 1.0.7
+
+### Additions and Improvements
+* Added an arm-64 architecture slice to the static library, for applications that wish to target the 64-bit architecture.
+* Upgraded to Google IMA SDK 3.0b5
+* Added a subspec for users of Admob.  Use pod `Brightcove-Player-SDK-IMA/ForAdMob`.
+
+
 # 1.0.6
 
 ### Additions and Improvements
