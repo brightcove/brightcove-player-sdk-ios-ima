@@ -1,3 +1,13 @@
+# 1.0.8
+
+### Breaking Changes
+* Use of ReactiveCocoa in public APIs within the BCOVIMA Plugin is deprecated in this release. Version 1.1.0 will not require clients to install any version of ReactiveCocoa, and properties or methods that return or expect RACSignal objects will be removed. See the header files for guidance on how to update deprecated functionality for compatibility with 1.1.0. The only deprecated method in the BCOVIMA Plugin is:
+  * `-[BCOVIMAAdsRequestPolicy signalWithValue:]`
+
+### Additions and Improvements
+* Send `kBCOVIMALifecycleEventAdsManagerDidRequestContentPause` and `kBCOVIMALifecycleEventAdsManagerDidRequestContentResume` when the IMAAdsManager requests that the content be paused or resumed.
+* Fixed a bug in which the `kBCOVPlaybackSessionLifecycleEventEnd` event could be sent prematurely when using server-side ad rules and no postroll was scheduled to be shown.
+
 # 1.0.7
 
 ### Additions and Improvements

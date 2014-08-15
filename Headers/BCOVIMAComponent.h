@@ -20,6 +20,8 @@ extern NSString * const kBCOVIMALifecycleEventAdsLoaderLoaded;
 extern NSString * const kBCOVIMALifecycleEventAdsLoaderFailed;
 extern NSString * const kBCOVIMALifecycleEventAdsManagerDidReceiveAdEvent;
 extern NSString * const kBCOVIMALifecycleEventAdsManagerDidReceiveAdError;
+extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentPause;
+extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentResume;
 
 
 /**

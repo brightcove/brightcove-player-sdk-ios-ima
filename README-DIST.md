@@ -1,4 +1,4 @@
-# BCOVIMA Plugin for Brightcove Player SDK for iOS, version 1.0.7.211
+# BCOVIMA Plugin for Brightcove Player SDK for iOS, version 1.0.8.252
 
 Installation
 ============
@@ -94,10 +94,10 @@ BCOVIMA gives you a lot of control over how ads requests are made, via the BCOVI
 
 Frequently Asked Questions
 ==========================
-**I'm trying to use a VAST ad tag, but I don't see any ads. What gives?**
+** I'm trying to use a VAST ad tag, but I don't see any ads. What gives? **
 
 BCOVIMA currently (as of 2014-05-16) works only with ad tags that return server-side ad rules. For example, VMAP or server-side ad rules for DFP.
 
-**I can hear the ads, but I can't see them playing.**
+** I can hear the ads, but I can't see them playing. **
 
 This usually happens when you have not properly composed `-[BCOVPlayerSDKManager BCOVIMAAdViewStrategy]` into the view strategy you passed when creating the playback controller.
