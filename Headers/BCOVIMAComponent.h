@@ -17,12 +17,14 @@
 
 
 extern NSString * const kBCOVIMALifecycleEventAdsLoaderLoaded;
+extern NSString * const kBCOVIMALifecycleEventPropertyKeyAdsManager;
 extern NSString * const kBCOVIMALifecycleEventAdsLoaderFailed;
 extern NSString * const kBCOVIMALifecycleEventAdsManagerDidReceiveAdEvent;
+extern NSString * const kBCOVIMALifecycleEventPropertyKeyAdEvent;
 extern NSString * const kBCOVIMALifecycleEventAdsManagerDidReceiveAdError;
+extern NSString * const kBCOVIMALifecycleEventPropertyKeyAdError;
 extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentPause;
 extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentResume;
-
 
 /**
  * The default ad tag policy will look for an entry in each session.video's
@@ -33,6 +35,10 @@ extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentResume;
  */
 extern NSString * const kBCOVIMAAdTag;
 
+/**
+ * The cue point type for IMA ad type.
+ */
+extern NSString * const kBCOVIMACuePointTypeAd;
 
 /**
  * Category methods added to BCOVPlayerSDKManager to support IMA.
@@ -78,4 +84,14 @@ extern NSString * const kBCOVIMAAdTag;
  */
 - (BCOVPlaybackControllerViewStrategy)BCOVIMAAdViewStrategy;
 
+/**
+ * Returns a view strategy for display of IMA advertising that wraps another 
+ * view strategy.
+ *
+ * @param viewStrategey A BCOVPlaybackControllerViewStrategy block that will be 
+ * wrapped.
+ * @return A new BCOVPlaybackControllerViewStrategy that can be used for 
+ * display of IMA advertising.
+ */
+- (BCOVPlaybackControllerViewStrategy)IMAAdViewStrategyWrapperWithViewStrategey:(BCOVPlaybackControllerViewStrategy)viewStrategey;
 @end

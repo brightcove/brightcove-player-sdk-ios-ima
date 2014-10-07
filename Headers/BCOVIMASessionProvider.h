@@ -40,4 +40,20 @@
  */
 @property (nonatomic, strong) BCOVIMAAdsRequestPolicy *adsRequestPolicy;
 
+/**
+ * The specified session provider options for VAST ad type.
+ * It uses `+[BCOVIMAAdsRequestPolicy adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:nil]`
+ * as adsRequestPolicy to create IMAAdsRequest objects in BCOVIMASessions 
+ * configured by this session provider options.
+ */
++ (instancetype)VASTOptions;
+
+/**
+ * The specified session provider options for VMAP ad type.
+ * It uses +[BCOVIMAAdsRequestPolicy videoPropertiesVMAPAdTagUrlAdsRequestPolicy] 
+ * as adsRequestPolicy to create IMAAdsRequest objects in BCOVIMASessions 
+ * configured by this session provider options.
+ */
++ (instancetype)VMAPOptions;
+
 @end

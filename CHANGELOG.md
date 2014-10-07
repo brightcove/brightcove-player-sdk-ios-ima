@@ -1,3 +1,17 @@
+# 1.1.0
+
+### Breaking Changes
+* Use of ReactiveCocoa in public APIs within the BCOVIMA Plugin is removed in this release.
+
+### Additions and Improvements
+* VAST is now supported. Please see the README.md for more information.
+* Upgraded to Google IMA SDK 3.0b7. This release resolves a problem that causes slow timer countdowns on iOS 8. We are working with Google on resolving some known issues in IMA SDK 3.0b7.  If you run into any issues in beta7, please let us know. The known issues include:
+    * Learn more button doesn't show up on ads that are shorter than 6 seconds.
+    * Sometimes ads stay in memory even after ads are finished.
+    * Lock screen and quick look controls may be taken over by ad player.
+    * The countdown timer isn't in the correct location.
+    * Ads sometime loop if headphones are removed from device during an ad.
+
 # 1.0.8
 
 ### Breaking Changes
