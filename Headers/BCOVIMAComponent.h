@@ -12,8 +12,7 @@
 
 #import "BCOVPlayerSDK.h"
 
-
-@class BCOVIMASessionProviderOptions;
+@class BCOVIMAAdsRequestPolicy;
 
 
 extern NSString * const kBCOVIMALifecycleEventAdsLoaderLoaded;
@@ -47,18 +46,20 @@ extern NSString * const kBCOVIMACuePointTypeAd;
 
 /**
  * Creates and returns a new playback controller with the specified IMASettings
- * object, IMAAdsRenderingSettings object, and view strategy. The returned
- * playback controller will be configured with an IMA session provider.
+ * object, IMAAdsRenderingSettings object, view strategy, and ad container. The 
+ * returned playback controller will be configured with an IMA session provider.
  *
  * @param settings An IMASettings that will be used to configure any
  * IMAAdsLoader object used by the returned playback controller.
  * @param adsRenderingSettings An IMAAdsRenderingSettings that will be used to
  * configure any IMAAdsManager object used by the returned playback controller.
+ * @param adsRequestPolicy BCOVIMAAdsRequestPolicy instance to generate 
+ * IMAAdsRequests for use by a given input playback session.
  * @param strategy A view strategy that determines the view for the returned
  * playback controller.
  * @return A new playback controller with the specified parameters.
  */
-- (id<BCOVPlaybackController>)createIMAPlaybackControllerWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings viewStrategy:(BCOVPlaybackControllerViewStrategy)strategy;
+- (id<BCOVPlaybackController>)createIMAPlaybackControllerWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy viewStrategy:(BCOVPlaybackControllerViewStrategy)strategy;
 
 /**
  * Creates and returns a new BCOVIMASessionProvider with the specified
@@ -68,30 +69,12 @@ extern NSString * const kBCOVIMACuePointTypeAd;
  * IMAAdsLoader object used by the returned session provider.
  * @param adsRenderingSettings An IMAAdsRenderingSettings that will be used to
  * configure any IMAAdsManager object used by the returned session provider.
+ * @param adsRequestPolicy BCOVIMAAdsRequestPolicy instance to generate
+ * IMAAdsRequests for use by a given input playback session.
  * @param provider A session provider to attach upstream and deliver playback
  * sessions to the returned session provider.
- * @param options The options with which to configure the returned session
- * provider.
  * @return A new BCOVIMASessionProvider with the specified parameters.
  */
-- (id<BCOVPlaybackSessionProvider>)createIMASessionProviderWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider options:(BCOVIMASessionProviderOptions *)options;
+- (id<BCOVPlaybackSessionProvider>)createIMASessionProviderWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider;
 
-/**
- * Returns a view strategy that wraps the view it is given with a view that
- * also contains an ad view, for display of IMA advertising.
- *
- * @return A view strategy block that wraps its parameter with an ad view.
- */
-- (BCOVPlaybackControllerViewStrategy)BCOVIMAAdViewStrategy;
-
-/**
- * Returns a view strategy for display of IMA advertising that wraps another 
- * view strategy.
- *
- * @param viewStrategey A BCOVPlaybackControllerViewStrategy block that will be 
- * wrapped.
- * @return A new BCOVPlaybackControllerViewStrategy that can be used for 
- * display of IMA advertising.
- */
-- (BCOVPlaybackControllerViewStrategy)IMAAdViewStrategyWrapperWithViewStrategey:(BCOVPlaybackControllerViewStrategy)viewStrategey;
 @end

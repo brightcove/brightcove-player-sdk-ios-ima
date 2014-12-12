@@ -10,50 +10,14 @@
 
 #import "BCOVPlayerSDK.h"
 
-
-@class BCOVIMAAdsRequestPolicy;
-
-
 /**
  * Session provider implementation that delivers playback sessions with support
  * for Interactive Media Ads.
  *
  * Instances of this class should not be created directly by clients of the
- * Brightcove Player SDK for iOS; instead use the `-[BCOVPlayerSDKManager createIMASessionProviderWithSettings:adsRenderingSettings:upstreamSessionProvider:options:]`
+ * Brightcove Player SDK for iOS; instead use the `-[BCOVPlayerSDKManager createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:upstreamSessionProvider:]`
  * factory method (which is added as a category method).
  */
 @interface BCOVIMASessionProvider : NSObject <BCOVPlaybackSessionProvider>
-
-@end
-
-
-/**
- * Optional configuration for IMA session providers.
- */
-@interface BCOVIMASessionProviderOptions : NSObject
-
-/**
- * The policy that should be consulted to create IMAAdsRequest objects in
- * BCOVIMASessions created by this session provider.
- *
- * The default policy is `+[BCOVIMAAdsRequestPolicy videoPropertiesVMAPAdTagUrlAdsRequestPolicy]`.
- */
-@property (nonatomic, strong) BCOVIMAAdsRequestPolicy *adsRequestPolicy;
-
-/**
- * The specified session provider options for VAST ad type.
- * It uses `+[BCOVIMAAdsRequestPolicy adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:nil]`
- * as adsRequestPolicy to create IMAAdsRequest objects in BCOVIMASessions 
- * configured by this session provider options.
- */
-+ (instancetype)VASTOptions;
-
-/**
- * The specified session provider options for VMAP ad type.
- * It uses +[BCOVIMAAdsRequestPolicy videoPropertiesVMAPAdTagUrlAdsRequestPolicy] 
- * as adsRequestPolicy to create IMAAdsRequest objects in BCOVIMASessions 
- * configured by this session provider options.
- */
-+ (instancetype)VMAPOptions;
 
 @end

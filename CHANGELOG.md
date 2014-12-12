@@ -1,3 +1,13 @@
+# 1.2.0
+### Breaking Changes
+* Qualified with Google IMA 3.0.0b10. In this release, Google switched from using a UIWebView to a WKWebView in iOS 8 for its ad processing. This means that you **must** build your app with an arm64 slice. It also means that if you aren't using Cocoapods, you must **optionaly** link against WebKit.framework.
+* `BCOVIMASessionProviderOptions` has been removed. This class exposed no functionality externally.
+* `+[BCOVPlayerSDKManager BCOVIMAAdViewStrategy]` and `-[BCOVPlayerSDKManager IMAAdViewStrategyWrapperWithViewStrategey:]` have been removed. Views in which ads are to be rendered are now part of the initialization methods. Please consult the readme for more information.
+* `BCOVPlayerSDKManager` manager methods have been modified. Previously, the plugin defaulted to supporting VMAP/Server Side Ad Rules and you had to optionaly configure it to support VAST/Cue Points. With this change, you **must** now specificy your desired ad request policy. If you had been using VMAP/SSA by default, you can use `[BCOVIMAAdsRequestPolicy videoPropertiesVMAPAdTagUrlAdsRequestPolicyWithAdDisplayContainer:]` or `[BCOVIMAAdsRequestPolicy adsRequestPolicyWithVMAPAdTagUrl:adDisplayContainer:]`. Please consult the readme for more information.
+
+### Additions and Improvements
+* You can now specify the view in which ads will be rendered. You can now pass the IMAAdDisplayContainer into the session provider.
+
 # 1.1.1
 ### Breaking Changes
 * iOS 6 is still deprecated in this release. We have not removed support yet.  iOS 6.x currently accounts for ~2% of global SDK traffic.
