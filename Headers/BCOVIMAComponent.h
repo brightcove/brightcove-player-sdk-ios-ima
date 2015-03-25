@@ -57,9 +57,13 @@ extern NSString * const kBCOVIMACuePointTypeAd;
  * IMAAdsRequests for use by a given input playback session.
  * @param strategy A view strategy that determines the view for the returned
  * playback controller.
+ * @param adContainer the view in which the ad will be displayed and the ad 
+ * information UI will be rendered.
+ * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil 
+ * or empty.
  * @return A new playback controller with the specified parameters.
  */
-- (id<BCOVPlaybackController>)createIMAPlaybackControllerWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy viewStrategy:(BCOVPlaybackControllerViewStrategy)strategy;
+- (id<BCOVPlaybackController>)createIMAPlaybackControllerWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy adContainer:(UIView *)adContainer companionSlots:(NSArray *)companionSlots viewStrategy:(BCOVPlaybackControllerViewStrategy)strategy;
 
 /**
  * Creates and returns a new BCOVIMASessionProvider with the specified
@@ -71,10 +75,14 @@ extern NSString * const kBCOVIMACuePointTypeAd;
  * configure any IMAAdsManager object used by the returned session provider.
  * @param adsRequestPolicy BCOVIMAAdsRequestPolicy instance to generate
  * IMAAdsRequests for use by a given input playback session.
+ * @param adContainer the view in which the ad will be displayed and the ad 
+ * information UI will be rendered.
+ * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil 
+ * or empty.
  * @param provider A session provider to attach upstream and deliver playback
  * sessions to the returned session provider.
  * @return A new BCOVIMASessionProvider with the specified parameters.
  */
-- (id<BCOVPlaybackSessionProvider>)createIMASessionProviderWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider;
+- (id<BCOVPlaybackSessionProvider>)createIMASessionProviderWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy adContainer:(UIView *)adContainer companionSlots:(NSArray *)companionSlots upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider;
 
 @end

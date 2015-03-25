@@ -1,3 +1,28 @@
+# 1.3.0
+### Breaking Changes
+* `BCOVIMAAdsRequestPolicy` methods have been modified and no longer take a `IMAAdDisplayContainer` object.
+
+| Removed Method (BCOVIMAAdsRequestPolicy)                                                        | Replaced By (BCOVIMAAdsRequestPolicy)                                         |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `+videoPropertiesVMAPAdTagUrlAdsRequestPolicyWithAdDisplayContainer:`                           | `+videoPropertiesVMAPAdTagUrlAdsRequestPolicy:`                               |
+| `+adsRequestPolicyWithVMAPAdTagUrl:adDisplayContainer:`                                         | `+adsRequestPolicyWithVMAPAdTagUrl:`                                          |
+| `+adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:adDisplayContainer:`    | `+adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:`     |
+| `+adsRequestPolicyFromCuePointPropertiesWithAdTag:adsCuePointProgressPolicy:adDisplayContainer:`| `+adsRequestPolicyFromCuePointPropertiesWithAdTag:adsCuePointProgressPolicy:` |
+
+For more information on these replacement methods, please see the readme.
+
+* `BCOVPlayerSDKManager` have been modified to take to accommodate an ad view and companion slots.
+
+| Removed Method (BCOVPlayerSDKManager)                                                                  | Replaced By (BCOVPlayerSDKManager)                                                                                                |
+| ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `-createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:viewStrategy:`         | `-createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:`         |
+| `-createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:upstreamSessionProvider:` | `-createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:` |
+
+### Additions and Improvements
+* Qualified with Google IMA 3.0.0b12.
+* Fixed a bug where ads were not visible after the first video in a playlist.
+* Fixed a bug that could break frequency capping.
+
 # 1.2.0
 ### Breaking Changes
 * Qualified with Google IMA 3.0.0b10. In this release, Google switched from using a UIWebView to a WKWebView in iOS 8 for its ad processing. This means that you **must** build your app with an arm64 slice. It also means that if you aren't using Cocoapods, you must **optionaly** link against WebKit.framework.

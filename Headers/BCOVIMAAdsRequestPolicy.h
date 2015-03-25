@@ -12,7 +12,7 @@
 @protocol BCOVPlaybackSession;
 
 @class BCOVCuePointProgressPolicy;
-@class IMAAdDisplayContainer;
+
 
 /**
  * Policy object to generate IMAAdsRequests for use by a
@@ -30,12 +30,10 @@
  * That URL will be used to construct a VMAP IMAAdsRequest for that playback 
  * session.
  *
- * @param adDisplayContainer IMAAdDisplayContainer instance used to create an
- * IMAAdsRequest.
  * @return An ads request policy that generates VMAP IMAAdsRequests from
  * information in each playback session's `BCOVVideo.properties`.
  */
-+ (instancetype)videoPropertiesVMAPAdTagUrlAdsRequestPolicyWithAdDisplayContainer:(IMAAdDisplayContainer *)adDisplayContainer;
++ (instancetype)videoPropertiesVMAPAdTagUrlAdsRequestPolicy;
 
 /**
  * Returns an ads request policy that generates a VMAP IMAAdsRequest with the
@@ -43,12 +41,10 @@
  *
  * @param VMAPAdTagUrl The ad tag URL to include in the IMAAdsRequest this
  * policy generates. Currently, only VMAP ad tag URLs are supported.
- * @param adDisplayContainer IMAAdDisplayContainer instance used to create an
- * IMAAdsRequest.
  * @return An ads request policy that generates VMAP IMAAdsRequests from
  * the specified parameters.
  */
-+ (instancetype)adsRequestPolicyWithVMAPAdTagUrl:(NSString *)VMAPAdTagUrl adDisplayContainer:(IMAAdDisplayContainer *)adDisplayContainer;
++ (instancetype)adsRequestPolicyWithVMAPAdTagUrl:(NSString *)VMAPAdTagUrl;
 
 #pragma mark VAST
 
@@ -63,12 +59,10 @@
  * @param adsCuePointProgressPolicy The cue point progress policy specified for
  * VAST ads requests cue points. If this parameter is nil, `+[BCOVCuePointProgressPolicy progressPolicyProcessingCuePoints:BCOVProgressPolicyProcessAllCuePoints resumingPlaybackFrom:BCOVProgressPolicyResumeFromContentPlayhead ignoringPreviouslyProcessedCuePoints:NO]`
  * will be used as default.
- * @param adDisplayContainer IMAAdDisplayContainer instance used to create an
- * IMAAdsRequest.
  * @return An ads request policy that generates VAST IMAAdsRequests from
  * information in each playback video's `BCOVCuePoint.properties`.
  */
-+ (instancetype)adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:(BCOVCuePointProgressPolicy *)adsCuePointProgressPolicy adDisplayContainer:(IMAAdDisplayContainer *)adDisplayContainer;
++ (instancetype)adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:(BCOVCuePointProgressPolicy *)adsCuePointProgressPolicy;
 
 /**
  * Returns an ads request policy that checks each BCOVVideo for BCOVCuePoints
@@ -81,10 +75,8 @@
  * @param adsCuePointProgressPolicy The cue point progress policy specified for
  * VAST ads requests cue points. If this parameter is nil, `+[BCOVCuePointProgressPolicy progressPolicyProcessingCuePoints:BCOVProgressPolicyProcessAllCuePoints resumingPlaybackFrom:BCOVProgressPolicyResumeFromContentPlayhead ignoringPreviouslyProcessedCuePoints:NO]`
  * will be used as default.
- * @param adDisplayContainer IMAAdDisplayContainer instance used to create an 
- * IMAAdsRequest.
  * @return An ads request policy that generates VAST IMAAdsRequests from
  * `adTag` and information in each playback video's `BCOVCuePoint.properties`.
  */
-+ (instancetype)adsRequestPolicyFromCuePointPropertiesWithAdTag:(NSString *)adTag adsCuePointProgressPolicy:(BCOVCuePointProgressPolicy *)adsCuePointProgressPolicy adDisplayContainer:(IMAAdDisplayContainer *)adDisplayContainer;
++ (instancetype)adsRequestPolicyFromCuePointPropertiesWithAdTag:(NSString *)adTag adsCuePointProgressPolicy:(BCOVCuePointProgressPolicy *)adsCuePointProgressPolicy;
 @end
