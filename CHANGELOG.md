@@ -1,3 +1,12 @@
+# 1.4.0
+### Breaking Changes
+* Undocumented lifecycle events such as `kBCOVPlaybackSessionLifecycleEventIMAAdEnter` and `kBCOVPlaybackSessionLifecycleEventIMAAdEnter` have been removed.
+* IMA imports in SDK public headers have been removed in anticipation of moving to new IMA library versions that use modules. That means that you will need to import `IMAAdsLoader.h` in your header files.
+
+### Additions and Improvements
+* Updated to support Brightcove Analytics V2.
+* You must use the Brightcove Player SDK for iOS version 4.4.0+.
+
 # 1.3.0
 ### Breaking Changes
 * `BCOVIMAAdsRequestPolicy` methods have been modified and no longer take a `IMAAdDisplayContainer` object.
