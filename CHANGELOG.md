@@ -1,3 +1,10 @@
+# 1.5.0
+### Additions and Improvements
+* Qualified with Google IMA 3.0.0b16. As of beta13, IMA is now a static framework. You will need to remove `#import` references to IMA headers and instead use a module `@import GoogleInteractiveMediaAds;`. Make sure this import occurs **before** importing `BCOVIMA.h`.
+
+### Additions and Improvements
+* Fix a bug where VAST postrolls were loading but not playing.
+
 # 1.4.0
 ### Breaking Changes
 * Undocumented lifecycle events such as `kBCOVPlaybackSessionLifecycleEventIMAAdEnter` and `kBCOVPlaybackSessionLifecycleEventIMAAdEnter` have been removed.

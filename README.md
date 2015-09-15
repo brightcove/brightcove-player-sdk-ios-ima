@@ -1,4 +1,4 @@
-# BCOVIMA Plugin for Brightcove Player SDK for iOS, version 1.4.0.535
+# BCOVIMA Plugin for Brightcove Player SDK for iOS, version 1.5.0.537
 
 Requirements
 ============
@@ -19,7 +19,7 @@ To add the IMA Plugin for Brightcove Player SDK to your project manually:
 1. On the "Build Settings" tab of your application target:
     * Ensure that BCOVIMA headers are in your application's "Header Search Path".
     * Ensure that `-ObjC` has been added to the "Other Linker Flags" build setting.
-1. Install Google's IMA library 3.0b12, following their [directions][googleima].
+1. Install Google's IMA library 3.0b16, following their [directions][googleima].
 
 [cocoapods]: http://cocoapods.org
 [podspecs]: https://github.com/CocoaPods/Specs/tree/master/Specs/Brightcove-Player-SDK-IMA
