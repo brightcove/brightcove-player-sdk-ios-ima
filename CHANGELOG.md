@@ -1,3 +1,7 @@
+# 1.5.1
+### Additions and Improvements
+* Send `kBCOVPlaybackSessionLifecycleEventWillPauseForAd` on the lifecycle delegate method when pausing for an Ad.
+
 # 1.5.0
 ### Additions and Improvements
 * Qualified with Google IMA 3.0.0b16. As of beta13, IMA is now a static framework. You will need to remove `#import` references to IMA headers and instead use a module `@import GoogleInteractiveMediaAds;`. Make sure this import occurs **before** importing `BCOVIMA.h`.

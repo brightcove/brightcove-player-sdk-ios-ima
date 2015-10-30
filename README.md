@@ -1,4 +1,4 @@
-# BCOVIMA Plugin for Brightcove Player SDK for iOS, version 1.5.0.537
+# BCOVIMA Plugin for Brightcove Player SDK for iOS, version 1.5.1.559
 
 Requirements
 ============

@@ -25,6 +25,8 @@ extern NSString * const kBCOVIMALifecycleEventPropertyKeyAdError;
 extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentPause;
 extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentResume;
 
+extern NSString * const kBCOVIMAAdPropertiesKeyIMAAdInstance;
+
 /**
  * The default ad tag policy will look for an entry in each session.video's
  * properties with this key and use it as the ad tag for VMAP requests. In
