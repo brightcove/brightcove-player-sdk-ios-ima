@@ -1,6 +1,6 @@
 //
 // BCOVIMAAdsRequestPolicy.h
-// BCOVIMA
+// BrightcoveIMA
 //
 // Copyright (c) 2015 Brightcove, Inc. All rights reserved.
 // License: https://accounts.brightcove.com/en/terms-and-conditions
@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-
-@protocol BCOVPlaybackSession;
-
 @class BCOVCuePointProgressPolicy;
+@protocol BCOVPlaybackSession;
 
 
 /**

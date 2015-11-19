@@ -1,3 +1,16 @@
+# 2.0.0
+### Breaking Changes
+* Calls to `[AVPlayer play]`, `[AVPlayer pause]`, and `[AVPlayer seekToTime:]` must be changed to call the corresponding method on the `BCOVPlaybackController`. Failure to do so will cause undefined behavior.
+* The static library distributable has been removed. If installed manually (not CocoaPods), you will need to remove libBCOVIMA.a and its headers from the Header Search Path. Please see README.md for new install options.
+* Header `BCOVIMA.h` has been removed. Please see README.md for new import options.
+
+### Additions and Improvements
+* Bitcode support. Note, the IMA library does not yet support Bitcode.
+* The SDK is now distributed as a static framework.
+* Fixed a bug that caused a large delay before playback when using VAST.
+* Fixed a bug that caused the content to play before playing the prerolls.
+* Internal improvements.
+
 # 1.5.1
 ### Additions and Improvements
 * Send `kBCOVPlaybackSessionLifecycleEventWillPauseForAd` on the lifecycle delegate method when pausing for an Ad.

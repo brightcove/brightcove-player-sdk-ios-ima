@@ -1,25 +1,45 @@
-# BCOVIMA Plugin for Brightcove Player SDK for iOS, version 1.5.1.559
+# IMA Plugin for Brightcove Player SDK for iOS, version 2.0.0.576
 
-Requirements
-============
-This plugin supports iOS 7.0+.
+Supported Platforms
+===================
+iOS 7.0 and above.
 
 Installation
 ============
-You can use [Cocoapods][cocoapods] to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-SDK-IMA` podspec [here][podspecs].
+The IMA Plugin for Brightcove Player SDK provides a static library framework for installation. A dynamic framework will be added in the future when Google releases a dylib version of IMA.
+
+CocoaPods
+--------------
+
+You can use [CocoaPods][cocoapods] to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-SDK-IMA` podspec [here][podspecs]. The pod will incorporate the correct version of IMA automatically. A subspec is also provided for those that need the Admob version of IMA. CocoaPods 0.39 or newer is required.
+
+Static Framework example:
+
+    pod 'Brightcove-Player-SDK-IMA'
+    
+For Admob example:
+
+    pod 'Brightcove-Player-SDK-IMA/ForAdmob'  
+
+Manual
+--------------
 
 To add the IMA Plugin for Brightcove Player SDK to your project manually:
 
 1. Install the latest version of the [Brightcove Player SDK][bcovsdk].
-1. Download the latest zip'ed release of the plugin from our [release page][release].
-1. Add the contents of Library and Headers to the project.
-1. On the "Build Phases" tab of your application target, add the following to the "Link
+2. Download the latest zipped release of the plugin from our [release page][release].
+3. Add the 'BrightcoveIMA.framework' to your project.
+4. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the path to the framework. This should have been done automatically unless the framework is stored under a different root directory than your project.
+5. On the "Build Phases" tab of your application target, add the following to the "Link
     Binary With Libraries" phase:
-    * `libBCOVIMA.a`
-1. On the "Build Settings" tab of your application target:
-    * Ensure that BCOVIMA headers are in your application's "Header Search Path".
+    * `BrightcoveIMA.framework`
+6. On the "Build Settings" tab of your application target:
     * Ensure that `-ObjC` has been added to the "Other Linker Flags" build setting.
-1. Install Google's IMA library 3.0b16, following their [directions][googleima].
+7. Install Google's IMA library 3.0b16, following their [directions][googleima].
+
+Imports
+--------------
+The IMA Plugin for Brightcove Player SDK can be imported into code a few different ways; `@import BrightcoveIMA;`, `#import <BrightcoveIMA/BrightcoveIMA.h>` or `#import <BrightcoveIMA/[specific class].h>`.
 
 [cocoapods]: http://cocoapods.org
 [podspecs]: https://github.com/CocoaPods/Specs/tree/master/Specs/Brightcove-Player-SDK-IMA
@@ -79,6 +99,14 @@ If you have questions or need help, we have a support forum for Brightcove's nat
 [bcovsdk]: https://github.com/brightcove/brightcove-player-sdk-ios
 [forum]: https://groups.google.com/forum/#!forum/brightcove-native-player-sdks
 
+Play and Pause
+===========================
+The Brightcove IMA Plugin implements custom play and pause logic to ensure the smoothest possible ad experience. Therefore, you will need to make sure that you use the play method on the `BCOVPlaybackController` or the `-[BCOVSessionProviderExtension ima_play]` or `-[BCOVSessionProviderExtension ima_pause]` ([BCOVSessionProviderExtension][BCOVIMAComponent]), and not the AVPlayer.
+
+As an example, calling play for the first time on `BCOVPlaybackController` allows BCOVIMA to process preroll ads without any of the content playing before the preroll. For more information on how BCOVIMA overrides the default `BCOVPlaybackController` methods, please check out [BCOVSessionProviderExtension][BCOVIMAComponent].
+
+[BCOVIMAComponent]: https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/Headers/BCOVIMAComponent.h
+
 Customizing Plugin Behavior
 ===========================
 There are a couple of configuration points in BCOVIMA. You can combine BCOVIMA with another plugin for the Brightcove Player SDK for iOS, you can create a custom view strategy, and you can supply a custom ads request policy.
@@ -88,7 +116,7 @@ VAST and VMAP/Server Side Ad Rules
 
 BCOVIMA gives you control over how ads requests are made, via the `BCOVIMAAdsRequestPolicy` class. The class provides factory methods for the supported policies. Once you obtain an instance of the correct policy, you need to provide it to the `BCOVPlayerSDKManager` to create a playback controller or a playback session provider. 
 
-In Quick Start, an example of VMAP is gaven. Here is a VAST example.
+In Quick Start, an example of VMAP is given. Here is a VAST example.
 
         IMASettings *imaSettings = [[IMASettings alloc] init];
         imaSettings.ppid = kViewControllerIMAPublisherID;
@@ -112,7 +140,7 @@ In Quick Start, an example of VMAP is gaven. Here is a VAST example.
     
 Let's break this code down into steps, to make it a bit simpler to digest:
 
-1. This example is the same as the one provided in the quickstart, except that we are now calling a different `BCOVIMAAdsRequestPolicy` policy method to specify that we want to use VAST.
+1. This example is the same as the one provided in the quick-start, except that we are now calling a different `BCOVIMAAdsRequestPolicy` policy method to specify that we want to use VAST.
 
 BCOVIMAAdsRequestPolicy has four factory methods to generate ads request policy; two for VMAP and two for VAST. Two factory methods for VMAP are described in more detail below:
 
@@ -122,11 +150,9 @@ BCOVIMAAdsRequestPolicy has four factory methods to generate ads request policy;
 
 There are two factory methods for VAST.  All of the VAST methods take a BCOVCuePointProgressPolicy. The cue point policy determines which BCOVCuePoints will get processed by the BCOVIMAAdsRequestPolicy.  The VAST policies are as follows:
 
-* `+adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:` This method returns an ads request policy that checks each BCOVVideo for BCOVCuePoints of type 'kBCOVIMACuePointTypeAd' and looks in each of those cuepoints properties for the key `kBCOVIMAAdTag` to determine the VAST ad tag that should be used to request ads.
+* `+adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:` This method returns an ads request policy that checks each BCOVVideo for BCOVCuePoints of type 'kBCOVIMACuePointTypeAd' and looks in each of those cue points properties for the key `kBCOVIMAAdTag` to determine the VAST ad tag that should be used to request ads.
 
 * `+adsRequestPolicyFromCuePointPropertiesWithAdTag:adsCuePointProgressPolicy:`  This method returns an ad request policy that uses the specified VAST ad tag for all BCOVCuePoints of type **kBCOVIMACuePointTypeAd**. Properties of the cue point are appended to the ad tag as query parameters.
-
-[companiondocs]: https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/quickstart
 
 View Strategy
 -------------

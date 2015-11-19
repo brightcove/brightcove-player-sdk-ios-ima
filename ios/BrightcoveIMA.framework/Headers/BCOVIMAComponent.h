@@ -1,6 +1,6 @@
 //
 // BCOVIMAComponent.h
-// BCOVIMA
+// BrightcoveIMA
 //
 // Copyright (c) 2015 Brightcove, Inc. All rights reserved.
 // License: https://accounts.brightcove.com/en/terms-and-conditions
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "BCOVPlayerSDK.h"
+#import <BrightcovePlayerSDK/BrightcovePlayerSDK.h>
 
 @class BCOVIMAAdsRequestPolicy;
 @class IMAAdsRenderingSettings;
@@ -86,5 +86,26 @@ extern NSString * const kBCOVIMACuePointTypeAd;
  * @return A new BCOVIMASessionProvider with the specified parameters.
  */
 - (id<BCOVPlaybackSessionProvider>)createIMASessionProviderWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy adContainer:(UIView *)adContainer companionSlots:(NSArray *)companionSlots upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider;
+
+@end
+
+
+/**
+ * IMA specific methods for the plugin context.
+ */
+@interface BCOVSessionProviderExtension (BCOVIMAAdditions)
+
+/**
+ * Plays the video.
+ *
+ * On first play, before playing content, the session will process all preroll ads before starting
+ * the content.
+ */
+- (void)ima_play;
+
+/**
+ * Pauses the video.
+ */
+- (void)ima_pause;
 
 @end
