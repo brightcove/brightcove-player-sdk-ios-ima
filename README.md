@@ -19,7 +19,7 @@ Static Framework example:
     
 For Admob example:
 
-    pod 'Brightcove-Player-SDK-IMA/ForAdmob'  
+    pod 'Brightcove-Player-SDK-IMA/ForAdMob'  
 
 Manual
 --------------
