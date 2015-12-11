@@ -1,3 +1,7 @@
+# 2.0.1
+### Additions and Improvements
+* Reformatted the framework's short version string to comply with App Store submission requirements.
+
 # 2.0.0
 ### Breaking Changes
 * Calls to `[AVPlayer play]`, `[AVPlayer pause]`, and `[AVPlayer seekToTime:]` must be changed to call the corresponding method on the `BCOVPlaybackController`. Failure to do so will cause undefined behavior.
