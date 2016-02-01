@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 2.0.1.590
+# IMA Plugin for Brightcove Player SDK for iOS, version 2.0.2.602
 
 Supported Platforms
 ===================
@@ -11,15 +11,15 @@ The IMA Plugin for Brightcove Player SDK provides a static library framework for
 CocoaPods
 --------------
 
-You can use [CocoaPods][cocoapods] to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-SDK-IMA` podspec [here][podspecs]. The pod will incorporate the correct version of IMA automatically. A subspec is also provided for those that need the Admob version of IMA. CocoaPods 0.39 or newer is required.
+You can use [CocoaPods][cocoapods] to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-SDK-IMA` podspec [here][podspecs]. The pod will incorporate the correct version of IMA automatically. A subspec is also provided for those that need the AdMob version of IMA. CocoaPods 0.39 or newer is required.
 
 Static Framework example:
 
     pod 'Brightcove-Player-SDK-IMA'
     
-For Admob example:
+For AdMob example:
 
-    pod 'Brightcove-Player-SDK-IMA/ForAdmob'  
+    pod 'Brightcove-Player-SDK-IMA/ForAdMob'  
 
 Manual
 --------------
@@ -105,7 +105,7 @@ The Brightcove IMA Plugin implements custom play and pause logic to ensure the s
 
 As an example, calling play for the first time on `BCOVPlaybackController` allows BCOVIMA to process preroll ads without any of the content playing before the preroll. For more information on how BCOVIMA overrides the default `BCOVPlaybackController` methods, please check out [BCOVSessionProviderExtension][BCOVIMAComponent].
 
-[BCOVIMAComponent]: https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/Headers/BCOVIMAComponent.h
+[BCOVIMAComponent]: https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/ios/BrightcoveIMA.framework/Headers/BCOVIMAComponent.h
 
 Customizing Plugin Behavior
 ===========================
@@ -170,12 +170,11 @@ You can provide a custom view strategy to the BCOVPlaybackManager when you are c
     
 Composing Session Providers
 ---------------------------
-If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the `-[BCOVPlayerSDKManager createPlaybackControllerWithSessionProvider:viewStrategy:]` method. You can see an example of what this looks like in the [BasicIMAWidevinePlayer example code][wv-ima-sample].
+If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the `-[BCOVPlayerSDKManager createPlaybackControllerWithSessionProvider:viewStrategy:]` method.
 
 When composing session providers, the session preloading can be enabled from [`BCOVBasicSessionProvider`][basicprovider]; however, preloading sessions with IMA plugin is **strongly discouraged** due to a bug in the Google IMA library when having multiple AVPlayers in memory.
 
-[wv-ima-sample]: https://github.com/BrightcoveOS/ios-player-samples/blob/master/IMA%2BWidevine/BasicIMAWidevinePlayer/objc/BasicIMAWidevinePlayer/ViewController.m#L63-L97
-[basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/Headers/BCOVBasicSessionProvider.h#L31-L46
+[basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46
 
 Frequently Asked Questions
 ==========================

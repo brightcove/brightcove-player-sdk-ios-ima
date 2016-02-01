@@ -1,3 +1,7 @@
+# 2.0.2
+### Additions and Improvements
+* Fixed a crash that occurred when using the Brightcove IMA plugin with the Brightcove PlayerUI plugin.
+
 # 2.0.1
 ### Additions and Improvements
 * Reformatted the framework's short version string to comply with App Store submission requirements.
@@ -109,7 +113,7 @@ For more information on these replacement methods, please see the readme.
 ### Additions and Improvements
 * Added an arm-64 architecture slice to the static library, for applications that wish to target the 64-bit architecture.
 * Upgraded to Google IMA SDK 3.0b5
-* Added a subspec for users of Admob.  Use pod `Brightcove-Player-SDK-IMA/ForAdMob`.
+* Added a subspec for users of AdMob.  Use pod `Brightcove-Player-SDK-IMA/ForAdMob`.
 
 
 # 1.0.6
