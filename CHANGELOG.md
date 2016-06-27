@@ -1,3 +1,8 @@
+# 2.1.0
+### Additions and Improvements
+* Internal improvements to support ad controls in the Brightcove PlayerUI.
+* Requires version 5.1.0 or higher of the Brightcove Player SDK.
+
 # 2.0.2
 ### Additions and Improvements
 * Fixed a crash that occurred when using the Brightcove IMA plugin with the Brightcove PlayerUI plugin.
@@ -114,7 +119,6 @@ For more information on these replacement methods, please see the readme.
 * Added an arm-64 architecture slice to the static library, for applications that wish to target the 64-bit architecture.
 * Upgraded to Google IMA SDK 3.0b5
 * Added a subspec for users of AdMob.  Use pod `Brightcove-Player-SDK-IMA/ForAdMob`.
-
 
 # 1.0.6
 

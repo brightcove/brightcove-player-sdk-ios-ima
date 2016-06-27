@@ -18,7 +18,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		EciFFnMmyGnqmAMDVjpy83AL8us=
+		EUptU8/30YrwhFhVmX2VJRqAMEs=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -28,21 +28,49 @@
 	<key>files2</key>
 	<dict>
 		<key>Headers/BCOVIMAAdsRequestPolicy.h</key>
-		<data>
-		EcCSQuG9znSBsX2ueQoDrSwHSDw=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			EcCSQuG9znSBsX2ueQoDrSwHSDw=
+			</data>
+			<key>hash2</key>
+			<data>
+			uqu6gk0Hd/pCWT1DpugQFxqzKjEZ/dO4T0lI2gdZGz0=
+			</data>
+		</dict>
 		<key>Headers/BCOVIMAComponent.h</key>
-		<data>
-		J8ia4qSTaujTDByEgPTcktlqHCk=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			J8ia4qSTaujTDByEgPTcktlqHCk=
+			</data>
+			<key>hash2</key>
+			<data>
+			2Bk3JYD8ddACUaa2zaAhGl1VVZ61sc7XgqA3Sab1z1A=
+			</data>
+		</dict>
 		<key>Headers/BrightcoveIMA.h</key>
-		<data>
-		zmEXoAm6cJyTWWtZJ77ssA68+Po=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			zmEXoAm6cJyTWWtZJ77ssA68+Po=
+			</data>
+			<key>hash2</key>
+			<data>
+			IkdiAR7IzwRtGHUmpHaDZWI1tpag1uXjwBzq+vWCMuE=
+			</data>
+		</dict>
 		<key>Modules/module.modulemap</key>
-		<data>
-		I4vzaqBja8dxOVjyhgBqQJQivtA=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			I4vzaqBja8dxOVjyhgBqQJQivtA=
+			</data>
+			<key>hash2</key>
+			<data>
+			U3dv4OxKDzH98xlRFQNWxyVhUvDXS7T0XiLTAL99KGA=
+			</data>
+		</dict>
 	</dict>
 	<key>rules</key>
 	<dict>
