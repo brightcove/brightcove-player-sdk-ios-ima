@@ -1,14 +1,14 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 2.1.0.638
+# IMA Plugin for Brightcove Player SDK for iOS, version 2.2.0.649
 
 Supported Platforms
 ===================
-iOS 7.0 and above.
+iOS 8.0 and above.
 
 Installation
 ============
 The IMA Plugin for Brightcove Player SDK provides a static library framework for installation. A dynamic framework will be added in the future when Google releases a dylib version of IMA.
 
-The IMA plugin current supports only version 3.0b16 of Google's IMA library. Support will be added for the latest released version in the near future.
+The IMA plugin current supports only version 3.2.1 of Google's IMA library.
 
 CocoaPods
 --------------
@@ -37,7 +37,7 @@ To add the IMA Plugin for Brightcove Player SDK to your project manually:
     * `BrightcoveIMA.framework`
 6. On the "Build Settings" tab of your application target:
     * Ensure that `-ObjC` has been added to the "Other Linker Flags" build setting.
-7. Install Google's IMA library 3.0b16, following their [directions][googleima].
+7. Install Google's IMA library 3.2.1, following their [directions][googleima].
 
 Imports
 --------------
@@ -49,7 +49,7 @@ The IMA Plugin for Brightcove Player SDK can be imported into code a few differe
 
 Quick Start
 ===========
-BCOVIMA is a bridge between [Google's IMA iOS SDK v3][googleima] and the [Brightcove Player SDK for iOS][bcovsdk]. Its use is relatively straightforward. This example uses Server Side Ad Rules.
+The BrightcoveIMA plugin is a bridge between [Google's IMA iOS SDK v3][googleima] and the [Brightcove Player SDK for iOS][bcovsdk]. This snippet shows its basic usage with Server Side Ad Rules.
 
     [1] IMASettings *imaSettings = [[IMASettings alloc] init];
         imaSettings.ppid = kViewControllerIMAPublisherID;
@@ -75,10 +75,11 @@ BCOVIMA is a bridge between [Google's IMA iOS SDK v3][googleima] and the [Bright
 
         [videoContainerView addSubview:controller.view];  
 
-        NSString *token;      // (Brightcove Media API token with URL access)
+        NSString *accountID;  // (Brightcove Video Cloud account ID)
+        NSString *policyKey;  // (Policy key associated with your account)
         NSString *playlistID; // (ID of the playlist you wish to use)
-        BCOVCatalogService *catalog = [[BCOVCatalogService alloc] initWithToken:token];
-        [catalog findPlaylistWithPlaylistID:playlistID
+        BCOVPlaybackService *playbackService = [[BCOVPlaybackService alloc] initWithAccountId:accountID policyKey:policyKey];
+        [playbackService findPlaylistWithPlaylistID:playlistID
                                  parameters:nil
                                  completion:^(BCOVPlaylist *playlist,
                                               NSDictionary *jsonResponse,
@@ -89,11 +90,11 @@ BCOVIMA is a bridge between [Google's IMA iOS SDK v3][googleima] and the [Bright
 
         }];
 
-Let's break this code down into steps, to make it a bit simpler to digest:
+Let's break this code down into steps to make it a bit simpler to digest:
 
-1. You create the same IMA settings, ads rendering settings that you would create if you were using Google's IMA iOS SDK directly, and these are required.
+1. Create the same IMA settings, ads rendering settings that you would create if you were using Google's IMA iOS SDK directly. These are required.
 1. BCOVIMAAdsRequestPolicy provides methods to specify VAST or VMAP/Server Side Ad Rules. Select the appropriate method to select your ads policy.
-1. BCOVIMA adds some category methods to BCOVPlaybackManager. The first of these is `-createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:`. Use this method to create your playback controller.
+1. BrightcoveIMA adds some category methods to BCOVPlaybackManager. The first of these is `-createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:`. Use this method to create your playback controller.
 
 If you have questions or need help, we have a support forum for Brightcove's native Player SDKs at [https://groups.google.com/forum/#!forum/brightcove-native-player-sdks][forum] .
 

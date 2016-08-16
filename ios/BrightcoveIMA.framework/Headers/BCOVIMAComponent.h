@@ -42,6 +42,14 @@ extern NSString * const kBCOVIMAAdTag;
 extern NSString * const kBCOVIMACuePointTypeAd;
 
 /**
+ * The dictionary key in the video properties for the
+ * IMA ad display container (IMAAdDisplayContainer *) associated with this ad.
+ * May be present in BCOVVideo objects returned in BCOVPlaybackControllerAdsDelegate
+ * callbacks (the video object is accessible via the session object).
+ */
+extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
+
+/**
  * Category methods added to BCOVPlayerSDKManager to support IMA.
  */
 @interface BCOVPlayerSDKManager (BCOVIMAAdditions)

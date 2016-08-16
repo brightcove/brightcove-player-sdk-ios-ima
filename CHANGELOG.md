@@ -1,3 +1,13 @@
+# 2.2.0
+### Additions and Improvements
+* Supports Google IMA SDK version 3.2.1.
+* Bitcode support has been added.
+* VAST ads will now display ad markers in the PlayerUI's progress slider (the same way VMAP ads markers are displayed).
+* The `kBCOVIMAVideoPropertiesKeyAdDisplayContainer` constant has been added to allow you to access the ad display container associated with the currently playing video. It can be retrieved from the video's properties dictionary.
+
+### Breaking Changes
+* The minimum supported deployment version is now iOS 8 (following the Google IMA SDK's minimum support).
+
 # 2.1.0
 ### Additions and Improvements
 * Internal improvements to support ad controls in the Brightcove PlayerUI.
