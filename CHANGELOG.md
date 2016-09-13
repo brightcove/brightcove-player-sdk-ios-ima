@@ -1,3 +1,7 @@
+# 2.2.1
+### Additions and Improvements
+* Fixed a problem where the framework would not install properly when using CocoaPods and the ForAdMob subspec.
+
 # 2.2.0
 ### Additions and Improvements
 * Supports Google IMA SDK version 3.2.1.
