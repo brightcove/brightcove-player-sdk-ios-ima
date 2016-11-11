@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 2.2.1.654
+# IMA Plugin for Brightcove Player SDK for iOS, version 2.2.2.666
 
 Supported Platforms
 ===================
@@ -8,7 +8,7 @@ Installation
 ============
 The IMA Plugin for Brightcove Player SDK provides a static library framework for installation. A dynamic framework will be added in the future when Google releases a dylib version of IMA.
 
-The IMA plugin current supports only version 3.2.1 of Google's IMA library.
+The IMA plugin supports version 3.3.1 of Google's IMA library.
 
 CocoaPods
 --------------
@@ -37,7 +37,7 @@ To add the IMA Plugin for Brightcove Player SDK to your project manually:
     * `BrightcoveIMA.framework`
 6. On the "Build Settings" tab of your application target:
     * Ensure that `-ObjC` has been added to the "Other Linker Flags" build setting.
-7. Install Google's IMA library 3.2.1, following their [directions][googleima].
+7. Install Google's IMA library 3.3.1, following their [directions][googleima].
 
 Imports
 --------------
@@ -114,58 +114,141 @@ Using the Built-In PlayerUI
 ===========================
 If you are using version 5.1 or later of the Brightcove Player SDK, you can take advantage of the built-in player controls with the Brightcove IMA plugin.
 
-To use the PlayerUI, create a `BCOVPlayerView`, called the player view, to contain the playback controls, the video content view, and a special view where IMA can display its ads.
-
 **Note:** The `BrightcovePlayerUI` module is no longer needed and has been removed. (Prior to version 5.1 of the Brightcove Player SDK, the Brightcove PlayerUI plugin was a separate framework and module.) You can remove any imports that reference the Brightcove PlayerUI module. All PlayerUI headers are now found in the `BrightcovePlayerSDK` module.
 
-Create a property in your `UIViewController` to keep track of the `BCOVPUIPlayerView`. The `BCOVPUIPlayerView` will contain both the playback controller's view, and the controls view.
+In your `UIViewController`, create a `BCOVPUIPlayerView` property called the player view, to contain the playback controls, the video content view, and a special view where IMA can display its ads.
 
-	// PlayerUI's Player View
-	@property (nonatomic) BCOVPUIPlayerView *playerView;
+```
+// PlayerUI's player view
+@property (nonatomic) BCOVPUIPlayerView *playerView;
+```
 
-Then create your player view. This view contains both the video content view and the view that displays playback and ad controls. This setup is the same no matter what plugin you are using. Set the player view to match the video container from your layout (`videoView`) when it resizes.
+Then create your player view; supply a nil playback controller which will be added later. This player view contains both the video content view and the view that displays playback controls and ad controls. This setup is the same no matter what plugin you are using. Set up the player view to match the video container from your layout (`videoView`) when it resizes.
 
-    // Create and configure Control View.
-    BCOVPUIBasicControlView *controlView = [BCOVPUIBasicControlView basicControlViewWithVODLayout];
-    self.playerView = [[BCOVPUIPlayerView alloc] initWithPlaybackController:self.playbackController options:nil controlsView:controlView];
-    self.playerView.frame = self.videoView.bounds;
-    self.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+```
+// Create and configure Control View.
+BCOVPUIBasicControlView *controlView = [BCOVPUIBasicControlView basicControlViewWithVODLayout];
+    
+// Create the player view with a nil playback controller.
+self.playerView = [[BCOVPUIPlayerView alloc] initWithPlaybackController:nil options:nil controlsView:controlView];
+self.playerView.frame = self.videoView.bounds;
+self.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+```
 
 Then, add the `BCOVPUIPlayerView` to your video container, `videoView`.
 
-    // Add BCOVPUIPlayerView to your video view.
-    [self.videoView addSubview:self.playerView];
+```
+// Add BCOVPUIPlayerView to your video view.
+[self.videoView addSubview:self.playerView];
+```
 
-The next steps are specific to IMA. Create your playback controller as you did above, but instead of your video container view, pass in the `contentOverlayView` from the player view as your `adContainer`. The `contentOverlayView` is a special view used for overlaying views on the main video content. You should also use `nil` instead of `[manager defaultControlsViewStrategy]` if you were using that as your `viewStrategy` (this was the older method for using built-in controls).
+Creating the playback controller is specific to IMA. Create your playback controller as you did above, but instead of your video container view, pass in the `contentOverlayView` from the player view as your `adContainer`. The `contentOverlayView` is a special view used for overlaying views on the main video content. You should also use `nil` instead of `[manager defaultControlsViewStrategy]` if you were using that as your `viewStrategy` (this was the older method for using built-in controls).
 
-        id<BCOVPlaybackController> controller =
+```
+// Create the playback controller.
+id<BCOVPlaybackController> controller =
                 [manager createIMAPlaybackControllerWithSettings:imaSettings
                         adsRenderingSettings:renderSettings
                         adsRequestPolicy:adsRequestPolicy
                         adContainer:self.playerView.contentOverlayView // special view for IMA ad content
                         companionSlots:nil
-                        viewStrategy:];
-        controller.delegate = self;
+                        viewStrategy:nil];
+controller.delegate = self;
+
+// Assign new playback controller to the player view.
+// This associates the playerController's session with the PlayerUI.
+// You can keep this player view around and assign new
+// playback controllers to it as they are created.
+self.playerView.playbackController = self.playbackController;
+```
 
 Lastly, implement two `BCOVPlaybackControllerAdsDelegate` methods on the playback controller's delegate. Since IMA implements its own set of ad controls, you should hide the Brightcove PlayerUI controls while IMA ads are playing. This prevents unwanted controls from showing up on the screen when the views are larger and more sparse, like when presenting in full-screen mode.
 
-    - (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didEnterAdSequence:(BCOVAdSequence *)adSequence
-    {
-      // Hide all controls for ads (so they're not visible when full-screen)
-      self.playerView.controlsContainerView.alpha = 0.0;
-    }
-
-    - (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didExitAdSequence:(BCOVAdSequence *)adSequence
-    {
-      // Show all controls when ads are finished.
-      self.playerView.controlsContainerView.alpha = 1.0;
-    }
+```
+- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didEnterAdSequence:(BCOVAdSequence *)adSequence
+{
+  // Hide all controls for ads (so they're not visible when full-screen)
+  self.playerView.controlsContainerView.alpha = 0.0;
+ }
+ 
+- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didExitAdSequence:(BCOVAdSequence *)adSequence
+{
+  // Show all controls when ads are finished.
+  self.playerView.controlsContainerView.alpha = 1.0;
+}
+```
 
 Now, when playing video with ads, you will see the PlayerUI controls while playing video content, plus ad markers on the timeline scrubber (VMAP ads only).
 
 The PlayerUI is highly customizable. For more information and sample code, please see **Custom Layouts** section in the README file of the [Brightcove Native Player SDK repository][BCOVSDK].
 
 [BCOVSDK]: https://github.com/brightcove/brightcove-player-sdk-ios
+
+Seeking Without Ads
+===========
+Use `-[BCOVPlaybackController seekWithoutAds:(CMTime)time completionHandler:(void (^)(BOOL finished))completion]` to resume playback at a specific time without forcing the user to watch ads scheduled before `time`. When using `seekWithoutAds:completionHandler:`, `autoPlay` should be disabled in the `BCOVPlaybackController`. `seekWithoutAds:completionHandler:` should be called on or after receiving `kBCOVPlaybackSessionLifecycleEventReady` in your `playbackController:playbackSession:didReceiveLifecycleEvent` delegate method.
+
+The `shutter` and `shutterFadeTime` properties of the `BCOVPlaybackController` can be used along with `seekWithoutAds:completionHandler:` to hide frame-flicker which can occur as the AVPlayer loads assets. In your BCOVPlaybackController setup code, close the shutter to hide the player view:
+
+```
+  NSObject<BCOVPlaybackController> *playbackController;
+        
+  playbackController = [sdkManager createFWPlaybackControllerWithAdContextPolicy:nil
+                                                                    viewStrategy:nil];
+  playbackController.delegate = self;
+        
+  if (self.willSeekWithoutAds)
+  {
+    // set the shutter fade time to zero to hide the player view immediately.
+    playbackController.shutterFadeTime = 0.0;
+    playbackController.shutter = YES;
+    
+    // disable autoPlay when resuming playback.
+    playbackController.autoPlay = NO;
+  }
+```
+
+Apple recommends waiting for the status of an AVPlayerItem to change to ready-to-play before using the AVPlayerItem; call `seekWithoutAds:completionHandler:` in the `playbackController:playbackSession:didReceiveLifecycleEvent` method of your `BCOVPlaybackControllerDelegate` delegate.
+
+
+```
+- (void)playbackController:(NSObject<BCOVPlaybackController>*)controller
+           playbackSession:(NSObject<BCOVPlaybackSession>*)session
+  didReceiveLifecycleEvent:(BCOVPlaybackSessionLifecycleEvent *)lifecycleEvent
+{
+  if ([kBCOVPlaybackSessionLifecycleEventReady isEqualToString:lifecycleEvent.eventType])
+  {
+    if (self.willSeekWithoutAds)
+    {
+      __weak typeof(controller) weakController = controller;
+
+      // seek without playing ads which are scheduled before the seek time, i.e. resume playback.
+      [controller seekWithoutAds:CMTimeMake(seekWithoutAdsValue, seekWithoutAdsTimescale)
+             completionHandler:^(BOOL finished){
+
+        if (!finished)
+        {
+          NSLog (@"seekWithoutAds failed to finish");
+        }
+
+        typeof(controller) strongController = weakController;
+        if (strongController)
+        {
+          // fade out the shutter to reveal the player view.
+          strongController.shutterFadeTime = 0.25;
+          strongController.shutter = NO;
+
+          // turn off seeking without ads - especially important if this player is being used with a playlist
+          self.willSeekWithoutAds = NO;
+        }
+
+      }];
+    }
+  }
+}
+```
+
+Note that when Seeking Without Ads is enabled in your app, you will still see the network traffic that normally occurs as part of setting up the IMA plugin. This traffic is necessary for proper plugin setup, and does not affect the Seeking Without Ads functionality.
 
 Customizing Plugin Behavior
 ===========================
