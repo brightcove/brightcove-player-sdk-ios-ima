@@ -44,7 +44,7 @@
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 2.2.2.666</h1>
+						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 2.2.3.682</h1>
 
 <h1>Supported Platforms</h1>
 
@@ -58,7 +58,7 @@
 
 <h2>CocoaPods</h2>
 
-<p>You can use <a href="http://cocoapods.org">CocoaPods</a> to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest <code>Brightcove-Player-SDK-IMA</code> podspec <a href="https://github.com/CocoaPods/Specs/tree/master/Specs/Brightcove-Player-SDK-IMA">here</a>. The pod will incorporate the correct version of IMA automatically. A subspec is also provided for those that need the AdMob version of IMA. CocoaPods 0.39 or newer is required.</p>
+<p>You can use <a href="http://cocoapods.org">CocoaPods</a> to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest <code>Brightcove-Player-SDK-IMA</code> podspec <a href="https://github.com/CocoaPods/Specs/tree/master/Specs/4/7/3/Brightcove-Player-SDK-IMA">here</a>. The pod will incorporate the correct version of IMA automatically. A subspec is also provided for those that need the AdMob version of IMA. CocoaPods 1.0 or newer is required.</p>
 
 <p>Static Framework example:</p>
 
@@ -68,6 +68,11 @@
 <p>For AdMob example:</p>
 
 <pre><code>pod 'Brightcove-Player-SDK-IMA/ForAdMob'  
+</code></pre>
+
+<p>Maintaining an up-to-date master podspec repo is necessary to ensure that you are always using the latest versions of Brightcove software. As of CocoaPods 1.0.0, podspec repo updates are no longer an automatic feature, so to update your master repo, run the following on the command line:</p>
+
+<pre><code>pod repo update
 </code></pre>
 
 <h2>Manual</h2>
@@ -92,7 +97,7 @@
 <li>Ensure that <code>-ObjC</code> has been added to the &ldquo;Other Linker Flags&rdquo; build setting.</li>
 </ul>
 </li>
-<li>Install Google&rsquo;s IMA library 3.3.1, following their <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/">directions</a>.</li>
+<li>Install Google&rsquo;s IMA library 3.3.1, following the <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/">IMA Guide</a>.</li>
 </ol>
 
 
@@ -102,7 +107,7 @@
 
 <h1>Quick Start</h1>
 
-<p>The BrightcoveIMA plugin is a bridge between <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/">Google&rsquo;s IMA iOS SDK v3</a> and the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Player SDK for iOS</a>. This snippet shows its basic usage with Server Side Ad Rules.</p>
+<p>The BrightcoveIMA plugin is a bridge between <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/">Google IMA iOS SDK v3</a> and the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Player SDK for iOS</a>. This snippet shows its basic usage with Server Side Ad Rules.</p>
 
 <pre><code>[1] IMASettings *imaSettings = [[IMASettings alloc] init];
     imaSettings.ppid = kViewControllerIMAPublisherID;
@@ -128,17 +133,18 @@
 
     [videoContainerView addSubview:controller.view];  
 
-    NSString *accountID;  // (Brightcove Video Cloud account ID)
-    NSString *policyKey;  // (Policy key associated with your account)
-    NSString *playlistID; // (ID of the playlist you wish to use)
-    BCOVPlaybackService *playbackService = [[BCOVPlaybackService alloc] initWithAccountId:accountID policyKey:policyKey];
-    [playbackService findPlaylistWithPlaylistID:playlistID
-                             parameters:nil
-                             completion:^(BCOVPlaylist *playlist,
-                                          NSDictionary *jsonResponse,
-                                          NSError      *error) {
+    NSString *policyKey = &lt;your-policy-key&gt;;
+    NSString *accountId = &lt;your-account-id&gt;;
+    NSString *videoID = &lt;your-video-id&gt;;
+    BCOVPlaybackService *playbackService = [[BCOVPlaybackService alloc] initWithAccountId:accountID
+                                                                                policyKey:policyKey];
+    [playbackService findVideoWithVideoID:videoID
+                               parameters:nil
+                               completion:^(BCOVVideo    *video,
+                                            NSDictionary *jsonResponse,
+                                            NSError      *error) {
 
-        [controller setVideos:playlist];
+        [controller setVideos:@[ video ]];
         [controller play];
 
     }];
@@ -226,7 +232,7 @@ self.playerView.playbackController = self.playbackController;
 
 <p>Now, when playing video with ads, you will see the PlayerUI controls while playing video content, plus ad markers on the timeline scrubber (VMAP ads only).</p>
 
-<p>The PlayerUI is highly customizable. For more information and sample code, please see <strong>Custom Layouts</strong> section in the README file of the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Native Player SDK repository</a>.</p>
+<p>The PlayerUI is highly customizable. For more information and sample code, please see <strong>Custom Layouts</strong> section in the README.md file of the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Native Player SDK repository</a>.</p>
 
 <h1>Seeking Without Ads</h1>
 
@@ -413,7 +419,7 @@ self.playerView.playbackController = self.playbackController;
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2016 Brightcove. All rights reserved. Updated: 2016-11-11</p>
+							<p class="copyright">Copyright &copy; 2016 Brightcove. All rights reserved. Updated: 2016-12-16</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

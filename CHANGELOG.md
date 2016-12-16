@@ -1,3 +1,7 @@
+# 2.2.3
+### Additions and Improvements
+* The podspec now supports version 5.3 of the Brightcove Player SDK for iOS.
+
 # 2.2.2
 ### Additions and Improvements
 * Added `-seekWithoutAds:(CMTime)time completionHandler:(void (^)(BOOL finished))completion`. Use this method to resume playback at a specific `time` without forcing the user to watch ads scheduled before `time`. `-seekWithoutAds:completionHandler:` requires Brightcove Player SDK for iOS version 5.2.0 or higher. Refer to the README.md for sample code.
