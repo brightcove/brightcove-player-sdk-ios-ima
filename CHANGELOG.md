@@ -1,3 +1,7 @@
+# 2.2.4
+### Additions and Improvements
+* Fixed an issue where "ad enter" events were not being reported to the delegate.
+
 # 2.2.3
 ### Additions and Improvements
 * The podspec now supports version 5.3 of the Brightcove Player SDK for iOS.

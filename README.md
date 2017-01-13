@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 2.2.3.682
+# IMA Plugin for Brightcove Player SDK for iOS, version 2.2.4.687
 
 Supported Platforms
 ===================
@@ -8,7 +8,7 @@ Installation
 ============
 The IMA Plugin for Brightcove Player SDK provides a static library framework for installation. A dynamic framework will be added in the future when Google releases a dylib version of IMA.
 
-The IMA plugin supports version 3.3.1 of Google's IMA library.
+The IMA plugin supports version 3.3.1, and only version 3.3.1, of the Google IMA library.
 
 CocoaPods
 --------------
