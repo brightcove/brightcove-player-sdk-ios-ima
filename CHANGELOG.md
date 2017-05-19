@@ -1,3 +1,7 @@
+# 2.3.0
+### Breaking Changes
+* Updated for Google IMA 3.5.2; IMA Plugin for Brightcove Player SDK is now a dynamic library framework.
+
 # 2.2.4
 ### Additions and Improvements
 * Fixed an issue where "ad enter" events were not being reported to the delegate.

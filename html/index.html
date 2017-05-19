@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>BCOVIMA Reference</title>
+	<title>Brightcove Native Player for iOS Reference</title>
 
 	<link rel="stylesheet" href="css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -14,7 +14,7 @@
 		<div class="container" class="hide-in-xcode">
 			
 			<h1 id="library-title">
-				<a href="index.html">BCOVIMA </a>
+				<a href="index.html">Brightcove Native Player for iOS </a>
 			</h1>
 
 			<p id="developer-home">
@@ -38,13 +38,13 @@
 		<div id="overview-contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">BCOVIMA Reference</h1>
+					<h1 class="title">Brightcove Native Player for iOS Reference</h1>
 
 					
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 2.2.4.687</h1>
+						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 2.3.0.32</h1>
 
 <h1>Supported Platforms</h1>
 
@@ -52,27 +52,22 @@
 
 <h1>Installation</h1>
 
-<p>The IMA Plugin for Brightcove Player SDK provides a static library framework for installation. A dynamic framework will be added in the future when Google releases a dylib version of IMA.</p>
+<p>IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.</p>
 
-<p>The IMA plugin supports version 3.3.1, and only version 3.3.1, of the Google IMA library.</p>
+<p>The IMA plugin supports version 3.5.2 of the Google IMA SDK.</p>
 
 <h2>CocoaPods</h2>
 
-<p>You can use <a href="http://cocoapods.org">CocoaPods</a> to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest <code>Brightcove-Player-SDK-IMA</code> podspec <a href="https://github.com/CocoaPods/Specs/tree/master/Specs/4/7/3/Brightcove-Player-SDK-IMA">here</a>. The pod will incorporate the correct version of IMA automatically. A subspec is also provided for those that need the AdMob version of IMA. CocoaPods 1.0 or newer is required.</p>
+<p>You can use <a href="http://cocoapods.org">CocoaPods</a> to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest <code>Brightcove-Player-SDK-IMA</code> podspec <a href="https://github.com/CocoaPods/Specs/tree/master/Specs/4/7/3/Brightcove-Player-SDK-IMA">here</a>. The pod will incorporate the correct version of IMA automatically. CocoaPods 1.0 or newer is required.</p>
 
-<p>Static Framework example:</p>
+<p>CocoaPod Podfile example:</p>
 
 <pre><code>pod 'Brightcove-Player-SDK-IMA'
 </code></pre>
 
-<p>For AdMob example:</p>
+<p>As of IMA release 3.4.1, AdMob is published as a standalone dynamic framework and can no longer be installed as part of the IMA Plugin for the Brightcove Native Player SDK. As such, there is no longer a <code>ForAdMob</code> subspec for the podspec. To use AdMob, download it and add it to your project manually, or add the <code>Google-Mobile-Ads-SDK</code> CocoaPod to your Podfile:</p>
 
-<pre><code>pod 'Brightcove-Player-SDK-IMA/ForAdMob'  
-</code></pre>
-
-<p>Maintaining an up-to-date master podspec repo is necessary to ensure that you are always using the latest versions of Brightcove software. As of CocoaPods 1.0.0, podspec repo updates are no longer an automatic feature, so to update your master repo, run the following on the command line:</p>
-
-<pre><code>pod repo update
+<pre><code>pod 'Google-Mobile-Ads-SDK'  
 </code></pre>
 
 <h2>Manual</h2>
@@ -80,30 +75,25 @@
 <p>To add the IMA Plugin for Brightcove Player SDK to your project manually:</p>
 
 <ol>
-<li>Install the latest version of the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Player SDK</a>.</li>
-<li>Download the latest zipped release of the plugin from our <a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases">release page</a>.</li>
-<li>Add the &lsquo;BrightcoveIMA.framework&rsquo; to your project.</li>
-<li>On the &ldquo;Build Settings&rdquo; tab of your application target, ensure that the &ldquo;Framework Search Paths&rdquo; include the path to the framework. This should have been done automatically unless the framework is stored under a different root directory than your project.</li>
-<li>On the &ldquo;Build Phases&rdquo; tab of your application target, add the following to the &ldquo;Link
- Binary With Libraries&rdquo; phase:
-
-<ul>
-<li><code>BrightcoveIMA.framework</code></li>
-</ul>
-</li>
+<li>Download the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Player SDK</a> framework.</li>
+<li>Download the <a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima">IMA Plugin for Brightcove Player SDK</a> framework.</li>
+<li>Download the <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/">Google IMA</a> framework.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add the <strong>dynamic</strong> framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of <strong>Embedded Binaries</strong>. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add BrightcoveIMA.framework from the IMA Plugin for Brightcove Player SDK download to the list of <strong>Embedded Binaries</strong>.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add GoogleInteractiveMediaAds.framework from the Google IMA download to the list of <strong>Embedded Binaries</strong>.</li>
+<li>On the &ldquo;Build Settings&rdquo; tab of your application target, ensure that the &ldquo;Framework Search Paths&rdquo; include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.</li>
 <li>On the &ldquo;Build Settings&rdquo; tab of your application target:
 
 <ul>
 <li>Ensure that <code>-ObjC</code> has been added to the &ldquo;Other Linker Flags&rdquo; build setting.</li>
 </ul>
 </li>
-<li>Install Google&rsquo;s IMA library 3.3.1, following the <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/">IMA Guide</a>.</li>
 </ol>
 
 
 <h2>Imports</h2>
 
-<p>The IMA Plugin for Brightcove Player SDK can be imported into code a few different ways; <code>@import BrightcoveIMA;</code>, <code>#import &lt;BrightcoveIMA/BrightcoveIMA.h&gt;</code> or <code>#import &lt;BrightcoveIMA/[specific class].h&gt;</code>.</p>
+<p>The IMA Plugin for Brightcove Player SDK can be imported into code a few different ways; <code>@import BrightcoveIMA;</code>, <code>#import &lt;BrightcoveIMA/BrightcoveIMA.h&gt;</code> or <code>#import &lt;BrightcoveIMA/[specific class].h&gt;</code>. You can import the <code>GoogleInteractiveMediaAds</code> and <code>BrightcovePlayerSDK</code> modules in similar fashion.</p>
 
 <h1>Quick Start</h1>
 
@@ -150,11 +140,11 @@
     }];
 </code></pre>
 
-<p>Let&rsquo;s break this code down into steps to make it a bit simpler to digest:</p>
+<p>Breaking the code down into steps:</p>
 
 <ol>
 <li>Create the same IMA settings, ads rendering settings that you would create if you were using Google&rsquo;s IMA iOS SDK directly. These are required.</li>
-<li>BCOVIMAAdsRequestPolicy provides methods to specify VAST or VMAP/Server Side Ad Rules. Select the appropriate method to select your ads policy.</li>
+<li><a href="Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a> provides methods to specify VAST or VMAP/Server Side Ad Rules. Select the appropriate method to select your ads policy.</li>
 <li>BrightcoveIMA adds some category methods to BCOVPlaybackManager. The first of these is <code>-createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:</code>. Use this method to create your playback controller.</li>
 </ol>
 
@@ -370,13 +360,13 @@ self.playerView.playbackController = self.playbackController;
 
 <p>If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the <code>[BCOVPlayerSDKManager createPlaybackControllerWithSessionProvider:viewStrategy:]</code> method.</p>
 
-<p>When composing session providers, the session preloading can be enabled from <a href="https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46"><code>BCOVBasicSessionProvider</code></a>; however, preloading sessions with IMA plugin is <strong>strongly discouraged</strong> due to a bug in the Google IMA library when having multiple AVPlayers in memory.</p>
+<p>When composing session providers, the session preloading can be enabled from <a href="https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46"><code>BCOVBasicSessionProvider</code></a>; however, preloading sessions with IMA plugin is <strong>strongly discouraged</strong> due to a bug in the Google IMA SDK when having multiple AVPlayers in memory.</p>
 
 <h1>Frequently Asked Questions</h1>
 
 <p><strong> I can hear the ads, but I can&rsquo;t see them playing. </strong></p>
 
-<p>This usually happens when either ad container view is not in view hierarchy, or ad view (which is subview of ad container view) is covered by other views.</p>
+<p>This usually happens when the ad container view is not in the view hierarchy, or when the ad view (which is a subview of the ad container view) is covered by other views.</p>
 						
 						
 					</div>
@@ -419,7 +409,7 @@ self.playerView.playbackController = self.playbackController;
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2017 Brightcove. All rights reserved. Updated: 2017-01-13</p>
+							<p class="copyright">Copyright &copy; 2017 Brightcove. All rights reserved. Updated: 2017-05-19</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
