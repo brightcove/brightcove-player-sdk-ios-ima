@@ -1,4 +1,4 @@
-# 2.3.0
+# 2.3.1
 ### Breaking Changes
 * Updated for Google IMA 3.5.2; IMA Plugin for Brightcove Player SDK is now a dynamic library framework.
 

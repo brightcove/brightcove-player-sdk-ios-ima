@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 2.3.0.32
+# IMA Plugin for Brightcove Player SDK for iOS, version 2.3.1.36
 
 Supported Platforms
 ==========
