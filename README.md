@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 2.3.1.36
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.0.1.72
 
 Supported Platforms
 ==========
@@ -13,11 +13,15 @@ The IMA plugin supports version 3.5.2 of the Google IMA SDK.
 CocoaPods
 ----------
 
-You can use [CocoaPods][cocoapods] to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-SDK-IMA` podspec [here][podspecs]. The pod will incorporate the correct version of IMA automatically. CocoaPods 1.0 or newer is required.
+You can use [CocoaPods][cocoapods] to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-IMA` podspec [here][podspecs]. The pod will incorporate the correct version of IMA automatically. CocoaPods 1.0 or newer is required.
 
 CocoaPod Podfile example:
 
-    pod 'Brightcove-Player-SDK-IMA'
+```
+source 'https://github.com/brightcove/BrightcoveSpecs.git'
+
+pod 'Brightcove-Player-IMA'
+```
 
 As of IMA release 3.4.1, AdMob is published as a standalone dynamic framework and can no longer be installed as part of the IMA Plugin for the Brightcove Native Player SDK. As such, there is no longer a `ForAdMob` subspec for the podspec. To use AdMob, download it and add it to your project manually, or add the `Google-Mobile-Ads-SDK` CocoaPod to your Podfile:
     
@@ -43,7 +47,7 @@ Imports
 The IMA Plugin for Brightcove Player SDK can be imported into code a few different ways; `@import BrightcoveIMA;`, `#import <BrightcoveIMA/BrightcoveIMA.h>` or `#import <BrightcoveIMA/[specific class].h>`. You can import the `GoogleInteractiveMediaAds` and `BrightcovePlayerSDK` modules in similar fashion.
 
 [cocoapods]: http://cocoapods.org
-[podspecs]: https://github.com/CocoaPods/Specs/tree/master/Specs/4/7/3/Brightcove-Player-SDK-IMA
+[podspecs]: https://github.com/brightcove/BrightcoveSpecs/tree/master/Brightcove-Player-IMA
 [release]: https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases
 
 Quick Start
