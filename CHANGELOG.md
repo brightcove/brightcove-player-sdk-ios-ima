@@ -1,12 +1,31 @@
+## Release 6.0.5
+
+#### Additions and Improvements
+
+* Fixes an issue where dynamic frameworks were missing bitcode.
+
+### Brightcove Player SDK for iOS (Core)
+
+#### Additions and Improvements
+
+* Fixes an issue where a zero-length file in the framework would cause a build warning.
+* Fixes an issue where adding the Brightcove Player SDK using CocoaPods required the manual addition of the MediaAccessibility framework. 
+
+
 ## Release 6.0.4
 
 ### Brightcove Player SDK for iOS (Core)
 
 #### Additions and Improvements
 
-* Server-Side Ad Insertion (SSAI) is now supported for both non-DRM and DRM videos ingested for Dynamic Delivery.
-* Fixed an issue where certain video names caused those videos to fail to download for offline playback. Refer to the _"Specifying the Download Display Name"_ section of the OfflinePlayback.md document.
+* Fixes an issue where certain video names caused those videos to fail to download for offline playback. Refer to the _"Specifying the Download Display Name"_ section of the OfflinePlayback.md document.
 * This release exposes the `HTTPMaximumConnectionsPerHost` property of the `NSURLSessionConfiguration` object used to construct the `AVAssetDownloadTask` which downloads a video for offline playback. Set this value when calling the `+initializeOfflineVideoManagerWithDelegate:options:` method of the `BCOVOfflineVideoManager` by providing an NSNumber value for the `kBCOVOfflineVideoManagerHTTPMaximumConnectionsPerHostKey` key in the `options` dictionary.
+
+### OnceUX Plugin for Brightcove Player SDK for iOS
+
+#### Additions and Improvements
+* Server-Side Ad Insertion (SSAI) is now supported for both non-DRM and DRM videos ingested for Dynamic Delivery.
+
 
 ## Release 6.0.3
 
@@ -15,7 +34,7 @@
 #### Additions and Improvements
 
 * When playing offline video, subtitles now render according to the user captioning preferences of the device.
-* Fixed a problem in which the Live button would frequently change state during live streaming.
+* Fixes an issue in which the Live button would frequently change state during live streaming.
 * Server-Side Ad Insertion (SSAI) is now supported for non-DRM videos ingested for Dynamic Delivery. This update requires the use of the OnceUX Plugin for Brightcove Player SDK for iOS.
 
 ### OnceUX Plugin for Brightcove Player SDK for iOS
@@ -83,12 +102,12 @@ source 'https://github.com/brightcove/BrightcoveSpecs.git'
 
 ### IMA Plugin for Brightcove Player SDK for iOS
 #### Additions and Improvements
-* Fixes and issue where the video view start time was sometimes reported incorrectly for Quality of Service metrics.
+* Fixes an issue where the video view start time was sometimes reported incorrectly for Quality of Service metrics.
 
 ### Omniture Plugin for Brightcove Player SDK for iOS
 #### Additions and Improvements
-* Fixes and issue where the video view start time was sometimes reported incorrectly for Quality of Service metrics.
+* Fixes an issue where the video view start time was sometimes reported incorrectly for Quality of Service metrics.
 
 ### OnceUX Plugin for Brightcove Player SDK for iOS
 #### Additions and Improvements
-* Fixes and issue where the video view start time was sometimes reported incorrectly for Quality of Service metrics.
+* Fixes an issue where the video view start time was sometimes reported incorrectly for Quality of Service metrics.
