@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.0.5.119
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.0.6.129
 
 Supported Platforms
 ==========
@@ -8,7 +8,7 @@ Installation
 ==========
 IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The IMA plugin supports version 3.5.2 of the Google IMA SDK.
+The IMA plugin supports version 3.6.0 of the Google IMA SDK.
 
 CocoaPods
 ----------
@@ -26,6 +26,10 @@ pod 'Brightcove-Player-IMA'
 As of IMA release 3.4.1, AdMob is published as a standalone dynamic framework and can no longer be installed as part of the IMA Plugin for the Brightcove Native Player SDK. As such, there is no longer a `ForAdMob` subspec for the podspec. To use AdMob, download it and add it to your project manually, or add the `Google-Mobile-Ads-SDK` CocoaPod to your Podfile:
     
     pod 'Google-Mobile-Ads-SDK'  
+
+When updating your installation, it's a good idea to refresh the local copy of your BrightcoveSpecs repository so that you have the latest podspecs locally, just like you would update your CococaPods master repository.
+
+Typically if you use `pod update` in Terminal this will happen automatically, or alternatively you can update explicitly with `pod repo update brightcove`. (Your BrightcoveSpecs repository may have a different name if you explicitly added it to your list of podspecs repos.)
 
 Manual
 ----------
