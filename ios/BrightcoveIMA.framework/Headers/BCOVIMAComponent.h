@@ -12,9 +12,15 @@
 
 @class BCOVIMAAdsRequestPolicy;
 @class IMAAdsRenderingSettings;
+@class IMAAdsRequest;
 @class IMASettings;
 
 
+/**
+ * When IMA ads load successfully, the kBCOVIMALifecycleEventAdsLoaderLoaded
+ * lifecycle event "properties" dictionary contains a reference to the IMAAdsLoader
+ * which can be retrieved using the key kBCOVIMALifecycleEventPropertyKeyAdsManager.
+ */
 extern NSString * const kBCOVIMALifecycleEventAdsLoaderLoaded;
 extern NSString * const kBCOVIMALifecycleEventPropertyKeyAdsManager;
 extern NSString * const kBCOVIMALifecycleEventAdsLoaderFailed;
@@ -26,6 +32,8 @@ extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentPause;
 extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentResume;
 
 extern NSString * const kBCOVIMAAdPropertiesKeyIMAAdInstance;
+
+extern NSString * const kBCOVIMAOptionIMAPlaybackSessionDelegateKey;
 
 /**
  * The default ad tag policy will look for an entry in each session.video's
@@ -73,7 +81,42 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * or empty.
  * @return A new playback controller with the specified parameters.
  */
-- (id<BCOVPlaybackController>)createIMAPlaybackControllerWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy adContainer:(UIView *)adContainer companionSlots:(NSArray *)companionSlots viewStrategy:(BCOVPlaybackControllerViewStrategy)strategy;
+- (id<BCOVPlaybackController>)createIMAPlaybackControllerWithSettings:(IMASettings *)settings
+                                                 adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings
+                                                     adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy
+                                                          adContainer:(UIView *)adContainer
+                                                       companionSlots:(NSArray *)companionSlots
+                                                         viewStrategy:(BCOVPlaybackControllerViewStrategy)strategy;
+
+/**
+ * Creates and returns a new playback controller with the specified IMASettings
+ * object, IMAAdsRenderingSettings object, view strategy, and ad container. The
+ * returned playback controller will be configured with an IMA session provider.
+ *
+ * @param settings An IMASettings that will be used to configure any
+ * IMAAdsLoader object used by the returned playback controller.
+ * @param adsRenderingSettings An IMAAdsRenderingSettings that will be used to
+ * configure any IMAAdsManager object used by the returned playback controller.
+ * @param adsRequestPolicy BCOVIMAAdsRequestPolicy instance to generate
+ * IMAAdsRequests for use by a given input playback session.
+ * @param strategy A view strategy that determines the view for the returned
+ * playback controller.
+ * @param adContainer the view in which the ad will be displayed and the ad
+ * information UI will be rendered.
+ * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil
+ * or empty.
+ * @param options An NSDictionary of IMA options. Can be nil or empty. The only
+ *  valid option key is
+ *      kBCOVIMAOptionIMAPlaybackSessionDelegateKey
+ * @return A new playback controller with the specified parameters.
+ */
+- (id<BCOVPlaybackController>)createIMAPlaybackControllerWithSettings:(IMASettings *)settings
+                                                 adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings
+                                                     adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy
+                                                          adContainer:(UIView *)adContainer
+                                                       companionSlots:(NSArray *)companionSlots
+                                                         viewStrategy:(BCOVPlaybackControllerViewStrategy)strategy
+                                                              options:(NSDictionary *)options;
 
 /**
  * Creates and returns a new BCOVIMASessionProvider with the specified
@@ -93,10 +136,60 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * sessions to the returned session provider.
  * @return A new BCOVIMASessionProvider with the specified parameters.
  */
-- (id<BCOVPlaybackSessionProvider>)createIMASessionProviderWithSettings:(IMASettings *)settings adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy adContainer:(UIView *)adContainer companionSlots:(NSArray *)companionSlots upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider;
+- (id<BCOVPlaybackSessionProvider>)createIMASessionProviderWithSettings:(IMASettings *)settings
+                                                   adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings
+                                                       adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy
+                                                            adContainer:(UIView *)adContainer
+                                                         companionSlots:(NSArray *)companionSlots
+                                                upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider;
+
+/**
+ * Creates and returns a new BCOVIMASessionProvider with the specified
+ * parameters.
+ *
+ * @param settings An IMASettings that will be used to configure any
+ * IMAAdsLoader object used by the returned session provider.
+ * @param adsRenderingSettings An IMAAdsRenderingSettings that will be used to
+ * configure any IMAAdsManager object used by the returned session provider.
+ * @param adsRequestPolicy BCOVIMAAdsRequestPolicy instance to generate
+ * IMAAdsRequests for use by a given input playback session.
+ * @param adContainer the view in which the ad will be displayed and the ad
+ * information UI will be rendered.
+ * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil
+ * or empty.
+ * @param provider A session provider to attach upstream and deliver playback
+ * sessions to the returned session provider.
+ * @param options An NSDictionary of IMA options. Can be nil or empty. The only
+ *  valid option key is
+ *      kBCOVIMAOptionIMAPlaybackSessionDelegateKey
+ * @return A new BCOVIMASessionProvider with the specified parameters.
+ */
+- (id<BCOVPlaybackSessionProvider>)createIMASessionProviderWithSettings:(IMASettings *)settings
+                                                   adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings
+                                                       adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy
+                                                            adContainer:(UIView *)adContainer
+                                                         companionSlots:(NSArray *)companionSlots
+                                                upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider
+                                                                options:(NSDictionary *)options;
 
 @end
 
+
+/**
+ * A delegate protocol for users of the Brightcove IMA advertising plugin.
+ */
+@protocol BCOVIMAPlaybackSessionDelegate
+
+@optional
+
+/**
+ * Called immediately before the IMA Plugin calls IMAAdsLoader -requestAdsWithRequest:
+ * to allow the user to first modify the ads request object, for example, to change
+ * the vastLoadTimeout property. This method is optional.
+ */
+- (void)willCallIMAAdsLoaderRequestAdsWithRequest:(IMAAdsRequest *)adsRequest forPosition:(NSTimeInterval)position;
+
+@end
 
 /**
  * IMA specific methods for the plugin context.

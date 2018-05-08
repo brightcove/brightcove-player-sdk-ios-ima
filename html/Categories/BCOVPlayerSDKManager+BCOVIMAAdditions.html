@@ -62,7 +62,11 @@
 		
 		<option value="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:">- createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:</option>
 		
+		<option value="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:">- createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:</option>
+		
 		<option value="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:">- createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:</option>
+		
+		<option value="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:">- createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:</option>
 		
 	</optgroup>
 	
@@ -209,6 +213,111 @@ returned playback controller will be configured with an IMA session provider.</p
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:" title="createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:">&ndash;&nbsp;createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Creates and returns a new playback controller with the specified IMASettings
+object, IMAAdsRenderingSettings object, view strategy, and ad container. The
+returned playback controller will be configured with an IMA session provider.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackController&gt;)createIMAPlaybackControllerWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> companionSlots:(NSArray *)<em>companionSlots</em> viewStrategy:(BCOVPlaybackControllerViewStrategy)<em>strategy</em> options:(NSDictionary *)<em>options</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>settings</code></th>
+						<td><p>An IMASettings that will be used to configure any
+IMAAdsLoader object used by the returned playback controller.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adsRenderingSettings</code></th>
+						<td><p>An IMAAdsRenderingSettings that will be used to
+configure any IMAAdsManager object used by the returned playback controller.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adsRequestPolicy</code></th>
+						<td><p><a href="../Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a> instance to generate
+IMAAdsRequests for use by a given input playback session.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adContainer</code></th>
+						<td><p>the view in which the ad will be displayed and the ad
+information UI will be rendered.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>companionSlots</code></th>
+						<td><p>the list of IMACompanionAdSlot instances. Can be nil
+or empty.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>strategy</code></th>
+						<td><p>A view strategy that determines the view for the returned
+playback controller.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>options</code></th>
+						<td><p>An NSDictionary of IMA options. Can be nil or empty. The only
+valid option key is
+kBCOVIMAOptionIMAPlaybackSessionDelegateKey</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A new playback controller with the specified parameters.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Creates and returns a new playback controller with the specified IMASettings
+object, IMAAdsRenderingSettings object, view strategy, and ad container. The
+returned playback controller will be configured with an IMA session provider.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">BCOVIMAComponent.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:" title="createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:">&ndash;&nbsp;createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:</a></code>
 </h3>
@@ -304,6 +413,109 @@ parameters.</p>
 			
 		</div>
 	</div>
+</div><div class="section-method">
+	<a name="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:" title="createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:">&ndash;&nbsp;createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Creates and returns a new BCOVIMASessionProvider with the specified
+parameters.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackSessionProvider&gt;)createIMASessionProviderWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> companionSlots:(NSArray *)<em>companionSlots</em> upstreamSessionProvider:(id&lt;BCOVPlaybackSessionProvider&gt;)<em>provider</em> options:(NSDictionary *)<em>options</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>settings</code></th>
+						<td><p>An IMASettings that will be used to configure any
+IMAAdsLoader object used by the returned session provider.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adsRenderingSettings</code></th>
+						<td><p>An IMAAdsRenderingSettings that will be used to
+configure any IMAAdsManager object used by the returned session provider.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adsRequestPolicy</code></th>
+						<td><p><a href="../Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a> instance to generate
+IMAAdsRequests for use by a given input playback session.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adContainer</code></th>
+						<td><p>the view in which the ad will be displayed and the ad
+information UI will be rendered.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>companionSlots</code></th>
+						<td><p>the list of IMACompanionAdSlot instances. Can be nil
+or empty.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>provider</code></th>
+						<td><p>A session provider to attach upstream and deliver playback
+sessions to the returned session provider.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>options</code></th>
+						<td><p>An NSDictionary of IMA options. Can be nil or empty. The only
+valid option key is
+kBCOVIMAOptionIMAPlaybackSessionDelegateKey</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A new BCOVIMASessionProvider with the specified parameters.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Creates and returns a new BCOVIMASessionProvider with the specified
+parameters.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">BCOVIMAComponent.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
 </div>
 						</div>
 						
@@ -319,7 +531,7 @@ parameters.</p>
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2018 Brightcove. All rights reserved. Updated: 2018-04-11</p>
+						<p class="copyright">Copyright &copy; 2018 Brightcove. All rights reserved. Updated: 2018-05-08</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.3.1.325
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.3.2.344
 
 Supported Platforms
 ==========
@@ -8,7 +8,7 @@ Installation
 ==========
 IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The IMA plugin supports version 3.6.0 of the Google IMA SDK.
+The IMA plugin supports version 3.7.0 of the Google IMA SDK for iOS. The Podspec for the IMA Plugin for Brightcove Player SDK for iOS references version 3.7.0.1 of the Google IMA iOS SDK as instructed by the [IMA Release History](https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/history).
 
 CocoaPods
 ----------
@@ -306,6 +306,38 @@ There are two factory methods for VAST.  All of the VAST methods take a BCOVCueP
 
 * `+adsRequestPolicyFromCuePointPropertiesWithAdTag:adsCuePointProgressPolicy:`  This method returns an ad request policy that uses the specified VAST ad tag for all BCOVCuePoints of type **kBCOVIMACuePointTypeAd**. Properties of the cue point are appended to the ad tag as query parameters.
 
+Modifying the IMAAdsRequest
+----------
+
+The IMA Plugin passes an `IMAAdsRequest` object to a `BCOMIMAPlaybackSessionDelegate` immediately before calling `IMAAdsLoader -requestAdsWithAdsRequest`, allowing the user to first modify the ads request. To receive the ads request callback, create an object that implements the `BCOVIMAPlaybackSessionDelegate` protocol.
+
+    @import BrightcovePlayerSDK;
+    @import BrightcoveIMA;
+
+    @interface MyViewController : UIViewController <BCOVIMAPlaybackSessionDelegate>
+
+Create a `BCOVIMASessionProvider` using either `createIMAPlaybackControllerWithSettings` or `createIMASessionProviderWithSettings`, and provide an NSDictionary of options with an entry having a key of `kBCOVIMAOptionIMAPlaybackSessionDelegateKey` and a value which is your delegate.
+
+    NSDictionary *imaSessionProviderOptions = @{ kBCOVIMAOptionIMAPlaybackSessionDelegateKey: self };
+    
+    id<BCOVPlaybackSessionProvider> imaSessionProvider =
+        [sdkManager createIMASessionProviderWithSettings:imaSettings
+                                    adsRenderingSettings:renderSettings
+                                        adsRequestPolicy:adsRequestPolicy
+                                             adContainer:self.playerView.contentOverlayView
+                                          companionSlots:ni
+                                 upstreamSessionProvider:nil
+                                                 options:imaSessionProviderOptions];
+
+Implement `willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:` in your `BCOVIMAPlaybackSessionDelegate`.
+
+    - (void)willCallIMAAdsLoaderRequestAdsWithRequest:(IMAAdsRequest *)adsRequest
+                                          forPosition:(NSTimeInterval)position
+    {
+        adsRequest.vastLoadTimeout = 3000.;
+    }
+
+
 View Strategy
 ----------
 You can provide a custom view strategy to the BCOVPlaybackManager when you are constructing your playback controller or session provider, rather than specify the defaultControlsViewStrategy directly. With a custom view strategy, the ad container view and ad companion slots can be tied with the video content view. This is an example of custom view strategy.
@@ -330,6 +362,6 @@ When composing session providers, the session preloading can be enabled from [`B
 
 Frequently Asked Questions
 ==========
-** I can hear the ads, but I can't see them playing. **
+_I can hear the ads, but I can't see them playing._
 
 This usually happens when the ad container view is not in the view hierarchy, or when the ad view (which is a subview of the ad container view) is covered by other views.
