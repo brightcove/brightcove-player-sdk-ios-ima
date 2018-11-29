@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.3.10.441
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.3.11.455
 
 Supported Platforms
 ==========
@@ -140,15 +140,27 @@ BCOVPUIBasicControlView *controlView = [BCOVPUIBasicControlView basicControlView
     
 // Create the player view with a nil playback controller.
 self.playerView = [[BCOVPUIPlayerView alloc] initWithPlaybackController:nil options:nil controlsView:controlView];
+// Add BCOVPUIPlayerView to your video view.
+[self.videoView addSubview:self.playerView];
+```
+
+You'll need to set up the layout for the player view, you can do this with Auto Layout or the older Springs & Struts method. 
+
+**Springs & Struts**
+```
 self.playerView.frame = self.videoView.bounds;
 self.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 ```
 
-Then, add the `BCOVPUIPlayerView` to your video container, `videoView`.
-
+**Auto Layout**
 ```
-// Add BCOVPUIPlayerView to your video view.
-[self.videoView addSubview:self.playerView];
+self.playerView.translatesAutoresizingMaskIntoConstraints = NO;
+[NSLayoutConstraint activateConstraints:@[
+                                          [self.playerView.topAnchor constraintEqualToAnchor:self.videoView.topAnchor],
+                                          [self.playerView.rightAnchor constraintEqualToAnchor:self.videoView.rightAnchor],
+                                          [self.playerView.leftAnchor constraintEqualToAnchor:self.videoView.leftAnchor],
+                                          [self.playerView.bottomAnchor constraintEqualToAnchor:self.videoView.bottomAnchor],
+                                         ]];
 ```
 
 Creating the playback controller is specific to IMA. Create your playback controller as you did above, but instead of your video container view, pass in the `contentOverlayView` from the player view as your `adContainer`. The `contentOverlayView` is a special view used for overlaying views on the main video content. You should also use `nil` instead of `[manager defaultControlsViewStrategy]` if you were using that as your `viewStrategy` (this was the older method for using built-in controls).
