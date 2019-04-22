@@ -191,6 +191,12 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
 
 @end
 
+@interface BCOVIMAComponent : NSObject <BCOVComponent, BCOVComponentIdentity>
+
++ (NSString *)versionIdentifier;
+
+@end
+
 /**
  * IMA specific methods for the plugin context.
  */

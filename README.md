@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.4.2.589
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.4.3.616
 
 Supported Platforms
 ==========
@@ -8,7 +8,7 @@ Installation
 ==========
 IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The IMA plugin supports version 3.7.0 of the Google IMA SDK for iOS. The Podspec for the IMA Plugin for Brightcove Player SDK for iOS references version 3.7.0.1 of the Google IMA iOS SDK as instructed by the [IMA Release History](https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/history).
+The IMA plugin supports version 3.9.0 of the Google IMA SDK for iOS. The Podspec for the IMA Plugin for Brightcove Player SDK for iOS references version 3.9.0 of the Google IMA iOS SDK as instructed by the [IMA Release History](https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/history).
 
 CocoaPods
 ----------
@@ -371,6 +371,20 @@ If you are using more than one plugin to the Brightcove Player SDK for iOS that 
 When composing session providers, the session preloading can be enabled from [`BCOVBasicSessionProvider`][basicprovider]; however, preloading sessions with IMA plugin is **strongly discouraged** due to a bug in the Google IMA SDK when having multiple AVPlayers in memory.
 
 [basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/fd5e766693e533854f202f270d3d62e32ceaae04/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46
+
+Registering Ad Overlays
+==========
+If you are placing any views over ads while they are playing, it is necceessary to register those views with the IMA SDK. Read the **Friendly obstructions** section of the [Open Measurement in the IMA SDK ](https://developers.google.com/interactive-media-ads/docs/sdks/ios/omsdk) page for more information.
+
+You can get the current IMAAdDisplayContainer object neccessary to register your overlays from the `playbackController:didAdvanceToPlaybackSession:` delegage method of your BCOVPlaybackController instance. For example:
+```
+- (void)playbackController:(id<BCOVPlaybackController>)controller didAdvanceToPlaybackSession:(id<BCOVPlaybackSession>)session
+{
+    NSDictionary *props = session.video.properties;
+    IMAAdDisplayContainer *adDisplayContainer = props[kBCOVIMAVideoPropertiesKeyAdDisplayContainer];
+    [adDisplayContainer registerVideoControlsOverlay:self.adOverlayView];
+}
+```
 
 Frequently Asked Questions
 ==========

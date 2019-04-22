@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>BCOVIMAPlaybackSessionDelegate Protocol Reference</title>
+	<title>BCOVIMAComponent Class Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -43,8 +43,6 @@
 							<select id="jump-to">
 	<option value="top">Jump To&#133;</option>
 	
-	<option value="overview">Overview</option>
-	
 
 	
 	
@@ -56,13 +54,13 @@
 	
 
 	
-
-	
-	<optgroup label="Instance Methods">
+	<optgroup label="Class Methods">
 		
-		<option value="//api/name/willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:">- willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:</option>
+		<option value="//api/name/versionIdentifier">+ versionIdentifier</option>
 		
 	</optgroup>
+	
+
 	
 	
 </select>
@@ -77,11 +75,17 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">BCOVIMAPlaybackSessionDelegate Protocol Reference</h1>
+					<h1 class="title">BCOVIMAComponent Class Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
+	<th>Inherits from</th>
+	<td>NSObject</td>
+</tr><tr>
+	<th>Conforms to</th>
+	<td>BCOVComponent<br />BCOVComponentIdentity</td>
+</tr><tr>
 	<th>Declared in</th>
 	<td>BCOVIMAComponent.h</td>
 </tr>
@@ -89,14 +93,6 @@
 					
 
                     
-					
-					<div class="section section-overview">
-						<a title="Overview" name="overview"></a>
-						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>A delegate protocol for users of the Brightcove IMA advertising plugin.</p>
-					</div>
-					
-					
 
 					
 					
@@ -109,8 +105,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:" title="willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:">&ndash;&nbsp;willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:</a></code>
+	<a name="//api/name/versionIdentifier" title="versionIdentifier"></a>
+	<h3 class="method-title"><code><a href="#//api/name/versionIdentifier">+&nbsp;versionIdentifier</a></code>
 </h3>
 
 	<div class="method-info">
@@ -118,44 +114,10 @@
 
 		<div class="method-info-container">
 			
-			
-			<div class="method-subsection brief-description">
-				<p>Called immediately before the IMA Plugin calls IMAAdsLoader -requestAdsWithRequest:
-to allow the user to first modify the ads request object, for example, to change
-the vastLoadTimeout property. This method is optional.</p>
-			</div>
-			
-		    
 
-			<div class="method-subsection method-declaration"><code>- (void)willCallIMAAdsLoaderRequestAdsWithRequest:(IMAAdsRequest *)<em>adsRequest</em> forPosition:(NSTimeInterval)<em>position</em></code></div>
+			<div class="method-subsection method-declaration"><code>+ (NSString *)versionIdentifier</code></div>
 
 		    
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>Called immediately before the IMA Plugin calls IMAAdsLoader -requestAdsWithRequest:
-to allow the user to first modify the ads request object, for example, to change
-the vastLoadTimeout property. This method is optional.</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">BCOVIMAComponent.h</code></p>
-			</div>
-			
-			
 		</div>
 	</div>
 </div>
