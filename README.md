@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.4.3.616
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.4.4.683
 
 Supported Platforms
 ==========
@@ -376,7 +376,7 @@ Registering Ad Overlays
 ==========
 If you are placing any views over ads while they are playing, it is necceessary to register those views with the IMA SDK. Read the **Friendly obstructions** section of the [Open Measurement in the IMA SDK ](https://developers.google.com/interactive-media-ads/docs/sdks/ios/omsdk) page for more information.
 
-You can get the current IMAAdDisplayContainer object neccessary to register your overlays from the `playbackController:didAdvanceToPlaybackSession:` delegage method of your BCOVPlaybackController instance. For example:
+You can get the current IMAAdDisplayContainer object neccessary to register your overlays from the `playbackController:didAdvanceToPlaybackSession:` delegate method of your BCOVPlaybackController instance. For example:
 ```
 - (void)playbackController:(id<BCOVPlaybackController>)controller didAdvanceToPlaybackSession:(id<BCOVPlaybackSession>)session
 {
