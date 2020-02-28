@@ -44,7 +44,7 @@
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.7.0.912</h1>
+						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.7.1.940</h1>
 
 <h1>Requirements</h1>
 
@@ -251,68 +251,77 @@ self.playerView.playbackController = self.playbackController;
 
 <p>The PlayerUI is highly customizable. For more information and sample code, please see <strong>Custom Layouts</strong> section in the README.md file of the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Native Player SDK repository</a>.</p>
 
-<h1>Seeking Without Ads</h1>
+<h1>Seek Without Ads</h1>
 
-<p>Use <code>-[BCOVPlaybackController seekWithoutAds:(CMTime)time completionHandler:(void (^)(BOOL finished))completion]</code> to resume playback at a specific time without forcing the user to watch ads scheduled before <code>time</code>. When using <code>seekWithoutAds:completionHandler:</code>, <code>autoPlay</code> should be disabled in the <code>BCOVPlaybackController</code>. <code>seekWithoutAds:completionHandler:</code> should be called on or after receiving <code>kBCOVPlaybackSessionLifecycleEventReady</code> in your <code>playbackController:playbackSession:didReceiveLifecycleEvent</code> delegate method.</p>
+<p>Use <code>-[BCOVPlaybackController seekWithoutAds:(CMTime)seekToTime completionHandler:(void (^)(BOOL finished))completion]</code> to resume playback at a specific time without forcing the user to watch ads scheduled before <code>seekToTime</code>.</p>
 
-<p>The <code>shutter</code> and <code>shutterFadeTime</code> properties of the <code>BCOVPlaybackController</code> can be used along with <code>seekWithoutAds:completionHandler:</code> to hide frame-flicker which can occur as the AVPlayer loads assets. In your BCOVPlaybackController setup code, close the shutter to hide the player view:</p>
+<p>In preparation for <code>seekWithoutAds:completionHandler:</code>, disable <code>autoPlay</code> when setting up the <code>BCOVPlaybackController</code>.</p>
 
-<pre><code>  NSObject&lt;BCOVPlaybackController&gt; *playbackController;
+<p>Apple recommends waiting for the status of an AVPlayerItem to change to ready-to-play before using the AVPlayerItem. Therefore, call <code>seekWithoutAds:completionHandler:</code> in the <code>kBCOVPlaybackSessionLifecycleEventReady</code> handler of the <code>playbackController:playbackSession:didReceiveLifecycleEvent</code> method of your <code>BCOVPlaybackControllerDelegate</code>.</p>
 
-  playbackController = [sdkManager createFWPlaybackControllerWithAdContextPolicy:nil
-                                                                    viewStrategy:nil];
-  playbackController.delegate = self;
-
-  if (self.willSeekWithoutAds)
-  {
-    // set the shutter fade time to zero to hide the player view immediately.
-    playbackController.shutterFadeTime = 0.0;
-    playbackController.shutter = YES;
-
-    // disable autoPlay when resuming playback.
-    playbackController.autoPlay = NO;
-  }
-</code></pre>
-
-<p>Apple recommends waiting for the status of an AVPlayerItem to change to ready-to-play before using the AVPlayerItem; call <code>seekWithoutAds:completionHandler:</code> in the <code>playbackController:playbackSession:didReceiveLifecycleEvent</code> method of your <code>BCOVPlaybackControllerDelegate</code> delegate.</p>
-
-<pre><code>- (void)playbackController:(NSObject&lt;BCOVPlaybackController&gt;*)controller
-           playbackSession:(NSObject&lt;BCOVPlaybackSession&gt;*)session
+<p>```objective-c
+- (void)playbackController:(NSObject<BCOVPlaybackController><em>)controller
+           playbackSession:(NSObject<BCOVPlaybackSession></em>)session
   didReceiveLifecycleEvent:(BCOVPlaybackSessionLifecycleEvent *)lifecycleEvent
 {
   if ([kBCOVPlaybackSessionLifecycleEventReady isEqualToString:lifecycleEvent.eventType])
   {
-    if (self.willSeekWithoutAds)
+    // self.resumePlayback is a hypothetical instance variable used here for illustration.
+    if (self.resumePlayback)
     {
-      __weak typeof(controller) weakController = controller;
+      __weak typeof(controller) weakController = controller;</p>
 
-      // seek without playing ads which are scheduled before the seek time, i.e. resume playback.
-      [controller seekWithoutAds:CMTimeMake(seekWithoutAdsValue, seekWithoutAdsTimescale)
-             completionHandler:^(BOOL finished){
+<pre><code>  // seek without playing ads which are scheduled before the seek time, i.e. resume playback.
+  [controller seekWithoutAds:CMTimeMake(seekWithoutAdsValue, seekWithoutAdsTimescale)
+           completionHandler:^(BOOL finished) {
 
-        if (!finished)
-        {
-          NSLog (@"seekWithoutAds failed to finish");
-        }
-
-        typeof(controller) strongController = weakController;
-        if (strongController)
-        {
-          // fade out the shutter to reveal the player view.
-          strongController.shutterFadeTime = 0.25;
-          strongController.shutter = NO;
-
-          // turn off seeking without ads - especially important if this player is being used with a playlist
-          self.willSeekWithoutAds = NO;
-        }
-
-      }];
+    if (!finished)
+    {
+      NSLog (@"seekWithoutAds failed to finish");
     }
-  }
+
+    typeof(controller) strongController = weakController;
+    if (strongController)
+    {
+      // fade out the shutter to reveal the player view.
+      strongController.shutterFadeTime = 0.25;
+      strongController.shutter = NO;
+
+      // turn off seek without ads - especially important if this player is being used with a playlist
+      self.resumePlayback = NO;
+    }
+
+  }];
 }
 </code></pre>
 
-<p>Note that when Seeking Without Ads is enabled in your app, you will still see the network traffic that normally occurs as part of setting up the IMA plugin. This traffic is necessary for proper plugin setup, and does not affect the Seeking Without Ads functionality.</p>
+<p>  }
+}
+```</p>
+
+<p>The <code>shutter</code> and <code>shutterFadeTime</code> properties of the <code>BCOVPlaybackController</code> can be used along with <code>seekWithoutAds:completionHandler:</code> to hide frame-flicker which can occur as the AVPlayer loads assets. In your BCOVPlaybackController set-up code, enable the shutter to hide the player view:</p>
+
+<p>```objective-c
+  NSObject<BCOVPlaybackController> *playbackController;</p>
+
+<p>  playbackController = [sdkManager createFWPlaybackControllerWithAdContextPolicy:nil
+                                                                    viewStrategy:nil];
+  playbackController.delegate = self;</p>
+
+<p>  if (self.resumePlayback)
+  {
+    // set the shutter fade time to zero to hide the player view immediately.
+    playbackController.shutterFadeTime = 0.0;
+    playbackController.shutter = YES;</p>
+
+<pre><code>// disable autoPlay when resuming playback.
+playbackController.autoPlay = NO;
+</code></pre>
+
+<p>  }
+```</p>
+
+<p>Note that when Seek Without Ads is used in your app, you might observe network traffic which normally occurs as part of setting up the IMA plugin. This traffic is necessary for proper plugin setup, and does not affect the Seek Without Ads functionality.</p>
 
 <h1>Customizing Plugin Behavior</h1>
 
@@ -436,6 +445,20 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 }
 </code></p>
 
+<h1>Audience Segment Targeting</h1>
+
+<p>If you&rsquo;d like to use Audience Segment Targeting with your IMA VAST ad requests you can do so by using the <code>updateAudienceSegmentTargetingValues</code> on <code>BCOVPlaybackController</code>. For eample:</p>
+
+<pre><code>[playbackController updateAudienceSegmentTargetingValues:@{
+    @"account_id":@"11223344",
+    @"account_type":@"premium""
+}];
+</code></pre>
+
+<p>These values will be appended to the <code>cust_params</code> query paramater of the IMA ad request URL. For example:</p>
+
+<p>The URL <strong><a href="http://pubads.g.doubleclick.net/gampad/ads">http://pubads.g.doubleclick.net/gampad/ads</a></strong> would become <strong><a href="http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium">http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium</a></strong>.</p>
+
 <h1>Frequently Asked Questions</h1>
 
 <p><em>I can hear the ads, but I can&rsquo;t see them playing.</em></p>
@@ -492,7 +515,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2020 Brightcove. All rights reserved. Updated: 2020-02-07</p>
+							<p class="copyright">Copyright &copy; 2020 Brightcove. All rights reserved. Updated: 2020-02-28</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
