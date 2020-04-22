@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.7.4.1018
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.7.5.1079
 
 Requirements
 ============
@@ -14,7 +14,7 @@ Installation
 ==========
 IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The IMA plugin supports version 3.9.0 of the Google IMA SDK for iOS. The Podspec for the IMA Plugin for Brightcove Player SDK for iOS references version 3.9.0 of the Google IMA iOS SDK as instructed by the [IMA Release History](https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/history).
+The IMA plugin supports version 3.11.3 of the Google IMA SDK for iOS and version 4.2.1 of the Google IMA SDK for tvOS.
 
 CocoaPods
 ----------
@@ -42,12 +42,12 @@ Manual
 
 To add the IMA Plugin for Brightcove Player SDK to your project manually:
 
-1. Download the [Brightcove Player SDK][bcovsdk] framework.
-1. Download the [IMA Plugin for Brightcove Player SDK][bcovima] framework.
+1. Download the [Brightcove Player SDK][bcovsdkrelease] framework.
+1. Download the [IMA Plugin for Brightcove Player SDK][bcoveimarelease] framework.
 1. Download the [Google IMA][googleima] framework.
-1. On the "General" tab of your application target, add the **dynamic** framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of **Embedded Binaries**. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download.
-1. On the "General" tab of your application target, add BrightcoveIMA.framework from the IMA Plugin for Brightcove Player SDK download to the list of **Embedded Binaries**.
-1. On the "General" tab of your application target, add GoogleInteractiveMediaAds.framework from the Google IMA download to the list of **Embedded Binaries**.
+1. On the "General" tab of your application target, add the **dynamic** framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of **Frameworks, Libraries, Embedded Content**. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download.
+1. On the "General" tab of your application target, add BrightcoveIMA.framework from the IMA Plugin for Brightcove Player SDK download to the list of **Frameworks, Libraries, Embedded Content**.
+1. On the "General" tab of your application target, add GoogleInteractiveMediaAds.framework from the Google IMA download to the list of **Frameworks, Libraries, Embedded Content**.
 1. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.
 1. On the "Build Settings" tab of your application target:
     * Ensure that `-ObjC` has been added to the "Other Linker Flags" build setting.
@@ -58,7 +58,8 @@ The IMA Plugin for Brightcove Player SDK can be imported into code a few differe
 
 [cocoapods]: http://cocoapods.org
 [podspecs]: https://github.com/brightcove/BrightcoveSpecs/tree/master/Brightcove-Player-IMA
-[release]: https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases
+[bcovsdkrelease]: https://github.com/brightcove/brightcove-player-sdk-ios/releases
+[bcoveimarelease]: https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases
 
 Quick Start
 ==========
@@ -112,7 +113,7 @@ Breaking the code down into steps:
 
 If you have questions or need help, we have a support forum for Brightcove's native Player SDKs at [https://groups.google.com/forum/#!forum/brightcove-native-player-sdks][forum] .
 
-[googleima]: https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/
+[googleima]: https://developers.google.com/interactive-media-ads/docs/sdks/ios/download
 [bcovsdk]: https://github.com/brightcove/brightcove-player-sdk-ios
 [bcovima]: https://github.com/brightcove/brightcove-player-sdk-ios-ima
 [forum]: https://groups.google.com/forum/#!forum/brightcove-native-player-sdks

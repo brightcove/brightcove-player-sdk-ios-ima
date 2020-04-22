@@ -44,7 +44,7 @@
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.7.4.1018</h1>
+						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.7.5.1079</h1>
 
 <h1>Requirements</h1>
 
@@ -62,7 +62,7 @@
 
 <p>IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.</p>
 
-<p>The IMA plugin supports version 3.9.0 of the Google IMA SDK for iOS. The Podspec for the IMA Plugin for Brightcove Player SDK for iOS references version 3.9.0 of the Google IMA iOS SDK as instructed by the <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/history">IMA Release History</a>.</p>
+<p>The IMA plugin supports version 3.11.3 of the Google IMA SDK for iOS and version 4.2.1 of the Google IMA SDK for tvOS.</p>
 
 <h2>CocoaPods</h2>
 
@@ -89,12 +89,12 @@ pod 'Brightcove-Player-IMA'
 <p>To add the IMA Plugin for Brightcove Player SDK to your project manually:</p>
 
 <ol>
-<li>Download the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Player SDK</a> framework.</li>
-<li>Download the <a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima">IMA Plugin for Brightcove Player SDK</a> framework.</li>
-<li>Download the <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/">Google IMA</a> framework.</li>
-<li>On the &ldquo;General&rdquo; tab of your application target, add the <strong>dynamic</strong> framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of <strong>Embedded Binaries</strong>. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download.</li>
-<li>On the &ldquo;General&rdquo; tab of your application target, add BrightcoveIMA.framework from the IMA Plugin for Brightcove Player SDK download to the list of <strong>Embedded Binaries</strong>.</li>
-<li>On the &ldquo;General&rdquo; tab of your application target, add GoogleInteractiveMediaAds.framework from the Google IMA download to the list of <strong>Embedded Binaries</strong>.</li>
+<li>Download the <a href="https://github.com/brightcove/brightcove-player-sdk-ios/releases">Brightcove Player SDK</a> framework.</li>
+<li>Download the <a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases">IMA Plugin for Brightcove Player SDK</a> framework.</li>
+<li>Download the <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/download">Google IMA</a> framework.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add the <strong>dynamic</strong> framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, Embedded Content</strong>. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add BrightcoveIMA.framework from the IMA Plugin for Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, Embedded Content</strong>.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add GoogleInteractiveMediaAds.framework from the Google IMA download to the list of <strong>Frameworks, Libraries, Embedded Content</strong>.</li>
 <li>On the &ldquo;Build Settings&rdquo; tab of your application target, ensure that the &ldquo;Framework Search Paths&rdquo; include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.</li>
 <li>On the &ldquo;Build Settings&rdquo; tab of your application target:
 
@@ -111,7 +111,7 @@ pod 'Brightcove-Player-IMA'
 
 <h1>Quick Start</h1>
 
-<p>The BrightcoveIMA plugin is a bridge between <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/v3/">Google IMA iOS SDK v3</a> and the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Player SDK for iOS</a>. This snippet shows its basic usage with Server Side Ad Rules.</p>
+<p>The BrightcoveIMA plugin is a bridge between <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/download">Google IMA iOS SDK v3</a> and the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Player SDK for iOS</a>. This snippet shows its basic usage with Server Side Ad Rules.</p>
 
 <pre><code>[1] IMASettings *imaSettings = [[IMASettings alloc] init];
     imaSettings.ppid = kViewControllerIMAPublisherID;
@@ -515,7 +515,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2020 Brightcove. All rights reserved. Updated: 2020-03-26</p>
+							<p class="copyright">Copyright &copy; 2020 Brightcove. All rights reserved. Updated: 2020-04-22</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
