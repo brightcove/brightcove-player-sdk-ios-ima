@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.7.5.1079
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.7.6.1121
 
 Requirements
 ============
@@ -395,6 +395,11 @@ You can get the current IMAAdDisplayContainer object neccessary to register your
     [adDisplayContainer registerVideoControlsOverlay:self.adOverlayView];
 }
 ```
+AirPlay
+==========
+
+The IMA plugin supports AirPlay for pre-roll and post-roll ads. Set `enableBackgroundPlayback` to `YES` on `IMASettings` along with enabling AirPlay on your `BCOVPlaybackController`. See the "_AirPlay_" section of the README for more information.
+
 Audience Segment Targeting
 ==========
 
