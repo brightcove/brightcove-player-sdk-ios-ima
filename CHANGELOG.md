@@ -1,3 +1,25 @@
+## Release 6.3.12
+
+### Brightcove Player SDK for iOS (Core)
+
+#### Additions and Improvements
+
+* Removes references to UIWebView.
+
+* Fixes an issue where the status information of offline video downloads was being deleted. This issue is present only in Release 6.3.11.
+
+### IMA Plugin for Brightcove Player SDK for iOS
+
+#### Additions and Improvements
+
+* Supports IMA 3.11.3 for iOS which, among other improvements, removes references to UIWebView. When running on an iOS 9.x device, configure IMAAdsRenderingSettings to use Safari when opening landing pages in response to taps on "Learn More" or companions ads.
+
+```objc
+IMAAdsRenderingSettings *renderSettings = [[IMAAdsRenderingSettings alloc] init];
+renderSettings.webOpenerPresentingController = nil;
+renderSettings.webOpenerDelegate = self; // optional
+```
+
 ## Release 6.3.11
 
 ### Brightcove Player SDK for iOS (Core)
@@ -24,7 +46,7 @@
 
 * Fixes an issue where, while looping a video with postroll ads, the lifecycle event kBCOVPlaybackSessionLifecycleEventEnd was sent only the first time the video reached its end.
 
-## Release 6.3.9 
+## Release 6.3.9
 
 ### Brightcove Player SDK for iOS (Core)
 
@@ -318,19 +340,19 @@ The `BCOVOfflineVideoDownloadState` enumeration adds the following values:
 ```
     /* iOS 11+ only: Download of extra tracks requested but not yet reporting progress */
     BCOVOfflineVideoDownloadStateTracksRequested = 7,
-    
+
     /* iOS 11+ only: Download of extra tracks is progressing normally */
     BCOVOfflineVideoDownloadStateTracksDownloading = 8,
-    
+
     /* iOS 11+ only: Download of extra tracks was paused */
     BCOVOfflineVideoDownloadStateTracksSuspended = 9,
-    
+
     /* iOS 11+ only: Download of extra tracks completed normally */
     BCOVOfflineVideoDownloadStateTracksCancelled = 10,
-    
+
     /* iOS 11+ only: Download of extra tracks completed normally */
     BCOVOfflineVideoDownloadStateTracksCompleted = 11,
-    
+
     /* iOS 11+ only: Download of extra tracks terminated with an error */
     BCOVOfflineVideoDownloadStateTracksError = 12
 ```
@@ -396,11 +418,11 @@ You can specify AVMediaCharacteristicAudible or AVMediaCharacteristicLegible to 
 - (NSArray<AVMediaSelectionOption *> *)downloadedMediaSelectionOptionsForMediaCharacteristic:(NSString *)mediaCharacteristic
                                                                            offlineVideoToken:(BCOVOfflineVideoToken)offlineVideoToken
 ```
- 
+
 The `forceStopAllDownloadTasks` method is implemented as a workaround for a bug on iOS 11.0.x and iOS 11.1.x. On these iOS versions, a track download will resume to completion if it was paused and then cancelled. The only way to stop the download is to force all the downloads in progress to stop wtih an error.
- 
+
 This method should not be used on other versions of iOS; you can cancel an aggregate download task normally on iOS 11.2 by calling `cancelVideoDownload`.
- 
+
 ```
 - (void)forceStopAllDownloadTasks
 ```
@@ -488,7 +510,7 @@ For full details about downloading video for offline playback, see the *iOS App 
 #### Additions and Improvements
 
 * Fixes an issue where a zero-length file in the framework would cause a build warning.
-* Fixes an issue where adding the Brightcove Player SDK using CocoaPods required the manual addition of the MediaAccessibility framework. 
+* Fixes an issue where adding the Brightcove Player SDK using CocoaPods required the manual addition of the MediaAccessibility framework.
 
 
 ## Release 6.0.4
