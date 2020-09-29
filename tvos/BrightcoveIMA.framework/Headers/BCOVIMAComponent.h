@@ -77,7 +77,9 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * playback controller.
  * @param adContainer the view in which the ad will be displayed and the ad 
  * information UI will be rendered.
- * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil 
+ * @param adContainerViewController The view controller containing the ad container. If not provided
+ * here, must be set on the IMAAdDisplayContainer before making an ads or stream request.
+ * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil
  * or empty.
  * @return A new playback controller with the specified parameters.
  */
@@ -85,6 +87,7 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
                                                  adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings
                                                      adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy
                                                           adContainer:(UIView *)adContainer
+                                                       viewController:(UIViewController *)adContainerViewController
                                                        companionSlots:(NSArray *)companionSlots
                                                          viewStrategy:(BCOVPlaybackControllerViewStrategy)strategy;
 
@@ -103,6 +106,8 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * playback controller.
  * @param adContainer the view in which the ad will be displayed and the ad
  * information UI will be rendered.
+ * @param adContainerViewController The view controller containing the ad container. If not provided
+ * here, must be set on the IMAAdDisplayContainer before making an ads or stream request.
  * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil
  * or empty.
  * @param options An NSDictionary of IMA options. Can be nil or empty. The only
@@ -114,6 +119,7 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
                                                  adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings
                                                      adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy
                                                           adContainer:(UIView *)adContainer
+                                                       viewController:(UIViewController *)adContainerViewController
                                                        companionSlots:(NSArray *)companionSlots
                                                          viewStrategy:(BCOVPlaybackControllerViewStrategy)strategy
                                                               options:(NSDictionary *)options;
@@ -130,7 +136,9 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * IMAAdsRequests for use by a given input playback session.
  * @param adContainer the view in which the ad will be displayed and the ad 
  * information UI will be rendered.
- * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil 
+ * @param adContainerViewController The view controller containing the ad container. If not provided
+ * here, must be set on the IMAAdDisplayContainer before making an ads or stream request.
+ * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil
  * or empty.
  * @param provider A session provider to attach upstream and deliver playback
  * sessions to the returned session provider.
@@ -140,6 +148,7 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
                                                    adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings
                                                        adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy
                                                             adContainer:(UIView *)adContainer
+                                                         viewController:(UIViewController *)adContainerViewController
                                                          companionSlots:(NSArray *)companionSlots
                                                 upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider;
 
@@ -155,6 +164,8 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * IMAAdsRequests for use by a given input playback session.
  * @param adContainer the view in which the ad will be displayed and the ad
  * information UI will be rendered.
+ * @param adContainerViewController The view controller containing the ad container. If not provided
+ * here, must be set on the IMAAdDisplayContainer before making an ads or stream request.
  * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil
  * or empty.
  * @param provider A session provider to attach upstream and deliver playback
@@ -168,6 +179,7 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
                                                    adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings
                                                        adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)adsRequestPolicy
                                                             adContainer:(UIView *)adContainer
+                                                         viewController:(UIViewController *)adContainerViewController
                                                          companionSlots:(NSArray *)companionSlots
                                                 upstreamSessionProvider:(id<BCOVPlaybackSessionProvider>)provider
                                                                 options:(NSDictionary *)options;

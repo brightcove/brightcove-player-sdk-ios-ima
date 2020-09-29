@@ -60,13 +60,13 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:">- createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:</option>
+		<option value="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:">- createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:</option>
 		
-		<option value="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:">- createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:</option>
+		<option value="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:options:">- createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:options:</option>
 		
-		<option value="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:">- createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:</option>
+		<option value="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:">- createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:</option>
 		
-		<option value="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:">- createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:</option>
+		<option value="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:options:">- createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:options:</option>
 		
 	</optgroup>
 	
@@ -115,8 +115,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:" title="createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:">&ndash;&nbsp;createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:</a></code>
+	<a name="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:" title="createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:">&ndash;&nbsp;createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -133,7 +133,7 @@ returned playback controller will be configured with an IMA session provider.</p
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackController&gt;)createIMAPlaybackControllerWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> companionSlots:(NSArray *)<em>companionSlots</em> viewStrategy:(BCOVPlaybackControllerViewStrategy)<em>strategy</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackController&gt;)createIMAPlaybackControllerWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> viewController:(UIViewController *)<em>adContainerViewController</em> companionSlots:(NSArray *)<em>companionSlots</em> viewStrategy:(BCOVPlaybackControllerViewStrategy)<em>strategy</em></code></div>
 
 		    
 			
@@ -163,6 +163,12 @@ IMAAdsRequests for use by a given input playback session.</p></td>
 						<th scope="row" class="argument-name"><code>adContainer</code></th>
 						<td><p>the view in which the ad will be displayed and the ad
 information UI will be rendered.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adContainerViewController</code></th>
+						<td><p>The view controller containing the ad container. If not provided
+here, must be set on the IMAAdDisplayContainer before making an ads or stream request.</p></td>
 					</tr>
 				
 					<tr>
@@ -213,8 +219,8 @@ returned playback controller will be configured with an IMA session provider.</p
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:" title="createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:">&ndash;&nbsp;createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:options:</a></code>
+	<a name="//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:options:" title="createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:options:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:options:">&ndash;&nbsp;createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:options:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -231,7 +237,7 @@ returned playback controller will be configured with an IMA session provider.</p
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackController&gt;)createIMAPlaybackControllerWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> companionSlots:(NSArray *)<em>companionSlots</em> viewStrategy:(BCOVPlaybackControllerViewStrategy)<em>strategy</em> options:(NSDictionary *)<em>options</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackController&gt;)createIMAPlaybackControllerWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> viewController:(UIViewController *)<em>adContainerViewController</em> companionSlots:(NSArray *)<em>companionSlots</em> viewStrategy:(BCOVPlaybackControllerViewStrategy)<em>strategy</em> options:(NSDictionary *)<em>options</em></code></div>
 
 		    
 			
@@ -261,6 +267,12 @@ IMAAdsRequests for use by a given input playback session.</p></td>
 						<th scope="row" class="argument-name"><code>adContainer</code></th>
 						<td><p>the view in which the ad will be displayed and the ad
 information UI will be rendered.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adContainerViewController</code></th>
+						<td><p>The view controller containing the ad container. If not provided
+here, must be set on the IMAAdDisplayContainer before making an ads or stream request.</p></td>
 					</tr>
 				
 					<tr>
@@ -318,8 +330,8 @@ returned playback controller will be configured with an IMA session provider.</p
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:" title="createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:">&ndash;&nbsp;createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:</a></code>
+	<a name="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:" title="createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:">&ndash;&nbsp;createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -335,7 +347,7 @@ parameters.</p>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackSessionProvider&gt;)createIMASessionProviderWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> companionSlots:(NSArray *)<em>companionSlots</em> upstreamSessionProvider:(id&lt;BCOVPlaybackSessionProvider&gt;)<em>provider</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackSessionProvider&gt;)createIMASessionProviderWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> viewController:(UIViewController *)<em>adContainerViewController</em> companionSlots:(NSArray *)<em>companionSlots</em> upstreamSessionProvider:(id&lt;BCOVPlaybackSessionProvider&gt;)<em>provider</em></code></div>
 
 		    
 			
@@ -365,6 +377,12 @@ IMAAdsRequests for use by a given input playback session.</p></td>
 						<th scope="row" class="argument-name"><code>adContainer</code></th>
 						<td><p>the view in which the ad will be displayed and the ad
 information UI will be rendered.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adContainerViewController</code></th>
+						<td><p>The view controller containing the ad container. If not provided
+here, must be set on the IMAAdDisplayContainer before making an ads or stream request.</p></td>
 					</tr>
 				
 					<tr>
@@ -414,8 +432,8 @@ parameters.</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:" title="createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:">&ndash;&nbsp;createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:upstreamSessionProvider:options:</a></code>
+	<a name="//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:options:" title="createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:options:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:options:">&ndash;&nbsp;createIMASessionProviderWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:upstreamSessionProvider:options:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -431,7 +449,7 @@ parameters.</p>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackSessionProvider&gt;)createIMASessionProviderWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> companionSlots:(NSArray *)<em>companionSlots</em> upstreamSessionProvider:(id&lt;BCOVPlaybackSessionProvider&gt;)<em>provider</em> options:(NSDictionary *)<em>options</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (id&lt;BCOVPlaybackSessionProvider&gt;)createIMASessionProviderWithSettings:(IMASettings *)<em>settings</em> adsRenderingSettings:(IMAAdsRenderingSettings *)<em>adsRenderingSettings</em> adsRequestPolicy:(BCOVIMAAdsRequestPolicy *)<em>adsRequestPolicy</em> adContainer:(UIView *)<em>adContainer</em> viewController:(UIViewController *)<em>adContainerViewController</em> companionSlots:(NSArray *)<em>companionSlots</em> upstreamSessionProvider:(id&lt;BCOVPlaybackSessionProvider&gt;)<em>provider</em> options:(NSDictionary *)<em>options</em></code></div>
 
 		    
 			
@@ -461,6 +479,12 @@ IMAAdsRequests for use by a given input playback session.</p></td>
 						<th scope="row" class="argument-name"><code>adContainer</code></th>
 						<td><p>the view in which the ad will be displayed and the ad
 information UI will be rendered.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>adContainerViewController</code></th>
+						<td><p>The view controller containing the ad container. If not provided
+here, must be set on the IMAAdDisplayContainer before making an ads or stream request.</p></td>
 					</tr>
 				
 					<tr>
@@ -529,7 +553,7 @@ parameters.</p>
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 Brightcove. All rights reserved. Updated: 2020-09-09</p>
+						<p class="copyright">Copyright &copy; 2020 Brightcove. All rights reserved. Updated: 2020-09-29</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

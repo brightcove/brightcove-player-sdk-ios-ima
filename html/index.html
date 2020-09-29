@@ -44,7 +44,7 @@
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.7.11.1278</h1>
+						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.8.0.1318</h1>
 
 <h1>Requirements</h1>
 
@@ -62,7 +62,7 @@
 
 <p>IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.</p>
 
-<p>The IMA plugin supports version 3.11.4 of the Google IMA SDK for iOS and version 4.2.3 of the Google IMA SDK for tvOS.</p>
+<p>The IMA plugin supports version 3.12.1 of the Google IMA SDK for iOS and version 4.3.2 of the Google IMA SDK for tvOS.</p>
 
 <h2>CocoaPods</h2>
 
@@ -133,11 +133,12 @@ end
     BCOVPlayerSDKManager *manager = [BCOVPlayerSDKManager sharedManager];
     id&lt;BCOVPlaybackController&gt; controller =
 [3]         [manager createIMAPlaybackControllerWithSettings:imaSettings
-                    adsRenderingSettings:renderSettings
-                    adsRequestPolicy:adsRequestPolicy
-                    adContainer:videoContainerView 
-                    companionSlots:nil
-                    viewStrategy:nil];
+                                        adsRenderingSettings:renderSettings
+                                            adsRequestPolicy:adsRequestPolicy
+                                                 adContainer:videoContainerView 
+                                              viewController:self
+                                              companionSlots:nil
+                                                viewStrategy:nil];
     controller.delegate = self;
 
     [videoContainerView addSubview:controller.view];  
@@ -223,11 +224,12 @@ self.playerView.translatesAutoresizingMaskIntoConstraints = NO;
 <pre><code>// Create the playback controller.
 id&lt;BCOVPlaybackController&gt; controller =
                 [manager createIMAPlaybackControllerWithSettings:imaSettings
-                        adsRenderingSettings:renderSettings
-                        adsRequestPolicy:adsRequestPolicy
-                        adContainer:self.playerView.contentOverlayView // special view for IMA ad content
-                        companionSlots:nil
-                        viewStrategy:nil];
+                                            adsRenderingSettings:renderSettings
+                                                adsRequestPolicy:adsRequestPolicy
+                                                     adContainer:self.playerView.contentOverlayView // special view for IMA ad content
+                                                  viewController:self
+                                                  companionSlots:nil
+                                                    viewStrategy:nil];
 controller.delegate = self;
 
 // Assign new playback controller to the player view.
@@ -352,11 +354,12 @@ playbackController.autoPlay = NO;
     BCOVPlayerSDKManager *manager = [BCOVPlayerSDKManager sharedManager];
     id&lt;BCOVPlaybackController&gt; controller =
             [manager createIMAPlaybackControllerWithSettings:imaSettings
-                    adsRenderingSettings:renderSettings
-                    adsRequestPolicy:adsRequestPolicy
-                    adContainer:videoContainerView
-                    companionSlots:nil
-                    viewStrategy:[manager defaultControlsViewStrategy]];
+                                        adsRenderingSettings:renderSettings
+                                            adsRequestPolicy:adsRequestPolicy
+                                                 adContainer:videoContainerView
+                                              viewController:self
+                                              companionSlots:nil
+                                                viewStrategy:nil];
 </code></pre>
 
 <p>Let&rsquo;s break this code down into steps, to make it a bit simpler to digest:</p>
@@ -401,6 +404,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
                                 adsRenderingSettings:renderSettings
                                     adsRequestPolicy:adsRequestPolicy
                                          adContainer:self.playerView.contentOverlayView
+                                      viewController:self
                                       companionSlots:ni
                              upstreamSessionProvider:nil
                                              options:imaSessionProviderOptions];
@@ -452,7 +456,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 
 <h1>AirPlay</h1>
 
-<p>The IMA plugin supports AirPlay for pre-roll and post-roll ads. Set <code>enableBackgroundPlayback</code> to <code>YES</code> on <code>IMASettings</code> along with enabling AirPlay on your <code>BCOVPlaybackController</code>. See the &ldquo;<em>AirPlay</em>&rdquo; section of the README for more information.</p>
+<p>The IMA plugin supports AirPlay for pre-roll and post-roll ads. Set <code>enableBackgroundPlayback</code> to <code>YES</code> on <code>IMASettings</code> along with enabling AirPlay on your <code>BCOVPlaybackController</code>. See the &ldquo;<em>AirPlay</em>&rdquo; section of the <a href="https://github.com/brightcove/brightcove-player-sdk-ios#airplay-">Core SDK README</a> for more information.</p>
 
 <h1>Audience Segment Targeting</h1>
 
@@ -524,7 +528,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2020 Brightcove. All rights reserved. Updated: 2020-09-09</p>
+							<p class="copyright">Copyright &copy; 2020 Brightcove. All rights reserved. Updated: 2020-09-29</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
