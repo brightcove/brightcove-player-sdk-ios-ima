@@ -28,6 +28,9 @@
  * That URL will be used to construct a VMAP IMAAdsRequest for that playback 
  * session.
  *
+ * Use this policy when you want the ability to specify a different VMAP ad tag URL
+ * for different videos.
+ *
  * @return An ads request policy that generates VMAP IMAAdsRequests from
  * information in each playback session's `BCOVVideo.properties`.
  */
@@ -36,6 +39,8 @@
 /**
  * Returns an ads request policy that generates a VMAP IMAAdsRequest with the
  * specified ad tag URL and companion slots for every playback session.
+ *
+ * Use this policy when you want  to use the same VMAP ad tag URL for all videos.
  *
  * @param VMAPAdTagUrl The ad tag URL to include in the IMAAdsRequest this
  * policy generates. Currently, only VMAP ad tag URLs are supported.
@@ -54,6 +59,9 @@
  * That URL will be used to construct a VAST IMAAdsRequest for that playback
  * session.
  *
+ * Use this policy when you want the ability to specify a different VAST ad tag URL
+ * for different cuepoints.
+ *
  * @param adsCuePointProgressPolicy The cue point progress policy specified for
  * VAST ads requests cue points. If this parameter is nil, `+[BCOVCuePointProgressPolicy progressPolicyProcessingCuePoints:BCOVProgressPolicyProcessAllCuePoints resumingPlaybackFrom:BCOVProgressPolicyResumeFromContentPlayhead ignoringPreviouslyProcessedCuePoints:NO]`
  * will be used as default.
@@ -67,6 +75,8 @@
  * of type 'kBCOVIMACuePointTypeAd'. The cuepoint properies will be appended on
  * ad tag as query parameters. That URL will be used to construct a VAST IMAAdsRequest
  * for that playback session.
+ *
+ * Use this policy when you want to use the same VAST ad tag URL for all cuepoints.
  *
  * @param adTag The ad tag URL to include in the IMAAdsRequest this
  * policy generates.

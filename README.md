@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.8.1.1355
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.8.2.1421
 
 Requirements
 ============
@@ -68,7 +68,7 @@ The IMA Plugin for Brightcove Player SDK can be imported into code a few differe
 
 Quick Start
 ==========
-The BrightcoveIMA plugin is a bridge between [Google IMA iOS SDK v3][googleima] and the [Brightcove Player SDK for iOS][bcovsdk]. This snippet shows its basic usage with Server Side Ad Rules.
+The BrightcoveIMA plugin is a bridge between [Google IMA iOS SDK v3][googleima] and the [Brightcove Player SDK for iOS][bcovsdk]. This snippet shows its basic usage with VMAP ad rules.
 
     [1] IMASettings *imaSettings = [[IMASettings alloc] init];
         imaSettings.ppid = kViewControllerIMAPublisherID;
@@ -114,15 +114,12 @@ The BrightcoveIMA plugin is a bridge between [Google IMA iOS SDK v3][googleima] 
 Breaking the code down into steps:
 
 1. Create the same IMA settings, ads rendering settings that you would create if you were using Google's IMA iOS SDK directly. These are required.
-1. BCOVIMAAdsRequestPolicy provides methods to specify VAST or VMAP/Server Side Ad Rules. Select the appropriate method to select your ads policy.
+1. BCOVIMAAdsRequestPolicy provides methods to specify VAST or VMAP ad rules. Select the appropriate method to select your ads policy.
 1. BrightcoveIMA adds some category methods to BCOVPlaybackManager. The first of these is `-createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:`. Use this method to create your playback controller.
-
-If you have questions or need help, we have a support forum for Brightcove's native Player SDKs at [https://groups.google.com/forum/#!forum/brightcove-native-player-sdks][forum] .
 
 [googleima]: https://developers.google.com/interactive-media-ads/docs/sdks/ios/download
 [bcovsdk]: https://github.com/brightcove/brightcove-player-sdk-ios
 [bcovima]: https://github.com/brightcove/brightcove-player-sdk-ios-ima
-[forum]: https://groups.google.com/forum/#!forum/brightcove-native-player-sdks
 
 Play and Pause
 ==========
@@ -134,9 +131,6 @@ As an example, calling play for the first time on `BCOVPlaybackController` allow
 
 Using the Built-In PlayerUI
 ==========
-If you are using version 5.1 or later of the Brightcove Player SDK, you can take advantage of the built-in player controls with the Brightcove IMA plugin.
-
-**Note:** The `BrightcovePlayerUI` module is no longer needed and has been removed. (Prior to version 5.1 of the Brightcove Player SDK, the Brightcove PlayerUI plugin was a separate framework and module.) You can remove any imports that reference the Brightcove PlayerUI module. All PlayerUI headers are now found in the `BrightcovePlayerSDK` module.
 
 In your `UIViewController`, create a `BCOVPUIPlayerView` property called the player view, to contain the playback controls, the video content view, and a special view where IMA can display its ads.
 
@@ -176,7 +170,7 @@ self.playerView.translatesAutoresizingMaskIntoConstraints = NO;
                                          ]];
 ```
 
-Creating the playback controller is specific to IMA. Create your playback controller as you did above, but instead of your video container view, pass in the `contentOverlayView` from the player view as your `adContainer`. The `contentOverlayView` is a special view used for overlaying views on the main video content. You should also use `nil` instead of `[manager defaultControlsViewStrategy]` if you were using that as your `viewStrategy` (this was the older method for using built-in controls).
+Creating the playback controller is specific to IMA. Create your playback controller as you did above, but instead of your video container view, pass in the `contentOverlayView` from the player view as your `adContainer`. The `contentOverlayView` is a special view used for overlaying views on the main video content.
 
 ```
 // Create the playback controller.
@@ -292,7 +286,7 @@ Customizing Plugin Behavior
 ==========
 There are a couple of configuration points in BCOVIMA. You can combine BCOVIMA with another plugin for the Brightcove Player SDK for iOS, you can create a custom view strategy, and you can supply a custom ads request policy.
 
-VAST and VMAP/Server Side Ad Rules
+VAST and VMAP ad rules
 ----------
 
 BCOVIMA gives you control over how ads requests are made, via the `BCOVIMAAdsRequestPolicy` class. The class provides factory methods for the supported policies. Once you obtain an instance of the correct policy, you need to provide it to the `BCOVPlayerSDKManager` to create a playback controller or a playback session provider. 
@@ -335,6 +329,92 @@ There are two factory methods for VAST.  All of the VAST methods take a BCOVCueP
 * `+adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:` This method returns an ads request policy that checks each BCOVVideo for BCOVCuePoints of type 'kBCOVIMACuePointTypeAd' and looks in each of those cue points properties for the key `kBCOVIMAAdTag` to determine the VAST ad tag that should be used to request ads.
 
 * `+adsRequestPolicyFromCuePointPropertiesWithAdTag:adsCuePointProgressPolicy:`  This method returns an ad request policy that uses the specified VAST ad tag for all BCOVCuePoints of type **kBCOVIMACuePointTypeAd**. Properties of the cue point are appended to the ad tag as query parameters.
+
+You can add VAST ad tag cuepoints to a video by using the `update:` method on the `BCOVVideo` object. The following example adds pre-roll, mid-roll and post-roll cuepoints:
+
+```
+// Objective-C
+- (BCOVVideo *)updateVideo:(BCOVVideo *)video
+{
+    // Determine mid-point of video so we can insert a cue point there
+    CGFloat durationMiliSeconds = ((NSNumber *)video.properties[@"duration"]).doubleValue;
+    CGFloat midpointSeconds = (durationMiliSeconds / 2) / 1000;
+    CMTime midpointTime = CMTimeMakeWithSeconds(midpointSeconds, 1);
+
+    return [video update:^(id<BCOVMutableVideo> mutableVideo)
+    {
+        mutableVideo.cuePoints = [[BCOVCuePointCollection alloc] initWithArray:@[
+            [[BCOVCuePoint alloc] initWithType:kBCOVIMACuePointTypeAd
+                                      position:kCMTimeZero
+                                    properties:@{ kBCOVIMAAdTag : kVASTAdTagURL }],
+            [[BCOVCuePoint alloc] initWithType:kBCOVIMACuePointTypeAd
+                                      position:midpointTime
+                                    properties:@{ kBCOVIMAAdTag : kVASTAdTagURL }],
+            [[BCOVCuePoint alloc] initWithType:kBCOVIMACuePointTypeAd
+                                      position:kBCOVCuePointPositionTypeAfter
+                                    properties:@{ kBCOVIMAAdTag : kVASTAdTagURL }]
+
+        ]];
+        
+    }];
+}
+```
+
+```
+// Swift
+func updateVideo(withVASTTag vastTag: String) -> BCOVVideo? {
+    
+    guard let durationNum = self.properties["duration"] as? NSNumber else {
+        return nil
+    }
+    
+    let durationMiliSeconds = durationNum.doubleValue
+    let midpointSeconds = (durationMiliSeconds / 2) / 1000
+    let midpointTime = CMTimeMakeWithSeconds(midpointSeconds, preferredTimescale: 1)
+    
+    let cuePointPositionTypeAfter = CMTime.positiveInfinity
+    
+    return update { (mutableVideo: BCOVMutableVideo?) in
+        guard let mutableVideo = mutableVideo else {
+            return
+        }
+        
+        mutableVideo.cuePoints = BCOVCuePointCollection(array: [
+            BCOVCuePoint(type: kBCOVIMACuePointTypeAd, position: CMTime.zero, properties: [kBCOVIMAAdTag:vastTag])!,
+            BCOVCuePoint(type: kBCOVIMACuePointTypeAd, position: midpointTime, properties: [kBCOVIMAAdTag:vastTag])!,
+            BCOVCuePoint(type: kBCOVIMACuePointTypeAd, position: cuePointPositionTypeAfter, properties: [kBCOVIMAAdTag:vastTag])!,
+        ])
+    }
+    
+}
+```
+You can also convert cuepoints created in VideoCloud to VAST cuepoints like this:
+
+```
+- (BCOVVideo *)updateVideo:(BCOVVideo *)video
+    NSArray *cuePoints = video.cuePoints.array;
+    NSMutableArray *updatedCuePoints = @[].mutableCopy;
+    for (BCOVCuePoint *cuePoint in cuePoints)
+    {
+        if ([cuePoint.type isEqualToString:kBCOVIMACuePointTypeAd])
+        {
+            // The "metadata" property is the value of the
+            // "Key/Value Pairs" field in VideoCloud when
+            // creating/editing a Cue Point. In this example
+            // the only value in this field is the VAST ad tag URL.
+            // If you have additional values you'll need to parse
+            // out just the ad tag URL.
+            NSString *metadata = cuePoint.properties[@"metadata"];
+            NSDictionary *properties = @{ kBCOVIMAAdTag : metadata };
+            BCOVCuePoint *updatedCuePoint = [[BCOVCuePoint alloc] initWithType:cuePoint.type position:cuePoint.position properties:properties];
+            [updatedCuePoints addObject:updatedCuePoint];
+        }
+    }
+    return [video update:^(id<BCOVMutableVideo> mutableVideo) {
+        mutableVideo.cuePoints = [BCOVCuePointCollection collectionWithArray:updatedCuePoints];
+    }];
+}
+```
 
 Modifying the IMAAdsRequest
 ----------
@@ -423,10 +503,15 @@ If you'd like to use Audience Segment Targeting with your IMA VAST ad requests y
 
 These values will be appended to the `cust_params` query paramater of the IMA ad request URL. For example:
 
-The URL **http://pubads.g.doubleclick.net/gampad/ads** would become **http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium**.
+The URL `http://pubads.g.doubleclick.net/gampad/ads` would become `http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium`.
 
 Frequently Asked Questions
 ==========
 _I can hear the ads, but I can't see them playing._
 
 This usually happens when the ad container view is not in the view hierarchy, or when the ad view (which is a subview of the ad container view) is covered by other views.
+
+Support
+=======
+If you have questions, need help or want to provide feedback, please use the [Support Portal](https://supportportal.brightcove.com/s/login/) or contact your Account Manager.  To receive notification of new SDK software releases, subscribe to the Brightcove Native Player SDKs [Google Group](https://groups.google.com/g/brightcove-native-player-sdks).
+
