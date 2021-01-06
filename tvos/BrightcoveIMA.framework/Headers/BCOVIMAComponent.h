@@ -2,7 +2,7 @@
 // BCOVIMAComponent.h
 // BrightcoveIMA
 //
-// Copyright (c) 2020 Brightcove, Inc. All rights reserved.
+// Copyright (c) 2021 Brightcove, Inc. All rights reserved.
 // License: https://accounts.brightcove.com/en/terms-and-conditions
 //
 
@@ -34,6 +34,7 @@ extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentResume;
 extern NSString * const kBCOVIMAAdPropertiesKeyIMAAdInstance;
 
 extern NSString * const kBCOVIMAOptionIMAPlaybackSessionDelegateKey;
+extern NSString * const kBCOVIMAOptionBlockAdTargetingAPIsKey;
 
 /**
  * The default ad tag policy will look for an entry in each session.video's
@@ -111,8 +112,10 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * @param companionSlots the list of IMACompanionAdSlot instances. Can be nil
  * or empty.
  * @param options An NSDictionary of IMA options. Can be nil or empty. The only
- *  valid option key is
+ *  valid option keys are
  *      kBCOVIMAOptionIMAPlaybackSessionDelegateKey
+ *      kBCOVIMAOptionBlockAdTargetingAPIsKey
+ * See the "Device Ad Targeting" section of the IMA plugin README for more information.
  * @return A new playback controller with the specified parameters.
  */
 - (id<BCOVPlaybackController>)createIMAPlaybackControllerWithSettings:(IMASettings *)settings
@@ -171,8 +174,10 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * @param provider A session provider to attach upstream and deliver playback
  * sessions to the returned session provider.
  * @param options An NSDictionary of IMA options. Can be nil or empty. The only
- *  valid option key is
+ *  valid option keys are
  *      kBCOVIMAOptionIMAPlaybackSessionDelegateKey
+ *      kBCOVIMAOptionBlockAdTargetingAPIsKey
+ * See the "Device Ad Targeting" section of the IMA plugin README for more information.
  * @return A new BCOVIMASessionProvider with the specified parameters.
  */
 - (id<BCOVPlaybackSessionProvider>)createIMASessionProviderWithSettings:(IMASettings *)settings
