@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.8.3.1457
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.8.4.1493
 
 Requirements
 ============
@@ -189,22 +189,6 @@ controller.delegate = self;
 // You can keep this player view around and assign new
 // playback controllers to it as they are created.
 self.playerView.playbackController = self.playbackController;
-```
-
-Lastly, implement two `BCOVPlaybackControllerAdsDelegate` methods on the playback controller's delegate. Since IMA implements its own set of ad controls, you should hide the Brightcove PlayerUI controls while IMA ads are playing. This prevents unwanted controls from showing up on the screen when the views are larger and more sparse, like when presenting in full-screen mode.
-
-```
-- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didEnterAdSequence:(BCOVAdSequence *)adSequence
-{
-  // Hide all controls for ads (so they're not visible when full-screen)
-  self.playerView.controlsContainerView.alpha = 0.0;
- }
- 
-- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didExitAdSequence:(BCOVAdSequence *)adSequence
-{
-  // Show all controls when ads are finished.
-  self.playerView.controlsContainerView.alpha = 1.0;
-}
 ```
 
 Now, when playing video with ads, you will see the PlayerUI controls while playing video content, plus ad markers on the timeline scrubber (VMAP ads only).
@@ -475,15 +459,26 @@ Registering Ad Overlays
 ==========
 If you are placing any views over ads while they are playing, it is necceessary to register those views with the IMA SDK. Read the **Friendly obstructions** section of the [Open Measurement in the IMA SDK ](https://developers.google.com/interactive-media-ads/docs/sdks/ios/omsdk) page for more information.
 
-You can get the current IMAAdDisplayContainer object neccessary to register your overlays from the `playbackController:didAdvanceToPlaybackSession:` delegate method of your BCOVPlaybackController instance. For example:
+You can get the current IMAAdDisplayContainer object neccessary to register your overlays from the `playbackController:playbackSession:didEnterAdSequence:` delegate method of your BCOVPlaybackController instance. For example:
 ```
-- (void)playbackController:(id<BCOVPlaybackController>)controller didAdvanceToPlaybackSession:(id<BCOVPlaybackSession>)session
+- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didEnterAdSequence:(BCOVAdSequence *)adSequence
 {
     NSDictionary *props = session.video.properties;
     IMAAdDisplayContainer *adDisplayContainer = props[kBCOVIMAVideoPropertiesKeyAdDisplayContainer];
-    [adDisplayContainer registerVideoControlsOverlay:self.adOverlayView];
+    [adDisplayContainer registerFriendlyObstruction:self.adOverlayView];
 }
 ```
+
+To unregister the obstructions when the ad sequence is finished, the `playbackController:playbackSession:didExitAdSequence:` delegate method of your BCOVPlaybackController instance can be used. For example:
+```
+- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didExitAdSequence:(BCOVAdSequence *)adSequence
+{
+    NSDictionary *props = session.video.properties;
+    IMAAdDisplayContainer *adDisplayContainer = props[kBCOVIMAVideoPropertiesKeyAdDisplayContainer];
+    [adDisplayContainer unregisterAllFriendlyObstructions];
+}
+```
+
 AirPlay
 ==========
 
