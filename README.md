@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.9.1.1726
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.10.0.1786
 
 Requirements
 ============
@@ -14,7 +14,7 @@ Installation
 ==========
 IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The IMA plugin supports version 3.12.1 of the Google IMA SDK for iOS and version 4.3.2 of the Google IMA SDK for tvOS.
+The IMA plugin supports version 3.14.4 of the Google IMA SDK for iOS and version 4.3.2 of the Google IMA SDK for tvOS.
 
 CocoaPods
 ----------
@@ -23,7 +23,7 @@ You can use [CocoaPods][cocoapods] to add the IMA Plugin for Brightcove Player S
 
 CocoaPod Podfile example:
 
-```
+```bash
 source 'https://github.com/brightcove/BrightcoveSpecs.git'
 
 use_frameworks!
@@ -56,6 +56,9 @@ To add the IMA Plugin for Brightcove Player SDK to your project manually:
 1. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.
 1. On the "Build Settings" tab of your application target:
     * Ensure that `-ObjC` has been added to the "Other Linker Flags" build setting.
+1. (**Universal Framework** only) On the "Build Phases" tab, add a "Run Script" phase with the command `bash ${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightcoveIMA.framework/strip-frameworks.sh`. Check "Run script only when installing". This will remove unneeded architectures from the build, which is important for App Store submission.
+1. (**Apple Silicon** only) On the "Build Settings" tab of your application target:
+    * Ensure that `arm64` has been added to your "Excluded Architectures" build setting for `Any iOS Simulator SDK`.
 
 Imports
 ----------
@@ -539,6 +542,39 @@ id<BCOVPlaybackSessionProvider> imaSessionProvider = [manager createIMASessionPr
                                                                                     companionSlots:nil
                                                                            upstreamSessionProvider:nil
                                                                                            options:imaPlaybackSessionOptions];
+```
+
+AVPlayerViewController Support
+==========================
+
+**Displaying Ad UI**
+
+If you'd like to display your own Ad UI during ad playback you can use the `playbackController:playbackSession:didReceiveLifecycleEvent:` delegate method. Here is an example:
+
+```
+#pragma mark BCOVPlaybackControllerDelegate
+
+- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didReceiveLifecycleEvent:(BCOVPlaybackSessionLifecycleEvent *)lifecycleEvent
+{
+    ...
+    
+    if ([lifecycleEvent.eventType isEqualToString:kBCOVIMALifecycleEventAdsManagerDidReceiveAdEvent])
+    {
+        IMAAdEvent *adEvent = lifecycleEvent.properties[@"adEvent"];
+    }
+    
+    switch (adEvent.type)
+    {
+        case kIMAAdEvent_STARTED:
+            [self displayAdUI:adEvent.ad.duration];
+            break;
+        case kIMAAdEvent_COMPLETE:
+            [self hideAdUI];
+            break;
+        default:
+            break;
+    }
+}
 ```
 
 Frequently Asked Questions

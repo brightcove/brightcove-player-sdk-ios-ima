@@ -44,7 +44,7 @@
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.9.1.1726</h1>
+						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.10.0.1786</h1>
 
 <h1>Requirements</h1>
 
@@ -62,7 +62,7 @@
 
 <p>IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.</p>
 
-<p>The IMA plugin supports version 3.12.1 of the Google IMA SDK for iOS and version 4.3.2 of the Google IMA SDK for tvOS.</p>
+<p>The IMA plugin supports version 3.14.4 of the Google IMA SDK for iOS and version 4.3.2 of the Google IMA SDK for tvOS.</p>
 
 <h2>CocoaPods</h2>
 
@@ -70,15 +70,16 @@
 
 <p>CocoaPod Podfile example:</p>
 
-<pre><code>source 'https://github.com/brightcove/BrightcoveSpecs.git'
+<p>```bash
+source &lsquo;<a href="https://github.com/brightcove/BrightcoveSpecs.git" title="">https://github.com/brightcove/BrightcoveSpecs.git'</a></p>
 
-use_frameworks!
-platform :ios, '11.0'
+<p>use_frameworks!
+platform :ios, &lsquo;11.0&rsquo;</p>
 
-target 'MyIMAPlayer' do
-  pod 'Brightcove-Player-IMA'
+<p>target &lsquo;MyIMAPlayer&rsquo; do
+  pod &lsquo;Brightcove-Player-IMA&rsquo;
 end
-</code></pre>
+```</p>
 
 <p>As of IMA release 3.4.1, AdMob is published as a standalone dynamic framework and can no longer be installed as part of the IMA Plugin for the Brightcove Native Player SDK. As such, there is no longer a <code>ForAdMob</code> subspec for the podspec. To use AdMob, download it and add it to your project manually, or add the <code>Google-Mobile-Ads-SDK</code> CocoaPod to your Podfile:</p>
 
@@ -105,6 +106,13 @@ end
 
 <ul>
 <li>Ensure that <code>-ObjC</code> has been added to the &ldquo;Other Linker Flags&rdquo; build setting.</li>
+</ul>
+</li>
+<li>(<strong>Universal Framework</strong> only) On the &ldquo;Build Phases&rdquo; tab, add a &ldquo;Run Script&rdquo; phase with the command <code>bash ${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightcoveIMA.framework/strip-frameworks.sh</code>. Check &ldquo;Run script only when installing&rdquo;. This will remove unneeded architectures from the build, which is important for App Store submission.</li>
+<li>(<strong>Apple Silicon</strong> only) On the &ldquo;Build Settings&rdquo; tab of your application target:
+
+<ul>
+<li>Ensure that <code>arm64</code> has been added to your &ldquo;Excluded Architectures&rdquo; build setting for <code>Any iOS Simulator SDK</code>.</li>
 </ul>
 </li>
 </ol>
@@ -164,14 +172,14 @@ end
 
 <ol>
 <li>Create the same IMA settings, ads rendering settings that you would create if you were using Google&rsquo;s IMA iOS SDK directly. These are required.</li>
-<li><a href="Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a> provides methods to specify VAST or VMAP ad rules. Select the appropriate method to select your ads policy.</li>
+<li>BCOVIMAAdsRequestPolicy provides methods to specify VAST or VMAP ad rules. Select the appropriate method to select your ads policy.</li>
 <li>BrightcoveIMA adds some category methods to BCOVPlaybackManager. The first of these is <code>-createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:</code>. Use this method to create your playback controller.</li>
 </ol>
 
 
 <h1>Play and Pause</h1>
 
-<p>The Brightcove IMA Plugin implements custom play and pause logic to ensure the smoothest possible ad experience. Therefore, you will need to make sure that you use the play method on the <code>BCOVPlaybackController</code> or the <code>[BCOVSessionProviderExtension ima_play]</code> or <code>[BCOVSessionProviderExtension ima_pause]</code> (<a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/ios/BrightcoveIMA.framework/Headers/BCOVIMAComponent.h">BCOVSessionProviderExtension</a>), and not the AVPlayer.</p>
+<p>The Brightcove IMA Plugin implements custom play and pause logic to ensure the smoothest possible ad experience. Therefore, you will need to make sure that you use the play method on the <code>BCOVPlaybackController</code> or the <code>-[BCOVSessionProviderExtension ima_play]</code> or <code>-[BCOVSessionProviderExtension ima_pause]</code> (<a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/ios/BrightcoveIMA.framework/Headers/BCOVIMAComponent.h">BCOVSessionProviderExtension</a>), and not the AVPlayer.</p>
 
 <p>As an example, calling play for the first time on <code>BCOVPlaybackController</code> allows BCOVIMA to process preroll ads without any of the content playing before the preroll. For more information on how BCOVIMA overrides the default <code>BCOVPlaybackController</code> methods, please check out <a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/ios/BrightcoveIMA.framework/Headers/BCOVIMAComponent.h">BCOVSessionProviderExtension</a>.</p>
 
@@ -315,7 +323,7 @@ playbackController.autoPlay = NO;
 
 <h2>VAST and VMAP ad rules</h2>
 
-<p>BCOVIMA gives you control over how ads requests are made, via the <a href="Classes/BCOVIMAAdsRequestPolicy.html"><code>BCOVIMAAdsRequestPolicy</code></a> class. The class provides factory methods for the supported policies. Once you obtain an instance of the correct policy, you need to provide it to the <code>BCOVPlayerSDKManager</code> to create a playback controller or a playback session provider.</p>
+<p>BCOVIMA gives you control over how ads requests are made, via the <code>BCOVIMAAdsRequestPolicy</code> class. The class provides factory methods for the supported policies. Once you obtain an instance of the correct policy, you need to provide it to the <code>BCOVPlayerSDKManager</code> to create a playback controller or a playback session provider.</p>
 
 <p>In Quick Start, an example of VMAP is given. Here is a VAST example.</p>
 
@@ -348,7 +356,7 @@ playbackController.autoPlay = NO;
 </ol>
 
 
-<p><a href="Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a> has four factory methods to generate ads request policy; two for VMAP and two for VAST. Two factory methods for VMAP are described in more detail below:</p>
+<p>BCOVIMAAdsRequestPolicy has four factory methods to generate ads request policy; two for VMAP and two for VAST. Two factory methods for VMAP are described in more detail below:</p>
 
 <ul>
 <li><p><code>+videoPropertiesVMAPAdTagUrlAdsRequestPolicy</code>: This method returns the default ads request policy, which looks for the <code>kBCOVIMAAdTag</code> in each BCOVVideo&rsquo;s properties to determine the VMAP ad tag that should be used to request ads.</p></li>
@@ -356,7 +364,7 @@ playbackController.autoPlay = NO;
 </ul>
 
 
-<p>There are two factory methods for VAST.  All of the VAST methods take a BCOVCuePointProgressPolicy. The cue point policy determines which BCOVCuePoints will get processed by the <a href="Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a>.  The VAST policies are as follows:</p>
+<p>There are two factory methods for VAST.  All of the VAST methods take a BCOVCuePointProgressPolicy. The cue point policy determines which BCOVCuePoints will get processed by the BCOVIMAAdsRequestPolicy.  The VAST policies are as follows:</p>
 
 <ul>
 <li><p><code>+adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:</code> This method returns an ads request policy that checks each BCOVVideo for BCOVCuePoints of type &lsquo;kBCOVIMACuePointTypeAd&rsquo; and looks in each of those cue points properties for the key <code>kBCOVIMAAdTag</code> to determine the VAST ad tag that should be used to request ads.</p></li>
@@ -450,12 +458,12 @@ func updateVideo(withVASTTag vastTag: String) -&gt; BCOVVideo? {
 
 <h2>Modifying the IMAAdsRequest</h2>
 
-<p>The IMA Plugin passes an <code>IMAAdsRequest</code> object to a <code>BCOMIMAPlaybackSessionDelegate</code> immediately before calling <code>IMAAdsLoader -requestAdsWithAdsRequest</code>, allowing the user to first modify the ads request. To receive the ads request callback, create an object that implements the <a href="Protocols/BCOVIMAPlaybackSessionDelegate.html"><code>BCOVIMAPlaybackSessionDelegate</code></a> protocol.</p>
+<p>The IMA Plugin passes an <code>IMAAdsRequest</code> object to a <code>BCOMIMAPlaybackSessionDelegate</code> immediately before calling <code>IMAAdsLoader -requestAdsWithAdsRequest</code>, allowing the user to first modify the ads request. To receive the ads request callback, create an object that implements the <code>BCOVIMAPlaybackSessionDelegate</code> protocol.</p>
 
 <pre><code>@import BrightcovePlayerSDK;
 @import BrightcoveIMA;
 
-@interface MyViewController : UIViewController BCOVIMAPlaybackSessionDelegate
+@interface MyViewController : UIViewController &lt;BCOVIMAPlaybackSessionDelegate&gt;
 </code></pre>
 
 <p>Create a <code>BCOVIMASessionProvider</code> using either <code>createIMAPlaybackControllerWithSettings</code> or <code>createIMASessionProviderWithSettings</code>, and provide an NSDictionary of options with an entry having a key of <code>kBCOVIMAOptionIMAPlaybackSessionDelegateKey</code> and a value which is your delegate.</p>
@@ -499,7 +507,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 
 <h2>Composing Session Providers</h2>
 
-<p>If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the <code>[BCOVPlayerSDKManager createPlaybackControllerWithSessionProvider:viewStrategy:]</code> method.</p>
+<p>If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the <code>-[BCOVPlayerSDKManager createPlaybackControllerWithSessionProvider:viewStrategy:]</code> method.</p>
 
 <p>When composing session providers, the session preloading can be enabled from <a href="https://github.com/brightcove/brightcove-player-sdk-ios/blob/fd5e766693e533854f202f270d3d62e32ceaae04/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46"><code>BCOVBasicSessionProvider</code></a>; however, preloading sessions with IMA plugin is <strong>strongly discouraged</strong> due to a bug in the Google IMA SDK when having multiple AVPlayers in memory.</p>
 
@@ -543,7 +551,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 
 <p>These values will be appended to the <code>cust_params</code> query paramater of the IMA ad request URL. For example:</p>
 
-<p>The URL <a href="http://pubads.g.doubleclick.net/gampad/ads"><code>http://pubads.g.doubleclick.net/gampad/ads</code></a> would become <a href="http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium"><code>http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium</code></a>.</p>
+<p>The URL <code>http://pubads.g.doubleclick.net/gampad/ads</code> would become <code>http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium</code>.</p>
 
 <h1>Device Ad Targeting</h1>
 
@@ -581,6 +589,37 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider = [manager createIMASes
                                                                                     companionSlots:nil
                                                                            upstreamSessionProvider:nil
                                                                                            options:imaPlaybackSessionOptions];
+</code></pre>
+
+<h1>AVPlayerViewController Support</h1>
+
+<p><strong>Displaying Ad UI</strong></p>
+
+<p>If you&rsquo;d like to display your own Ad UI during ad playback you can use the <code>playbackController:playbackSession:didReceiveLifecycleEvent:</code> delegate method. Here is an example:</p>
+
+<pre><code>#pragma mark BCOVPlaybackControllerDelegate
+
+- (void)playbackController:(id&lt;BCOVPlaybackController&gt;)controller playbackSession:(id&lt;BCOVPlaybackSession&gt;)session didReceiveLifecycleEvent:(BCOVPlaybackSessionLifecycleEvent *)lifecycleEvent
+{
+    ...
+
+    if ([lifecycleEvent.eventType isEqualToString:kBCOVIMALifecycleEventAdsManagerDidReceiveAdEvent])
+    {
+        IMAAdEvent *adEvent = lifecycleEvent.properties[@"adEvent"];
+    }
+
+    switch (adEvent.type)
+    {
+        case kIMAAdEvent_STARTED:
+            [self displayAdUI:adEvent.ad.duration];
+            break;
+        case kIMAAdEvent_COMPLETE:
+            [self hideAdUI];
+            break;
+        default:
+            break;
+    }
+}
 </code></pre>
 
 <h1>Frequently Asked Questions</h1>
@@ -643,7 +682,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider = [manager createIMASes
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2021 Brightcove. All rights reserved. Updated: 2021-08-16</p>
+							<p class="copyright">Copyright &copy; 2021 Brightcove. All rights reserved. Updated: 2021-09-27</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
