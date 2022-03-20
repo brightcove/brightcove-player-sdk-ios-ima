@@ -1,25 +1,14 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.10.2.1847
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.10.3.2003
 
-Requirements
-============
+## Installation
 
-- Xcode 11.0+
-- ARC
-
-Supported Platforms
-==========
-iOS 11.0 and above.
-
-Installation
-==========
 IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
 The IMA plugin supports version 3.14.4 of the Google IMA SDK for iOS and version 4.3.2 of the Google IMA SDK for tvOS.
 
-CocoaPods
-----------
+### CocoaPods
 
-You can use [CocoaPods][cocoapods] to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-IMA` podspec [here][podspecs]. The pod will incorporate the correct version of IMA automatically. CocoaPods 1.0 or newer is required.
+You can use [CocoaPods][cocoapods] to add the IMA Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-IMA` podspec [here][podspecs]. The pod will incorporate the correct version of IMA automatically.
 
 CocoaPod Podfile example:
 
@@ -38,12 +27,7 @@ As of IMA release 3.4.1, AdMob is published as a standalone dynamic framework an
     
     pod 'Google-Mobile-Ads-SDK'  
 
-When updating your installation, it's a good idea to refresh the local copy of your BrightcoveSpecs repository so that you have the latest podspecs locally, just like you would update your CococaPods master repository.
-
-Typically if you use `pod update` in Terminal this will happen automatically, or alternatively you can update explicitly with `pod repo update brightcove`. (Your BrightcoveSpecs repository may have a different name if you explicitly added it to your list of podspecs repos.)
-
-Manual
-----------
+### Manual
 
 To add the IMA Plugin for Brightcove Player SDK to your project manually:
 
@@ -60,8 +44,8 @@ To add the IMA Plugin for Brightcove Player SDK to your project manually:
 1. (**Apple Silicon** only) On the "Build Settings" tab of your application target:
     * Ensure that `arm64` has been added to your "Excluded Architectures" build setting for `Any iOS Simulator SDK`.
 
-Imports
-----------
+### Imports
+
 The IMA Plugin for Brightcove Player SDK can be imported into code a few different ways; `@import BrightcoveIMA;`, `#import <BrightcoveIMA/BrightcoveIMA.h>` or `#import <BrightcoveIMA/[specific class].h>`. You can import the `GoogleInteractiveMediaAds` and `BrightcovePlayerSDK` modules in similar fashion.
 
 [cocoapods]: http://cocoapods.org
@@ -69,8 +53,8 @@ The IMA Plugin for Brightcove Player SDK can be imported into code a few differe
 [bcovsdkrelease]: https://github.com/brightcove/brightcove-player-sdk-ios/releases
 [bcoveimarelease]: https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases
 
-Quick Start
-==========
+## Quick Start
+
 The BrightcoveIMA plugin is a bridge between [Google IMA iOS SDK v3][googleima] and the [Brightcove Player SDK for iOS][bcovsdk]. This snippet shows its basic usage with VMAP ad rules.
 
     [1] IMASettings *imaSettings = [[IMASettings alloc] init];
@@ -124,16 +108,15 @@ Breaking the code down into steps:
 [bcovsdk]: https://github.com/brightcove/brightcove-player-sdk-ios
 [bcovima]: https://github.com/brightcove/brightcove-player-sdk-ios-ima
 
-Play and Pause
-==========
+## Play and Pause
+
 The Brightcove IMA Plugin implements custom play and pause logic to ensure the smoothest possible ad experience. Therefore, you will need to make sure that you use the play method on the `BCOVPlaybackController` or the `-[BCOVSessionProviderExtension ima_play]` or `-[BCOVSessionProviderExtension ima_pause]` ([BCOVSessionProviderExtension][BCOVIMAComponent]), and not the AVPlayer.
 
 As an example, calling play for the first time on `BCOVPlaybackController` allows BCOVIMA to process preroll ads without any of the content playing before the preroll. For more information on how BCOVIMA overrides the default `BCOVPlaybackController` methods, please check out [BCOVSessionProviderExtension][BCOVIMAComponent].
 
 [BCOVIMAComponent]: https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/ios/BrightcoveIMA.framework/Headers/BCOVIMAComponent.h
 
-Using the Built-In PlayerUI
-==========
+## Using the Built-In PlayerUI
 
 In your `UIViewController`, create a `BCOVPUIPlayerView` property called the player view, to contain the playback controls, the video content view, and a special view where IMA can display its ads.
 
@@ -156,13 +139,15 @@ self.playerView = [[BCOVPUIPlayerView alloc] initWithPlaybackController:nil opti
 
 You'll need to set up the layout for the player view, you can do this with Auto Layout or the older Springs & Struts method. 
 
-**Springs & Struts**
+### Springs & Struts
+
 ```
 self.playerView.frame = self.videoView.bounds;
 self.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 ```
 
-**Auto Layout**
+### Auto Layout
+
 ```
 self.playerView.translatesAutoresizingMaskIntoConstraints = NO;
 [NSLayoutConstraint activateConstraints:@[
@@ -200,8 +185,8 @@ The PlayerUI is highly customizable. For more information and sample code, pleas
 
 [BCOVSDK]: https://github.com/brightcove/brightcove-player-sdk-ios
 
-Seek Without Ads
-==========
+## Seek Without Ads
+
 Use `-[BCOVPlaybackController seekWithoutAds:(CMTime)seekToTime completionHandler:(void (^)(BOOL finished))completion]` to resume playback at a specific time without forcing the user to watch ads scheduled before `seekToTime`.
 
 In preparation for `seekWithoutAds:completionHandler:`, disable `autoPlay` when setting up the `BCOVPlaybackController`.
@@ -269,12 +254,11 @@ The `shutter` and `shutterFadeTime` properties of the `BCOVPlaybackController` c
 
 Note that when Seek Without Ads is used in your app, you might observe network traffic which normally occurs as part of setting up the IMA plugin. This traffic is necessary for proper plugin setup, and does not affect the Seek Without Ads functionality.
 
-Customizing Plugin Behavior
-==========
+## Customizing Plugin Behavior
+
 There are a couple of configuration points in BCOVIMA. You can combine BCOVIMA with another plugin for the Brightcove Player SDK for iOS, you can create a custom view strategy, and you can supply a custom ads request policy.
 
-VAST and VMAP ad rules
-----------
+### VAST and VMAP ad rules
 
 BCOVIMA gives you control over how ads requests are made, via the `BCOVIMAAdsRequestPolicy` class. The class provides factory methods for the supported policies. Once you obtain an instance of the correct policy, you need to provide it to the `BCOVPlayerSDKManager` to create a playback controller or a playback session provider. 
 
@@ -403,8 +387,8 @@ You can also convert cuepoints created in VideoCloud to VAST cuepoints like this
 }
 ```
 
-Modifying the IMAAdsRequest
-----------
+### Modifying the IMAAdsRequest
+
 
 The IMA Plugin passes an `IMAAdsRequest` object to a `BCOMIMAPlaybackSessionDelegate` immediately before calling `IMAAdsLoader -requestAdsWithAdsRequest`, allowing the user to first modify the ads request. To receive the ads request callback, create an object that implements the `BCOVIMAPlaybackSessionDelegate` protocol.
 
@@ -436,8 +420,8 @@ Implement `willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:` in your `BCOV
     }
 
 
-View Strategy
-----------
+### View Strategy
+
 You can provide a custom view strategy to the BCOVPlaybackManager when you are constructing your playback controller or session provider, rather than specify the defaultControlsViewStrategy directly. With a custom view strategy, the ad container view and ad companion slots can be tied with the video content view. This is an example of custom view strategy.
 
     BCOVPlaybackControllerViewStrategy customViewStrategy = ^UIView* (UIView *view, id<BCOVPlaybackController> playbackController){
@@ -450,16 +434,16 @@ You can provide a custom view strategy to the BCOVPlaybackManager when you are c
         return <UIView of video container>;
     };
     
-Composing Session Providers
-----------
+### Composing Session Providers
+
 If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the `-[BCOVPlayerSDKManager createPlaybackControllerWithSessionProvider:viewStrategy:]` method.
 
 When composing session providers, the session preloading can be enabled from [`BCOVBasicSessionProvider`][basicprovider]; however, preloading sessions with IMA plugin is **strongly discouraged** due to a bug in the Google IMA SDK when having multiple AVPlayers in memory.
 
 [basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/fd5e766693e533854f202f270d3d62e32ceaae04/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46
 
-Registering Ad Overlays
-==========
+## Registering Ad Overlays
+
 If you are placing any views over ads while they are playing, it is necceessary to register those views with the IMA SDK. Read the **Friendly obstructions** section of the [Open Measurement in the IMA SDK ](https://developers.google.com/interactive-media-ads/docs/sdks/ios/omsdk) page for more information.
 
 You can get the current IMAAdDisplayContainer object neccessary to register your overlays from the `playbackController:playbackSession:didEnterAdSequence:` delegate method of your BCOVPlaybackController instance. For example:
@@ -482,13 +466,11 @@ To unregister the obstructions when the ad sequence is finished, the `playbackCo
 }
 ```
 
-AirPlay
-==========
+## AirPlay
 
 The IMA plugin supports AirPlay for pre-roll and post-roll ads. Set `enableBackgroundPlayback` to `YES` on `IMASettings` along with enabling AirPlay on your `BCOVPlaybackController`. See the "_AirPlay_" section of the [Core SDK README](https://github.com/brightcove/brightcove-player-sdk-ios#airplay-) for more information.
 
-Audience Segment Targeting
-==========
+## Audience Segment Targeting
 
 If you'd like to use Audience Segment Targeting with your IMA VAST ad requests you can do so by using the `updateAudienceSegmentTargetingValues` on `BCOVPlaybackController`. For eample:
 
@@ -503,8 +485,7 @@ These values will be appended to the `cust_params` query paramater of the IMA ad
 
 The URL `http://pubads.g.doubleclick.net/gampad/ads` would become `http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium`.
 
-Device Ad Targeting
-==========
+## Device Ad Targeting
 
 You can use the `kBCOVIMAOptionBlockAdTargetingAPIsKey` when setting up your `IMASessionProvider` or IMA `BCOVPlaybackController` to prevent calls to [AdSupport](https://developer.apple.com/documentation/adsupport) and [AppTrackingTransparency](https://developer.apple.com/documentation/apptrackingtransparency) APIs which cannot be used in some App Store submission scenarios.
 
@@ -544,10 +525,9 @@ id<BCOVPlaybackSessionProvider> imaSessionProvider = [manager createIMASessionPr
                                                                                            options:imaPlaybackSessionOptions];
 ```
 
-AVPlayerViewController Support
-==========================
+## AVPlayerViewController Support
 
-**Displaying Ad UI**
+### Displaying Ad UI
 
 If you'd like to display your own Ad UI during ad playback you can use the `playbackController:playbackSession:didReceiveLifecycleEvent:` delegate method. Here is an example:
 
@@ -577,13 +557,13 @@ If you'd like to display your own Ad UI during ad playback you can use the `play
 }
 ```
 
-Frequently Asked Questions
-==========
-_I can hear the ads, but I can't see them playing._
+##  Frequently Asked Questions
+
+### I can hear the ads, but I can't see them playing.
 
 This usually happens when the ad container view is not in the view hierarchy, or when the ad view (which is a subview of the ad container view) is covered by other views.
 
-Support
-=======
+## Support
+
 If you have questions, need help or want to provide feedback, please use the [Support Portal](https://supportportal.brightcove.com/s/login/) or contact your Account Manager.  To receive notification of new SDK software releases, subscribe to the Brightcove Native Player SDKs [Google Group](https://groups.google.com/g/brightcove-native-player-sdks).
 
