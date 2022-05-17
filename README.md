@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.10.4.2043
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.10.5.2109
 
 ## Installation
 
@@ -469,6 +469,24 @@ To unregister the obstructions when the ad sequence is finished, the `playbackCo
 ## AirPlay
 
 The IMA plugin supports AirPlay for pre-roll and post-roll ads. Set `enableBackgroundPlayback` to `YES` on `IMASettings` along with enabling AirPlay on your `BCOVPlaybackController`. See the "_AirPlay_" section of the [Core SDK README](https://github.com/brightcove/brightcove-player-sdk-ios#airplay-) for more information.
+
+## Picture-in-Picture
+
+The Brightcove IMA plugin can be used with Brightcove's Picture-in-Picture support.
+
+Ads can not be started if Picture-in-Picture is active, however if an ad is playing when Picture-in-Picture begins it will continue playing in the Picture-in-Picture window. Any VAST cue-points encountered after Picture-in-Picture has become active will be skipped. This is a limitation with the Google IMA SDK, see [IMA SDK for iOS > Picture-in-picture](https://developers.google.com/interactive-media-ads/docs/sdks/ios/client-side/picture_in_picture#starting_ads) for more information.
+
+Supported configurations are:
+* VAST with pre, mid and/or post-rolls.
+* VMAP with a pre-roll.
+
+Set `enableBackgroundPlayback` to `YES` on `IMASettings` and see the "_Picture in Picture_" section of the [Core SDK README](https://github.com/brightcove/brightcove-player-sdk-ios#PIP) for more information.
+
+If you are using a VAST configuration you will need to use this `BCOVCuePointProgressPolicy`:
+
+```
+BCOVCuePointProgressPolicy *policy = [BCOVCuePointProgressPolicy progressPolicyProcessingCuePoints:BCOVProgressPolicyProcessFinalCuePoint resumingPlaybackFrom:BCOVProgressPolicyResumeFromLastProcessedCuePoint ignoringPreviouslyProcessedCuePoints:YES];
+```
 
 ## Audience Segment Targeting
 
