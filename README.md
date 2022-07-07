@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.10.5.2109
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.10.6.2156
 
 ## Installation
 
@@ -502,46 +502,6 @@ If you'd like to use Audience Segment Targeting with your IMA VAST ad requests y
 These values will be appended to the `cust_params` query paramater of the IMA ad request URL. For example:
 
 The URL `http://pubads.g.doubleclick.net/gampad/ads` would become `http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium`.
-
-## Device Ad Targeting
-
-You can use the `kBCOVIMAOptionBlockAdTargetingAPIsKey` when setting up your `IMASessionProvider` or IMA `BCOVPlaybackController` to prevent calls to [AdSupport](https://developer.apple.com/documentation/adsupport) and [AppTrackingTransparency](https://developer.apple.com/documentation/apptrackingtransparency) APIs which cannot be used in some App Store submission scenarios.
-
-```
-// BCOVPlaybackController
-
-NSDictionary *imaPlaybackSessionOptions = @{
-    kBCOVIMAOptionIMAPlaybackSessionDelegateKey: self,
-    kBCOVIMAOptionBlockAdTargetingAPIsKey: @(YES)
-};
-
-self.playbackController = [manager createIMAPlaybackControllerWithSettings:imaSettings
-                                                      adsRenderingSettings:renderSettings
-                                                          adsRequestPolicy:adsRequestPolicy
-                                                               adContainer:self.playerView.contentOverlayView
-                                                            viewController:self
-                                                            companionSlots:nil
-                                                              viewStrategy:nil
-                                                                   options:imaPlaybackSessionOptions];
-```
-
-```
-// IMASessionProvider
-
-NSDictionary *imaPlaybackSessionOptions = @{
-    kBCOVIMAOptionIMAPlaybackSessionDelegateKey: self,
-    kBCOVIMAOptionBlockAdTargetingAPIsKey: @(YES)
-};
-
-id<BCOVPlaybackSessionProvider> imaSessionProvider = [manager createIMASessionProviderWithSettings:imaSettings
-                                                                              adsRenderingSettings:renderSettings
-                                                                                  adsRequestPolicy:adsRequestPolicy
-                                                                                       adContainer:self.playerView.contentOverlayView
-                                                                                    viewController:self
-                                                                                    companionSlots:nil
-                                                                           upstreamSessionProvider:nil
-                                                                                           options:imaPlaybackSessionOptions];
-```
 
 ## AVPlayerViewController Support
 

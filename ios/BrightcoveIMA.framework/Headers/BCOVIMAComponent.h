@@ -34,7 +34,7 @@ extern NSString * const kBCOVIMALifecycleEventAdsManagerDidRequestContentResume;
 extern NSString * const kBCOVIMAAdPropertiesKeyIMAAdInstance;
 
 extern NSString * const kBCOVIMAOptionIMAPlaybackSessionDelegateKey;
-extern NSString * const kBCOVIMAOptionBlockAdTargetingAPIsKey;
+extern NSString * const kBCOVIMAOptionBlockAdTargetingAPIsKey __deprecated_msg("kBCOVIMAOptionBlockAdTargetingAPIsKey is ineffective and will be deleted in a future SDK release.");
 
 /**
  * The default ad tag policy will look for an entry in each session.video's
@@ -114,7 +114,6 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * @param options An NSDictionary of IMA options. Can be nil or empty. The only
  *  valid option keys are
  *      kBCOVIMAOptionIMAPlaybackSessionDelegateKey
- *      kBCOVIMAOptionBlockAdTargetingAPIsKey
  * See the "Device Ad Targeting" section of the IMA plugin README for more information.
  * @return A new playback controller with the specified parameters.
  */
@@ -176,7 +175,6 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  * @param options An NSDictionary of IMA options. Can be nil or empty. The only
  *  valid option keys are
  *      kBCOVIMAOptionIMAPlaybackSessionDelegateKey
- *      kBCOVIMAOptionBlockAdTargetingAPIsKey
  * See the "Device Ad Targeting" section of the IMA plugin README for more information.
  * @return A new BCOVIMASessionProvider with the specified parameters.
  */
