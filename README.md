@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.11.0.2264
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.11.1.2309
 
 ## Installation
 
@@ -13,10 +13,11 @@ You can use [CocoaPods][cocoapods] to add the IMA Plugin for Brightcove Player S
 CocoaPod Podfile example:
 
 ```bash
+source 'https://github.com/CocoaPods/Specs'
 source 'https://github.com/brightcove/BrightcoveSpecs.git'
 
+platform :ios, '11.4'
 use_frameworks!
-platform :ios, '11.0'
 
 target 'MyIMAPlayer' do
   pod 'Brightcove-Player-IMA'
