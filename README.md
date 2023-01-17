@@ -1,10 +1,10 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.11.2.2333
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.12.0.2391
 
 ## Installation
 
 IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The IMA plugin supports version 3.14.4 of the Google IMA SDK for iOS and version 4.3.2 of the Google IMA SDK for tvOS.
+The IMA plugin supports version 3.18.1 of the Google IMA SDK for iOS and version 4.6.1 of the Google IMA SDK for tvOS.
 
 ### CocoaPods
 
@@ -16,7 +16,7 @@ CocoaPod Podfile example:
 source 'https://github.com/CocoaPods/Specs'
 source 'https://github.com/brightcove/BrightcoveSpecs.git'
 
-platform :ios, '11.4'
+platform :ios, '12.0'
 use_frameworks!
 
 target 'MyIMAPlayer' do
@@ -44,6 +44,18 @@ To add the IMA Plugin for Brightcove Player SDK to your project manually:
 1. (**Universal Framework** only) On the "Build Phases" tab, add a "Run Script" phase with the command `bash ${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightcoveIMA.framework/strip-frameworks.sh`. Check "Run script only when installing". This will remove unneeded architectures from the build, which is important for App Store submission.
 1. (**Apple Silicon** only) On the "Build Settings" tab of your application target:
     * Ensure that `arm64` has been added to your "Excluded Architectures" build setting for `Any iOS Simulator SDK`.
+
+### Swift Package Manager
+
+To add the IMA Plugin for Brightcove Player SDK to your project with Swift Package Manager:
+
+1. First [follow the steps][corespm] to add the Core XCFramework with Swift Package Mananger.
+1. Add the IMA package to Swift Package Manager using `https://github.com/brightcove/brightcove-player-sdk-ios-ima.git`.
+1. Download the [Google IMA][googleima] framework.
+1. On the "General" tab of your application target, add `GoogleInteractiveMediaAds.xcframework` to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting for the XCFrameworks must be "_Embed & Sign_".
+1. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.
+
+[corespm]: https://github.com/brightcove/brightcove-player-sdk-ios#swift-package-manager
 
 ### Imports
 
@@ -107,7 +119,6 @@ Breaking the code down into steps:
 
 [googleima]: https://developers.google.com/interactive-media-ads/docs/sdks/ios/download
 [bcovsdk]: https://github.com/brightcove/brightcove-player-sdk-ios
-[bcovima]: https://github.com/brightcove/brightcove-player-sdk-ios-ima
 
 ## Play and Pause
 
@@ -445,7 +456,7 @@ When composing session providers, the session preloading can be enabled from [`B
 
 ## Registering Ad Overlays
 
-If you are placing any views over ads while they are playing, it is necceessary to register those views with the IMA SDK. Read the **Friendly obstructions** section of the [Open Measurement in the IMA SDK ](https://developers.google.com/interactive-media-ads/docs/sdks/ios/omsdk) page for more information.
+If you are placing any views over ads while they are playing, it is necceessary to register those views with the IMA SDK. Read the **Friendly obstructions** section of the [Open Measurement in the IMA SDK](https://developers.google.com/interactive-media-ads/docs/sdks/ios/omsdk) page for more information.
 
 You can get the current IMAAdDisplayContainer object neccessary to register your overlays from the `playbackController:playbackSession:didEnterAdSequence:` delegate method of your BCOVPlaybackController instance. For example:
 ```
@@ -469,7 +480,7 @@ To unregister the obstructions when the ad sequence is finished, the `playbackCo
 
 ## AirPlay
 
-The IMA plugin supports AirPlay for pre-roll and post-roll ads. Set `enableBackgroundPlayback` to `YES` on `IMASettings` along with enabling AirPlay on your `BCOVPlaybackController`. See the "_AirPlay_" section of the [Core SDK README](https://github.com/brightcove/brightcove-player-sdk-ios#airplay-) for more information.
+The IMA plugin supports AirPlay for pre-roll and post-roll ads. Set `enableBackgroundPlayback` to `YES` on `IMASettings` along with enabling AirPlay on your `BCOVPlaybackController`. See the "_AirPlay_" section of the [Core SDK README](https://github.com/brightcove/brightcove-player-sdk-ios#airplay) for more information.
 
 ## Picture-in-Picture
 
@@ -481,7 +492,7 @@ Supported configurations are:
 * VAST with pre, mid and/or post-rolls.
 * VMAP with a pre-roll.
 
-Set `enableBackgroundPlayback` to `YES` on `IMASettings` and see the "_Picture in Picture_" section of the [Core SDK README](https://github.com/brightcove/brightcove-player-sdk-ios#PIP) for more information.
+Set `enableBackgroundPlayback` to `YES` on `IMASettings` and see the "_Picture in Picture_" section of the [Core SDK README](https://github.com/brightcove/brightcove-player-sdk-ios#picture-in-picture) for more information.
 
 If you are using a VAST configuration you will need to use this `BCOVCuePointProgressPolicy`:
 
