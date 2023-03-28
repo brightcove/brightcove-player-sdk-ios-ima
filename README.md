@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.12.0.2391
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.12.1.2421
 
 ## Installation
 
@@ -100,14 +100,17 @@ The BrightcoveIMA plugin is a bridge between [Google IMA iOS SDK v3][googleima] 
         NSString *videoID = <your-video-id>;
         BCOVPlaybackService *playbackService = [[BCOVPlaybackService alloc] initWithAccountId:accountID
                                                                                     policyKey:policyKey];
-        [playbackService findVideoWithVideoID:videoID
-                                   parameters:nil
-                                   completion:^(BCOVVideo    *video,
-                                                NSDictionary *jsonResponse,
-                                                NSError      *error) {
+        NSDictionary *configuration = @{
+            kBCOVPlaybackServiceConfigurationKeyVideoID:videoID
+        };
+        [playbackService findVideoWithConfiguration:configuration
+                                    queryParameters:nil
+                                         completion:^(BCOVVideo    *video,
+                                                      NSDictionary *jsonResponse,
+                                                      NSError      *error) {
 
-            [controller setVideos:@[ video ]];
-            [controller play];
+                  [controller setVideos:@[ video ]];
+                  [controller play];
 
         }];
 

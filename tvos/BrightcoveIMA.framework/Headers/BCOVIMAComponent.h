@@ -203,6 +203,15 @@ extern NSString * const kBCOVIMAVideoPropertiesKeyAdDisplayContainer;
  */
 - (void)willCallIMAAdsLoaderRequestAdsWithRequest:(IMAAdsRequest *)adsRequest forPosition:(NSTimeInterval)position;
 
+/**
+ * Called prior to creating a IMAAdsRequest using an ad tag URL that contains
+ * SpringServe macros. Use this method to return an `NSDictionary` containing
+ * values that will replace the SpringServe macros in the ad tag URL.
+ * See `BCOVSpringServeKeys.h` for available keys.
+ * The IMA plugin will attempt to fill in values for keys that are not passed in.
+ */
+- (NSDictionary *)valuesForSpringServeMacroReplacement;
+
 @end
 
 @interface BCOVIMAComponent : NSObject <BCOVComponent, BCOVComponentIdentity>
