@@ -10,3 +10,4 @@
 
 #import <BrightcoveIMA/BCOVIMAComponent.h>
 #import <BrightcoveIMA/BCOVIMAAdsRequestPolicy.h>
+#import <BrightcoveIMA/BCOVSpringServeKeys.h>
