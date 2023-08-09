@@ -6,7 +6,7 @@ import PackageDescription
 let BrightcovePlayerSDK = Package(
     name: "IMA Plugin for Brightcove Player SDK",
     platforms: [
-        .iOS(.v12)
+        .iOS(.v14), .tvOS(.v12)
     ],
     products: [
         .library(

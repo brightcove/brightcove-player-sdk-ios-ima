@@ -44,13 +44,13 @@
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.12.2.2452</h1>
+						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.12.3.2490</h1>
 
 <h2>Installation</h2>
 
 <p>IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.</p>
 
-<p>The IMA plugin supports version 3.18.1 of the Google IMA SDK for iOS and version 4.6.1 of the Google IMA SDK for tvOS.</p>
+<p>The IMA plugin supports version 3.19.1 of the Google IMA SDK for iOS and version 4.9.1 of the Google IMA SDK for tvOS.</p>
 
 <h3>CocoaPods</h3>
 
@@ -62,7 +62,7 @@
 source &lsquo;<a href="https://github.com/CocoaPods/Specs" title="">https://github.com/CocoaPods/Specs'</a>
 source &rsquo;<a href="https://github.com/brightcove/BrightcoveSpecs.git" title="">https://github.com/brightcove/BrightcoveSpecs.git'</a></p>
 
-<p>platform :ios, &lsquo;12.0&rsquo;
+<p>platform :ios, &lsquo;14.0&rsquo;
 use_frameworks!</p>
 
 <p>target &lsquo;MyIMAPlayer&rsquo; do
@@ -83,9 +83,9 @@ end
 <li>Download the <a href="https://github.com/brightcove/brightcove-player-sdk-ios/releases">Brightcove Player SDK</a> framework.</li>
 <li>Download the <a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases">IMA Plugin for Brightcove Player SDK</a> framework.</li>
 <li>Download the <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/download">Google IMA</a> framework.</li>
-<li>On the &ldquo;General&rdquo; tab of your application target, add the <strong>dynamic</strong> framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, Embedded Content</strong>. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download.</li>
-<li>On the &ldquo;General&rdquo; tab of your application target, add BrightcoveIMA.framework from the IMA Plugin for Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, Embedded Content</strong>.</li>
-<li>On the &ldquo;General&rdquo; tab of your application target, add GoogleInteractiveMediaAds.framework from the Google IMA download to the list of <strong>Frameworks, Libraries, Embedded Content</strong>.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add the <strong>dynamic</strong> framework, <code>BrightcovePlayerSDK.framework</code> or <code>BrightcovePlayerSDK.xcframework</code>, from the Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The universal Framework and XCFramework are found in the ios/dynamic directory of the download. The <em>Embed</em> setting must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add <code>BrightcoveIMA.framework</code> or <code>BrightcoveIMA.xcframework</code> from the IMA Plugin for Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The <em>Embed</em> setting must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add <code>GoogleInteractiveMediaAds.xcframework</code> from the Google IMA download to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The <em>Embed</em> setting for the XCFrameworks must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
 <li>On the &ldquo;Build Settings&rdquo; tab of your application target, ensure that the &ldquo;Framework Search Paths&rdquo; include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.</li>
 <li>On the &ldquo;Build Settings&rdquo; tab of your application target:
 
@@ -538,7 +538,9 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 
 <h2>AirPlay</h2>
 
-<p>The IMA plugin supports AirPlay for pre-roll and post-roll ads. Set <code>enableBackgroundPlayback</code> to <code>YES</code> on <code>IMASettings</code> along with enabling AirPlay on your <code>BCOVPlaybackController</code>. See the &ldquo;<em>AirPlay</em>&rdquo; section of the <a href="https://github.com/brightcove/brightcove-player-sdk-ios#airplay">Core SDK README</a> for more information.</p>
+<p><strong>Brightcove does not offer support for using AirPlay with the IMA plugin.</strong> Google’s IMA SDK does not fully support AirPlay, and the usage of AirPlay with the IMA plugin is not recommended at this time. There are likely to be unexpected behaviors and bugs for which no solution exists.</p>
+
+<p>However, if you wish to use this functionality in your apps set <code>enableBackgroundPlayback</code> to <code>YES</code> on <code>IMASettings</code> along with enabling AirPlay on your <code>BCOVPlaybackController</code>. See the &ldquo;<em>AirPlay</em>&rdquo; section of the <a href="https://github.com/brightcove/brightcove-player-sdk-ios#airplay">Core SDK README</a> for more information.</p>
 
 <h2>Picture-in-Picture</h2>
 
@@ -662,7 +664,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2023 Brightcove. All rights reserved. Updated: 2023-06-21</p>
+							<p class="copyright">Copyright &copy; 2023 Brightcove. All rights reserved. Updated: 2023-08-09</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
