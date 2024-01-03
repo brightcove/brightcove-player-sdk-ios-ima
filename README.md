@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.12.6.2550
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.12.7.2564
 
 ## Installation
 
@@ -483,7 +483,7 @@ To unregister the obstructions when the ad sequence is finished, the `playbackCo
 
 ## AirPlay
 
-**Brightcove does not offer support for using AirPlay with the IMA plugin.** Google’s IMA SDK does not fully support AirPlay, and the usage of AirPlay with the IMA plugin is not recommended at this time. There are likely to be unexpected behaviors and bugs for which no solution exists.
+**Brightcove does not offer support for using AirPlay with the IMA plugin.** Google’s IMA SDK [does not currently support AirPlay](https://developers.google.com/interactive-media-ads/docs/sdks/ios/client-side/compatibility#apple-airplay-support), and the usage of AirPlay with the IMA plugin is not recommended at this time. There are likely to be unexpected behaviors and bugs for which no solution exists.
 
 However, if you wish to use this functionality in your apps set `enableBackgroundPlayback` to `YES` on `IMASettings` along with enabling AirPlay on your `BCOVPlaybackController`. See the "_AirPlay_" section of the [Core SDK README](https://github.com/brightcove/brightcove-player-sdk-ios#airplay) for more information.
 
