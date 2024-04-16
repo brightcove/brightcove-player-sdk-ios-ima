@@ -1,10 +1,10 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 6.12.7.2564
+# IMA Plugin for Brightcove Player SDK for iOS, version 6.13.0.2599
 
 ## Installation
 
 IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The IMA plugin supports version 3.19.1 of the Google IMA SDK for iOS and version 4.9.1 of the Google IMA SDK for tvOS.
+The IMA plugin supports version 3.22.0 of the Google IMA SDK for iOS and version 4.12.0 of the Google IMA SDK for tvOS.
 
 ### CocoaPods
 
@@ -405,7 +405,7 @@ You can also convert cuepoints created in VideoCloud to VAST cuepoints like this
 ### Modifying the IMAAdsRequest
 
 
-The IMA Plugin passes an `IMAAdsRequest` object to a `BCOMIMAPlaybackSessionDelegate` immediately before calling `IMAAdsLoader -requestAdsWithAdsRequest`, allowing the user to first modify the ads request. To receive the ads request callback, create an object that implements the `BCOVIMAPlaybackSessionDelegate` protocol.
+The IMA Plugin passes an `IMAAdsRequest` object to a `BCOVIMAPlaybackSessionDelegate` immediately before calling `IMAAdsLoader -requestAdsWithAdsRequest`, allowing the user to first modify the ads request. To receive the ads request callback, create an object that implements the `BCOVIMAPlaybackSessionDelegate` protocol.
 
     @import BrightcovePlayerSDK;
     @import BrightcoveIMA;
@@ -507,7 +507,7 @@ BCOVCuePointProgressPolicy *policy = [BCOVCuePointProgressPolicy progressPolicyP
 
 ## Audience Segment Targeting
 
-If you'd like to use Audience Segment Targeting with your IMA VAST ad requests you can do so by using the `updateAudienceSegmentTargetingValues` on `BCOVPlaybackController`. For eample:
+If you'd like to use Audience Segment Targeting with your IMA VAST ad requests you can do so by using the `updateAudienceSegmentTargetingValues` on `BCOVPlaybackController`. For example:
 
 ```
 [playbackController updateAudienceSegmentTargetingValues:@{
