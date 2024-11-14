@@ -44,7 +44,7 @@
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 6.13.3.8</h1>
+						<h1>IMA Plugin for Brightcove Player SDK for iOS, version 7.0.0.9</h1>
 
 <h2>Installation</h2>
 
@@ -58,17 +58,16 @@
 
 <p>CocoaPod Podfile example:</p>
 
-<p>```bash
-source &lsquo;<a href="https://github.com/CocoaPods/Specs" title="">https://github.com/CocoaPods/Specs'</a>
-source &rsquo;<a href="https://github.com/brightcove/BrightcoveSpecs.git" title="">https://github.com/brightcove/BrightcoveSpecs.git'</a></p>
+<pre><code>source 'https://github.com/CocoaPods/Specs'
+source 'https://github.com/brightcove/BrightcoveSpecs.git'
 
-<p>platform :ios, &lsquo;14.0&rsquo;
-use_frameworks!</p>
+platform :ios, '14.0'
+use_frameworks!
 
-<p>target &lsquo;MyIMAPlayer&rsquo; do
-  pod &lsquo;Brightcove-Player-IMA&rsquo;
+target 'MyIMAPlayer' do
+  pod 'Brightcove-Player-IMA'
 end
-```</p>
+</code></pre>
 
 <p>As of IMA release 3.4.1, AdMob is published as a standalone dynamic framework and can no longer be installed as part of the IMA Plugin for the Brightcove Native Player SDK. As such, there is no longer a <code>ForAdMob</code> subspec for the podspec. To use AdMob, download it and add it to your project manually, or add the <code>Google-Mobile-Ads-SDK</code> CocoaPod to your Podfile:</p>
 
@@ -109,7 +108,7 @@ end
 
 <ol>
 <li>First <a href="https://github.com/brightcove/brightcove-player-sdk-ios#swift-package-manager">follow the steps</a> to add the Core XCFramework with Swift Package Mananger.</li>
-<li>Add the IMA package to Swift Package Manager using <code>https://github.com/brightcove/brightcove-player-sdk-ios-ima.git</code>.</li>
+<li>Add the IMA package to Swift Package Manager using <a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima.git"><code>https://github.com/brightcove/brightcove-player-sdk-ios-ima.git</code></a>.</li>
 <li>Download the <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/download">Google IMA</a> framework.</li>
 <li>On the &ldquo;General&rdquo; tab of your application target, add <code>GoogleInteractiveMediaAds.xcframework</code> to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The <em>Embed</em> setting for the XCFrameworks must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
 <li>On the &ldquo;Build Settings&rdquo; tab of your application target, ensure that the &ldquo;Framework Search Paths&rdquo; include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.</li>
@@ -118,203 +117,135 @@ end
 
 <h3>Imports</h3>
 
-<p>The IMA Plugin for Brightcove Player SDK can be imported into code a few different ways; <code>@import BrightcoveIMA;</code>, <code>#import &lt;BrightcoveIMA/BrightcoveIMA.h&gt;</code> or <code>#import &lt;BrightcoveIMA/[specific class].h&gt;</code>. You can import the <code>GoogleInteractiveMediaAds</code> and <code>BrightcovePlayerSDK</code> modules in similar fashion.</p>
+<p>The IMA Plugin for Brightcove Player SDK can be imported using:
+<code>
+ import BrightcoveIMA
+</code></p>
 
 <h2>Quick Start</h2>
 
 <p>The BrightcoveIMA plugin is a bridge between <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/download">Google IMA iOS SDK v3</a> and the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Player SDK for iOS</a>. This snippet shows its basic usage with VMAP ad rules.</p>
 
-<pre><code>[1] IMASettings *imaSettings = [[IMASettings alloc] init];
-    imaSettings.ppid = kViewControllerIMAPublisherID;
-    imaSettings.language = kViewControllerIMALanguage;
+<pre><code>[1] let imaSettings = IMASettings()
+    if let languageCode = NSLocale.current.languageCode {
+        imaSettings.language = languageCode
+    }
 
-    IMAAdsRenderingSettings *renderSettings = [[IMAAdsRenderingSettings alloc] init];
-    renderSettings.webOpenerPresentingController = self;
+    let adsRenderingSettings = IMAAdsRenderingSettings()
+    adsRenderingSettings.linkOpenerDelegate = self
+    adsRenderingSettings.linkOpenerPresentingController = self
 
-    UIView *videoContainerView = &lt;UIView of video container&gt;;
-    NSString *adTag = &lt;ad tag&gt;;
+    let adTag = "&lt;ad tag&gt;"
 
-[2] BCOVIMAAdsRequestPolicy *adsRequestPolicy = [BCOVIMAAdsRequestPolicy adsRequestPolicyWithVMAPAdTagUrl:adTag];
+[2] let adsRequestPolicy = BCOVIMAAdsRequestPolicy.init(vmapAdTagUrl: adTag)
 
-    BCOVPlayerSDKManager *manager = [BCOVPlayerSDKManager sharedManager];
-    id&lt;BCOVPlaybackController&gt; controller =
-[3]         [manager createIMAPlaybackControllerWithSettings:imaSettings
-                                        adsRenderingSettings:renderSettings
-                                            adsRequestPolicy:adsRequestPolicy
-                                                 adContainer:videoContainerView 
-                                              viewController:self
-                                              companionSlots:nil
-                                                viewStrategy:nil];
-    controller.delegate = self;
+    let sdkManager = BCOVPlayerSDKManager.sharedManager()
+[3] let playbackController = sdkManager.createIMAPlaybackController(with: imaSettings,
+                                                                adsRenderingSettings: adsRenderingSettings,
+                                                                adsRequestPolicy: adsRequestPolicy,
+                                                                adContainer: playerView.contentOverlayView,
+                                                                viewController: self,
+                                                                companionSlots: nil,
+                                                                viewStrategy: nil,
+                                                                options: nil)
 
-    [videoContainerView addSubview:controller.view];  
+    playbackController?.delegate = self
 
-    NSString *policyKey = &lt;your-policy-key&gt;;
-    NSString *accountId = &lt;your-account-id&gt;;
-    NSString *videoID = &lt;your-video-id&gt;;
-    BCOVPlaybackService *playbackService = [[BCOVPlaybackService alloc] initWithAccountId:accountID
-                                                                                policyKey:policyKey];
-    NSDictionary *configuration = @{
-        kBCOVPlaybackServiceConfigurationKeyVideoID:videoID
-    };
-    [playbackService findVideoWithConfiguration:configuration
-                                queryParameters:nil
-                                     completion:^(BCOVVideo    *video,
-                                                  NSDictionary *jsonResponse,
-                                                  NSError      *error) {
+    videoView.addSubview(playerView)
 
-              [controller setVideos:@[ video ]];
-              [controller play];
-
-    }];
+    let policyKey = "&lt;your-policy-key&gt;"
+    let accountID = "&lt;your-account-id&gt;"
+    let videoID = "&lt;your-video-id&gt;"
+    let playbackService = BCOVPlaybackService(withAccountId: accountID,
+                                              policyKey: policyKey)
+    let configuration = [
+        BCOVPlaybackService.ConfigurationKeyAssetID: videoID
+    ]
+    playbackService.findVideo(withConfiguration: configuration,
+                              queryParameters: nil) { (video: BCOVVideo?,
+                                                       jsonResponse: Any?,
+                                                       error: Error?) in
+        if let video {
+            playbackController?.setVideos([video])
+            playbackController?.play()
+        }
+    }
 </code></pre>
 
 <p>Breaking the code down into steps:</p>
 
 <ol>
 <li>Create the same IMA settings, ads rendering settings that you would create if you were using Google&rsquo;s IMA iOS SDK directly. These are required.</li>
-<li>BCOVIMAAdsRequestPolicy provides methods to specify VAST or VMAP ad rules. Select the appropriate method to select your ads policy.</li>
-<li>BrightcoveIMA adds some category methods to BCOVPlaybackManager. The first of these is <code>-createIMAPlaybackControllerWithSettings:adsRenderingSettings:adsRequestPolicy:adContainer:companionSlots:viewStrategy:</code>. Use this method to create your playback controller.</li>
+<li><a href="Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a> provides methods to specify VAST or VMAP ad rules. Select the appropriate method to select your ads policy.</li>
+<li>BrightcoveIMA adds some category methods to BCOVPlaybackManager. The first of these is <code>createIMAPlaybackController(with:adsRenderingSettings:adsRequestPolicy:adContainer:viewController:companionSlots:viewStrategy:)</code>. Use this method to create your playback controller.</li>
 </ol>
 
 
 <h2>Play and Pause</h2>
 
-<p>The Brightcove IMA Plugin implements custom play and pause logic to ensure the smoothest possible ad experience. Therefore, you will need to make sure that you use the play method on the <code>BCOVPlaybackController</code> or the <code>-[BCOVSessionProviderExtension ima_play]</code> or <code>-[BCOVSessionProviderExtension ima_pause]</code> (<a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/ios/BrightcoveIMA.framework/Headers/BCOVIMAComponent.h">BCOVSessionProviderExtension</a>), and not the AVPlayer.</p>
+<p>The Brightcove IMA Plugin implements custom play and pause logic to ensure the smoothest possible ad experience. Therefore, you will need to make sure that you use the play method on the <code>BCOVPlaybackController</code> or the <code>[BCOVSessionProviderExtension ima_play]</code> or <code>[BCOVSessionProviderExtension ima_pause]</code> (<a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/ios/BrightcoveIMA.framework/Headers/BCOVIMAComponent.h">BCOVSessionProviderExtension</a>), and not the AVPlayer.</p>
 
 <p>As an example, calling play for the first time on <code>BCOVPlaybackController</code> allows BCOVIMA to process preroll ads without any of the content playing before the preroll. For more information on how BCOVIMA overrides the default <code>BCOVPlaybackController</code> methods, please check out <a href="https://github.com/brightcove/brightcove-player-sdk-ios-ima/blob/master/ios/BrightcoveIMA.framework/Headers/BCOVIMAComponent.h">BCOVSessionProviderExtension</a>.</p>
 
-<h2>Using the Built-In PlayerUI</h2>
-
-<p>In your <code>UIViewController</code>, create a <code>BCOVPUIPlayerView</code> property called the player view, to contain the playback controls, the video content view, and a special view where IMA can display its ads.</p>
-
-<pre><code>// PlayerUI's player view
-@property (nonatomic) BCOVPUIPlayerView *playerView;
-</code></pre>
-
-<p>Then create your player view; supply a nil playback controller which will be added later. This player view contains both the video content view and the view that displays playback controls and ad controls. This setup is the same no matter what plugin you are using. Set up the player view to match the video container from your layout (<code>videoView</code>) when it resizes.</p>
-
-<pre><code>// Create and configure Control View.
-BCOVPUIBasicControlView *controlView = [BCOVPUIBasicControlView basicControlViewWithVODLayout];
-
-// Create the player view with a nil playback controller.
-self.playerView = [[BCOVPUIPlayerView alloc] initWithPlaybackController:nil options:nil controlsView:controlView];
-// Add BCOVPUIPlayerView to your video view.
-[self.videoView addSubview:self.playerView];
-</code></pre>
-
-<p>You&rsquo;ll need to set up the layout for the player view, you can do this with Auto Layout or the older Springs &amp; Struts method.</p>
-
-<h3>Springs &amp; Struts</h3>
-
-<pre><code>self.playerView.frame = self.videoView.bounds;
-self.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-</code></pre>
-
-<h3>Auto Layout</h3>
-
-<pre><code>self.playerView.translatesAutoresizingMaskIntoConstraints = NO;
-[NSLayoutConstraint activateConstraints:@[
-                                          [self.playerView.topAnchor constraintEqualToAnchor:self.videoView.topAnchor],
-                                          [self.playerView.rightAnchor constraintEqualToAnchor:self.videoView.rightAnchor],
-                                          [self.playerView.leftAnchor constraintEqualToAnchor:self.videoView.leftAnchor],
-                                          [self.playerView.bottomAnchor constraintEqualToAnchor:self.videoView.bottomAnchor],
-                                         ]];
-</code></pre>
-
-<p>Creating the playback controller is specific to IMA. Create your playback controller as you did above, but instead of your video container view, pass in the <code>contentOverlayView</code> from the player view as your <code>adContainer</code>. The <code>contentOverlayView</code> is a special view used for overlaying views on the main video content.</p>
-
-<pre><code>// Create the playback controller.
-id&lt;BCOVPlaybackController&gt; controller =
-                [manager createIMAPlaybackControllerWithSettings:imaSettings
-                                            adsRenderingSettings:renderSettings
-                                                adsRequestPolicy:adsRequestPolicy
-                                                     adContainer:self.playerView.contentOverlayView // special view for IMA ad content
-                                                  viewController:self
-                                                  companionSlots:nil
-                                                    viewStrategy:nil];
-controller.delegate = self;
-
-// Assign new playback controller to the player view.
-// This associates the playerController's session with the PlayerUI.
-// You can keep this player view around and assign new
-// playback controllers to it as they are created.
-self.playerView.playbackController = self.playbackController;
-</code></pre>
-
-<p>Now, when playing video with ads, you will see the PlayerUI controls while playing video content, plus ad markers on the timeline scrubber (VMAP ads only).</p>
-
-<p>The PlayerUI is highly customizable. For more information and sample code, please see <strong>Custom Layouts</strong> section in the README.md file of the <a href="https://github.com/brightcove/brightcove-player-sdk-ios">Brightcove Native Player SDK repository</a>.</p>
-
 <h2>Seek Without Ads</h2>
 
-<p>Use <code>-[BCOVPlaybackController seekWithoutAds:(CMTime)seekToTime completionHandler:(void (^)(BOOL finished))completion]</code> to resume playback at a specific time without forcing the user to watch ads scheduled before <code>seekToTime</code>.</p>
+<p>Use <code>playbackController.seekWithoutAds(_,completionHandler:)</code> to resume playback at a specific time without forcing the user to watch ads scheduled before <code>seekToTime</code>.</p>
 
-<p>In preparation for <code>seekWithoutAds:completionHandler:</code>, disable <code>autoPlay</code> when setting up the <code>BCOVPlaybackController</code>.</p>
+<p>In preparation for <code>seekWithoutAds(_,completionHandler:)</code>, disable <code>autoPlay</code> when setting up the <code>BCOVPlaybackController</code>.</p>
 
-<p>Apple recommends waiting for the status of an AVPlayerItem to change to ready-to-play before using the AVPlayerItem. Therefore, call <code>seekWithoutAds:completionHandler:</code> in the <code>kBCOVPlaybackSessionLifecycleEventReady</code> handler of the <code>playbackController:playbackSession:didReceiveLifecycleEvent</code> method of your <code>BCOVPlaybackControllerDelegate</code>.</p>
+<p>Apple recommends waiting for the status of an AVPlayerItem to change to ready-to-play before using the AVPlayerItem. Therefore, call <code>seekWithoutAds(_,completionHandler:)</code> in the <code>kBCOVPlaybackSessionLifecycleEventReady</code> handler of the <code>playbackController:playbackSession:didReceiveLifecycleEvent</code> method of your <code>BCOVPlaybackControllerDelegate</code>.</p>
 
-<p>```objective-c
-- (void)playbackController:(NSObject<BCOVPlaybackController><em>)controller
-           playbackSession:(NSObject<BCOVPlaybackSession></em>)session
-  didReceiveLifecycleEvent:(BCOVPlaybackSessionLifecycleEvent *)lifecycleEvent
-{
-  if ([kBCOVPlaybackSessionLifecycleEventReady isEqualToString:lifecycleEvent.eventType])
-  {
-    // self.resumePlayback is a hypothetical instance variable used here for illustration.
-    if (self.resumePlayback)
-    {
-      __weak typeof(controller) weakController = controller;</p>
+<pre><code>func playbackController(_ controller: BCOVPlaybackController,
+                        playbackSession session: BCOVPlaybackSession,
+                        didReceive lifecycleEvent: BCOVPlaybackSessionLifecycleEvent) {
 
-<pre><code>  // seek without playing ads which are scheduled before the seek time, i.e. resume playback.
-  [controller seekWithoutAds:CMTimeMake(seekWithoutAdsValue, seekWithoutAdsTimescale)
-           completionHandler:^(BOOL finished) {
+    if kBCOVPlaybackSessionLifecycleEventReady == lifecycleEvent.eventType {
 
-    if (!finished)
-    {
-      NSLog (@"seekWithoutAds failed to finish");
+        // self.resumePlayback is a hypothetical instance variable used here for illustration.
+        if resumePlayback {
+            // seek without playing ads which are scheduled before the seek time, i.e. resume playback.
+            controller.seekWithoutAds(seekWithoutAdsValue) { [weak playbackController, weak self] finished in
+                if !finished {
+                    print("seekWithoutAds failed to finish")
+                }
+
+                // fade out the shutter to reveal the player view.
+                playbackController?.shutterFadeTime = 0.25
+                playbackController?.shutter = false
+
+                // turn off seek without ads - especially important if this player is being used with a playlist
+                self?.resumePlayback = false
+            }
+        }
+
     }
-
-    typeof(controller) strongController = weakController;
-    if (strongController)
-    {
-      // fade out the shutter to reveal the player view.
-      strongController.shutterFadeTime = 0.25;
-      strongController.shutter = NO;
-
-      // turn off seek without ads - especially important if this player is being used with a playlist
-      self.resumePlayback = NO;
-    }
-
-  }];
 }
 </code></pre>
-
-<p>  }
-}
-```</p>
 
 <p>The <code>shutter</code> and <code>shutterFadeTime</code> properties of the <code>BCOVPlaybackController</code> can be used along with <code>seekWithoutAds:completionHandler:</code> to hide frame-flicker which can occur as the AVPlayer loads assets. In your BCOVPlaybackController set-up code, enable the shutter to hide the player view:</p>
 
-<p>```objective-c
-  NSObject<BCOVPlaybackController> *playbackController;</p>
+<pre><code>let sdkManager = BCOVPlayerSDKManager.sharedManager()
+let playbackController = sdkManager.createIMAPlaybackController(with: imaSettings,
+                                                                adsRenderingSettings: adsRenderingSettings,
+                                                                adsRequestPolicy: adsRequestPolicy,
+                                                                adContainer: playerView.contentOverlayView,
+                                                                viewController: self,
+                                                                companionSlots: nil,
+                                                                viewStrategy: nil)
 
-<p>  playbackController = [sdkManager createFWPlaybackControllerWithAdContextPolicy:nil
-                                                                    viewStrategy:nil];
-  playbackController.delegate = self;</p>
 
-<p>  if (self.resumePlayback)
-  {
+
+playbackController.delegate = self
+
+if resumePlayback {
     // set the shutter fade time to zero to hide the player view immediately.
-    playbackController.shutterFadeTime = 0.0;
-    playbackController.shutter = YES;</p>
+    playbackController.shutterFadeTime = 0
+    playbackController.shutter = true
 
-<pre><code>// disable autoPlay when resuming playback.
-playbackController.autoPlay = NO;
+    // disable autoPlay when resuming playback.
+    playbackController.isAutoPlay = false
+}
 </code></pre>
-
-<p>  }
-```</p>
 
 <p>Note that when Seek Without Ads is used in your app, you might observe network traffic which normally occurs as part of setting up the IMA plugin. This traffic is necessary for proper plugin setup, and does not affect the Seek Without Ads functionality.</p>
 
@@ -324,40 +255,40 @@ playbackController.autoPlay = NO;
 
 <h3>VAST and VMAP ad rules</h3>
 
-<p>BCOVIMA gives you control over how ads requests are made, via the <code>BCOVIMAAdsRequestPolicy</code> class. The class provides factory methods for the supported policies. Once you obtain an instance of the correct policy, you need to provide it to the <code>BCOVPlayerSDKManager</code> to create a playback controller or a playback session provider.</p>
+<p>BCOVIMA gives you control over how ads requests are made, via the <a href="Classes/BCOVIMAAdsRequestPolicy.html"><code>BCOVIMAAdsRequestPolicy</code></a> class. The class provides factory methods for the supported policies. Once you obtain an instance of the correct policy, you need to provide it to the <code>BCOVPlayerSDKManager</code> to create a playback controller or a playback session provider.</p>
 
 <p>In Quick Start, an example of VMAP is given. Here is a VAST example.</p>
 
-<pre><code>    IMASettings *imaSettings = [[IMASettings alloc] init];
-    imaSettings.ppid = kViewControllerIMAPublisherID;
-    imaSettings.language = kViewControllerIMALanguage;
+<pre><code>    let imaSettings = IMASettings()
+    if let languageCode = NSLocale.current.languageCode {
+        imaSettings.language = languageCode
+    }
 
-    IMAAdsRenderingSettings *renderSettings = [[IMAAdsRenderingSettings alloc] init];
-    renderSettings.webOpenerPresentingController = self;
+    let adsRenderingSettings = IMAAdsRenderingSettings()
+    adsRenderingSettings.linkOpenerDelegate = self
+    adsRenderingSettings.linkOpenerPresentingController = self
 
-    UIView *videoContainerView = &lt;UIView of video container&gt;;
+[1] let adsRequestPolicy = BCOVIMAAdsRequestPolicy(vastAdTagsInCuePointsAndAdsCuePointProgressPolicy: nil)
 
-[1] BCOVIMAAdsRequestPolicy *adsRequestPolicy = [BCOVIMAAdsRequestPolicy adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:nil];
-
-    BCOVPlayerSDKManager *manager = [BCOVPlayerSDKManager sharedManager];
-    id&lt;BCOVPlaybackController&gt; controller =
-            [manager createIMAPlaybackControllerWithSettings:imaSettings
-                                        adsRenderingSettings:renderSettings
-                                            adsRequestPolicy:adsRequestPolicy
-                                                 adContainer:videoContainerView
-                                              viewController:self
-                                              companionSlots:nil
-                                                viewStrategy:nil];
+    let sdkManager = BCOVPlayerSDKManager.sharedManager()
+    let playbackController = sdkManager.createIMAPlaybackController(with: imaSettings,
+                                                                    adsRenderingSettings: adsRenderingSettings,
+                                                                    adsRequestPolicy: adsRequestPolicy,
+                                                                    adContainer: playerView.contentOverlayView,
+                                                                    viewController: self,
+                                                                    companionSlots: nil,
+                                                                    viewStrategy: nil,
+                                                                    options: nil)
 </code></pre>
 
 <p>Let&rsquo;s break this code down into steps, to make it a bit simpler to digest:</p>
 
 <ol>
-<li>This example is the same as the one provided in the quick-start, except that we are now calling a different <code>BCOVIMAAdsRequestPolicy</code> policy method to specify that we want to use VAST.</li>
+<li>This example is the same as the one provided in the quick-start, except that we are now calling a different <a href="Classes/BCOVIMAAdsRequestPolicy.html"><code>BCOVIMAAdsRequestPolicy</code></a> policy method to specify that we want to use VAST.</li>
 </ol>
 
 
-<p>BCOVIMAAdsRequestPolicy has four factory methods to generate ads request policy; two for VMAP and two for VAST. Two factory methods for VMAP are described in more detail below:</p>
+<p><a href="Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a> has four factory methods to generate ads request policy; two for VMAP and two for VAST. Two factory methods for VMAP are described in more detail below:</p>
 
 <ul>
 <li><p><code>+videoPropertiesVMAPAdTagUrlAdsRequestPolicy</code>: This method returns the default ads request policy, which looks for the <code>kBCOVIMAAdTag</code> in each BCOVVideo&rsquo;s properties to determine the VMAP ad tag that should be used to request ads.</p></li>
@@ -365,7 +296,7 @@ playbackController.autoPlay = NO;
 </ul>
 
 
-<p>There are two factory methods for VAST.  All of the VAST methods take a BCOVCuePointProgressPolicy. The cue point policy determines which BCOVCuePoints will get processed by the BCOVIMAAdsRequestPolicy.  The VAST policies are as follows:</p>
+<p>There are two factory methods for VAST.  All of the VAST methods take a BCOVCuePointProgressPolicy. The cue point policy determines which BCOVCuePoints will get processed by the <a href="Classes/BCOVIMAAdsRequestPolicy.html">BCOVIMAAdsRequestPolicy</a>.  The VAST policies are as follows:</p>
 
 <ul>
 <li><p><code>+adsRequestPolicyWithVASTAdTagsInCuePointsAndAdsCuePointProgressPolicy:</code> This method returns an ads request policy that checks each BCOVVideo for BCOVCuePoints of type &lsquo;kBCOVIMACuePointTypeAd&rsquo; and looks in each of those cue points properties for the key <code>kBCOVIMAAdTag</code> to determine the VAST ad tag that should be used to request ads.</p></li>
@@ -375,166 +306,147 @@ playbackController.autoPlay = NO;
 
 <p>You can add VAST ad tag cuepoints to a video by using the <code>update:</code> method on the <code>BCOVVideo</code> object. The following example adds pre-roll, mid-roll and post-roll cuepoints:</p>
 
-<pre><code>// Objective-C
-- (BCOVVideo *)updateVideo:(BCOVVideo *)video
-{
-    // Determine mid-point of video so we can insert a cue point there
-    CGFloat durationMiliSeconds = ((NSNumber *)video.properties[@"duration"]).doubleValue;
-    CGFloat midpointSeconds = (durationMiliSeconds / 2) / 1000;
-    CMTime midpointTime = CMTimeMakeWithSeconds(midpointSeconds, 1);
+<pre><code>extension BCOVVideo {
 
-    return [video update:^(id&lt;BCOVMutableVideo&gt; mutableVideo)
-    {
-        mutableVideo.cuePoints = [[BCOVCuePointCollection alloc] initWithArray:@[
-            [[BCOVCuePoint alloc] initWithType:kBCOVIMACuePointTypeAd
-                                      position:kCMTimeZero
-                                    properties:@{ kBCOVIMAAdTag : kVASTAdTagURL }],
-            [[BCOVCuePoint alloc] initWithType:kBCOVIMACuePointTypeAd
-                                      position:midpointTime
-                                    properties:@{ kBCOVIMAAdTag : kVASTAdTagURL }],
-            [[BCOVCuePoint alloc] initWithType:kBCOVIMACuePointTypeAd
-                                      position:kBCOVCuePointPositionTypeAfter
-                                    properties:@{ kBCOVIMAAdTag : kVASTAdTagURL }]
+    func updateVideo(withVASTTag vastTag: String) -&gt; BCOVVideo? {
 
-        ]];
-
-    }];
-}
-</code></pre>
-
-<pre><code>// Swift
-func updateVideo(withVASTTag vastTag: String) -&gt; BCOVVideo? {
-
-    guard let durationNum = self.properties["duration"] as? NSNumber else {
-        return nil
-    }
-
-    let durationMiliSeconds = durationNum.doubleValue
-    let midpointSeconds = (durationMiliSeconds / 2) / 1000
-    let midpointTime = CMTimeMakeWithSeconds(midpointSeconds, preferredTimescale: 1)
-
-    let cuePointPositionTypeAfter = CMTime.positiveInfinity
-
-    return update { (mutableVideo: BCOVMutableVideo?) in
-        guard let mutableVideo = mutableVideo else {
-            return
+        guard let durationNum = self.properties["duration"] as? NSNumber else {
+            return nil
         }
 
-        mutableVideo.cuePoints = BCOVCuePointCollection(array: [
-            BCOVCuePoint(type: kBCOVIMACuePointTypeAd, position: CMTime.zero, properties: [kBCOVIMAAdTag:vastTag])!,
-            BCOVCuePoint(type: kBCOVIMACuePointTypeAd, position: midpointTime, properties: [kBCOVIMAAdTag:vastTag])!,
-            BCOVCuePoint(type: kBCOVIMACuePointTypeAd, position: cuePointPositionTypeAfter, properties: [kBCOVIMAAdTag:vastTag])!,
-        ])
-    }
+        let durationMiliSeconds = durationNum.doubleValue
+        let midpointSeconds = (durationMiliSeconds / 2) / 1000
+        let midpointTime = CMTimeMakeWithSeconds(midpointSeconds, preferredTimescale: 1)
 
+        let cuePointPositionTypeAfter = CMTime.positiveInfinity
+
+        return update { (mutableVideo: BCOVMutableVideo?) in
+            guard let mutableVideo = mutableVideo else {
+                return
+            }
+
+            guard let preroll = BCOVCuePoint(type: kBCOVIMACuePointTypeAd, position: CMTime.zero, properties: [kBCOVIMAAdTag:vastTag]),
+                  let midroll = BCOVCuePoint(type: kBCOVIMACuePointTypeAd, position: midpointTime, properties: [kBCOVIMAAdTag:vastTag]),
+                  let postroll = BCOVCuePoint(type: kBCOVIMACuePointTypeAd, position: cuePointPositionTypeAfter, properties: [kBCOVIMAAdTag:vastTag]) else {
+                return
+            }
+
+            mutableVideo.cuePoints = BCOVCuePointCollection(array: [
+                preroll,
+                midroll,
+                postroll
+            ])
+        }
+
+    }
 }
 </code></pre>
 
 <p>You can also convert cuepoints created in VideoCloud to VAST cuepoints like this:</p>
 
-<pre><code>- (BCOVVideo *)updateVideo:(BCOVVideo *)video
-    NSArray *cuePoints = video.cuePoints.array;
-    NSMutableArray *updatedCuePoints = @[].mutableCopy;
-    for (BCOVCuePoint *cuePoint in cuePoints)
-    {
-        if ([cuePoint.type isEqualToString:kBCOVIMACuePointTypeAd])
-        {
-            // The "metadata" property is the value of the
-            // "Key/Value Pairs" field in VideoCloud when
-            // creating/editing a Cue Point. In this example
-            // the only value in this field is the VAST ad tag URL.
-            // If you have additional values you'll need to parse
-            // out just the ad tag URL.
-            NSString *metadata = cuePoint.properties[@"metadata"];
-            NSDictionary *properties = @{ kBCOVIMAAdTag : metadata };
-            BCOVCuePoint *updatedCuePoint = [[BCOVCuePoint alloc] initWithType:cuePoint.type position:cuePoint.position properties:properties];
-            [updatedCuePoints addObject:updatedCuePoint];
+<pre><code>func update(video: BCOVVideo) -&gt; BCOVVideo {
+    guard let cuePoints = video.cuePoints?.array() as? [BCOVCuePoint] else {
+        return video
+    }
+    var updatedCuepoints = [BCOVCuePoint]()
+    for cuePoint in cuePoints {
+        // The "metadata" property is the value of the
+        // "Key/Value Pairs" field in VideoCloud when
+        // creating/editing a Cue Point. In this example
+        // the only value in this field is the VAST ad tag URL.
+        // If you have additional values you'll need to parse
+        // out just the ad tag URL.
+        guard let metadata = cuePoint.properties["metadata"] as? String else {
+            continue
+        }
+        let properties = [
+            kBCOVIMAAdTag: metadata
+        ]
+        if let updatedCuePoint = BCOVCuePoint(type: cuePoint.type,
+                                              position: cuePoint.position,
+                                              properties: properties) {
+            updatedCuepoints.append(updatedCuePoint)
         }
     }
-    return [video update:^(id&lt;BCOVMutableVideo&gt; mutableVideo) {
-        mutableVideo.cuePoints = [BCOVCuePointCollection collectionWithArray:updatedCuePoints];
-    }];
+    return video.update { (mutableVideo: BCOVMutableVideo?) in
+        guard let mutableVideo else {
+            return
+        }
+        mutableVideo.cuePoints = BCOVCuePointCollection(array: updatedCuepoints)
+    }
 }
 </code></pre>
 
 <h3>Modifying the IMAAdsRequest</h3>
 
-<p>The IMA Plugin passes an <code>IMAAdsRequest</code> object to a <code>BCOVIMAPlaybackSessionDelegate</code> immediately before calling <code>IMAAdsLoader -requestAdsWithAdsRequest</code>, allowing the user to first modify the ads request. To receive the ads request callback, create an object that implements the <code>BCOVIMAPlaybackSessionDelegate</code> protocol.</p>
+<p>The IMA Plugin passes an <code>IMAAdsRequest</code> object to a <a href="Protocols/BCOVIMAPlaybackSessionDelegate.html"><code>BCOVIMAPlaybackSessionDelegate</code></a> immediately before calling <code>IMAAdsLoader -requestAdsWithAdsRequest</code>, allowing the user to first modify the ads request. To receive the ads request callback, create an object that implements the <a href="Protocols/BCOVIMAPlaybackSessionDelegate.html"><code>BCOVIMAPlaybackSessionDelegate</code></a> protocol.</p>
 
-<pre><code>@import BrightcovePlayerSDK;
-@import BrightcoveIMA;
+<pre><code>import BrightcovePlayerSDK
+import BrightcoveIMA
+import GoogleInteractiveMediaAds
 
-@interface MyViewController : UIViewController &lt;BCOVIMAPlaybackSessionDelegate&gt;
+class ViewController: UIViewController, BCOVIMAPlaybackSessionDelegate
 </code></pre>
 
 <p>Create a <code>BCOVIMASessionProvider</code> using either <code>createIMAPlaybackControllerWithSettings</code> or <code>createIMASessionProviderWithSettings</code>, and provide an NSDictionary of options with an entry having a key of <code>kBCOVIMAOptionIMAPlaybackSessionDelegateKey</code> and a value which is your delegate.</p>
 
-<pre><code>NSDictionary *imaSessionProviderOptions = @{ kBCOVIMAOptionIMAPlaybackSessionDelegateKey: self };
+<pre><code>let imaSessionProviderOptions = [
+    kBCOVIMAOptionIMAPlaybackSessionDelegateKey: self
+]
 
-id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
-    [sdkManager createIMASessionProviderWithSettings:imaSettings
-                                adsRenderingSettings:renderSettings
-                                    adsRequestPolicy:adsRequestPolicy
-                                         adContainer:self.playerView.contentOverlayView
-                                      viewController:self
-                                      companionSlots:ni
-                             upstreamSessionProvider:nil
-                                             options:imaSessionProviderOptions];
+let imaSessionProvider = sdkManager.createIMASessionProvider(with: imaSettings,
+                                                             adsRenderingSettings: adsRenderingSettings,
+                                                             adsRequestPolicy: adsRequestPolicy,
+                                                             adContainer: playerView.contentOverlayView,
+                                                             viewController: self,
+                                                             companionSlots: nil,
+                                                             upstreamSessionProvider: nil,
+                                                             options: imaSessionProviderOptions)
 </code></pre>
 
-<p>Implement <code>willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:</code> in your <code>BCOVIMAPlaybackSessionDelegate</code>.</p>
+<p>Implement <code>willCallIMAAdsLoaderRequestAdsWithRequest:forPosition:</code> in your <a href="Protocols/BCOVIMAPlaybackSessionDelegate.html"><code>BCOVIMAPlaybackSessionDelegate</code></a>.</p>
 
-<pre><code>- (void)willCallIMAAdsLoaderRequestAdsWithRequest:(IMAAdsRequest *)adsRequest
-                                      forPosition:(NSTimeInterval)position
-{
-    adsRequest.vastLoadTimeout = 3000.;
+<pre><code>func willCallIMAAdsLoaderRequestAds(with adsRequest: IMAAdsRequest,
+                                    forPosition position: TimeInterval) {
+    adsRequest.vastLoadTimeout = 3000.0
 }
-</code></pre>
-
-<h3>View Strategy</h3>
-
-<p>You can provide a custom view strategy to the BCOVPlaybackManager when you are constructing your playback controller or session provider, rather than specify the defaultControlsViewStrategy directly. With a custom view strategy, the ad container view and ad companion slots can be tied with the video content view. This is an example of custom view strategy.</p>
-
-<pre><code>BCOVPlaybackControllerViewStrategy customViewStrategy = ^UIView* (UIView *view, id&lt;BCOVPlaybackController&gt; playbackController){
-
-    BCOVPlaybackControllerViewStrategy defaultControlsViewStrategy = [playbackManager defaultControlsViewStrategy];
-    UIView *contentAndDefaultControlsView = defaultControlsViewStrategy(view, playbackController);
-
-    [&lt;UIView of video container&gt; addSubview:contentAndDefaultControlsView];
-
-    return &lt;UIView of video container&gt;;
-};
 </code></pre>
 
 <h3>Composing Session Providers</h3>
 
-<p>If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the <code>-[BCOVPlayerSDKManager createPlaybackControllerWithSessionProvider:viewStrategy:]</code> method.</p>
+<p>If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the <code>sdkManager.createPlaybackController(withSessionProvider:,viewStrategy:)</code> method.</p>
 
-<p>When composing session providers, the session preloading can be enabled from <a href="https://github.com/brightcove/brightcove-player-sdk-ios/blob/fd5e766693e533854f202f270d3d62e32ceaae04/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46"><code>BCOVBasicSessionProvider</code></a>; however, preloading sessions with IMA plugin is <strong>strongly discouraged</strong> due to a bug in the Google IMA SDK when having multiple AVPlayers in memory.</p>
+<p>When composing session providers, the session preloading can be enabled from <a href="https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/ios/BrightcovePlayerSDK.framework/Headers/BrightcovePlayerSDK-Swift.h#L312-L325"><code>BCOVBasicSessionProvider</code></a>; however, preloading sessions with IMA plugin is <strong>strongly discouraged</strong> due to a bug in the Google IMA SDK when having multiple AVPlayers in memory.</p>
 
 <h2>Registering Ad Overlays</h2>
 
 <p>If you are placing any views over ads while they are playing, it is necceessary to register those views with the IMA SDK. Read the <strong>Friendly obstructions</strong> section of the <a href="https://developers.google.com/interactive-media-ads/docs/sdks/ios/omsdk">Open Measurement in the IMA SDK</a> page for more information.</p>
 
-<p>You can get the current IMAAdDisplayContainer object neccessary to register your overlays from the <code>playbackController:playbackSession:didEnterAdSequence:</code> delegate method of your BCOVPlaybackController instance. For example:
-<code>
-- (void)playbackController:(id&lt;BCOVPlaybackController&gt;)controller playbackSession:(id&lt;BCOVPlaybackSession&gt;)session didEnterAdSequence:(BCOVAdSequence *)adSequence
-{
-    NSDictionary *props = session.video.properties;
-    IMAAdDisplayContainer *adDisplayContainer = props[kBCOVIMAVideoPropertiesKeyAdDisplayContainer];
-    [adDisplayContainer registerFriendlyObstruction:self.adOverlayView];
-}
-</code></p>
+<p>You can get the current IMAAdDisplayContainer object neccessary to register your overlays from the <code>playbackController:playbackSession:didEnterAdSequence:</code> delegate method of your BCOVPlaybackController instance. For example:</p>
 
-<p>To unregister the obstructions when the ad sequence is finished, the <code>playbackController:playbackSession:didExitAdSequence:</code> delegate method of your BCOVPlaybackController instance can be used. For example:
-<code>
-- (void)playbackController:(id&lt;BCOVPlaybackController&gt;)controller playbackSession:(id&lt;BCOVPlaybackSession&gt;)session didExitAdSequence:(BCOVAdSequence *)adSequence
-{
-    NSDictionary *props = session.video.properties;
-    IMAAdDisplayContainer *adDisplayContainer = props[kBCOVIMAVideoPropertiesKeyAdDisplayContainer];
-    [adDisplayContainer unregisterAllFriendlyObstructions];
+<pre><code>func playbackController(_ controller: BCOVPlaybackController,
+                        playbackSession session: BCOVPlaybackSession,
+                        didEnter adSequence: BCOVAdSequence) {
+
+    let props = session.video.properties
+    if let adDisplayContainer = props[kBCOVDAIVideoPropertiesKeyAdDisplayContainer] as? IMAAdDisplayContainer{
+        adDisplayContainer.register(adOverlayView)
+    }
+
 }
-</code></p>
+</code></pre>
+
+<p>To unregister the obstructions when the ad sequence is finished, the <code>playbackController:playbackSession:didExitAdSequence:</code> delegate method of your BCOVPlaybackController instance can be used. For example:</p>
+
+<pre><code>func playbackController(_ controller: BCOVPlaybackController,
+                        playbackSession session: BCOVPlaybackSession,
+                        didExitAdSequence adSequence: BCOVAdSequence) {
+    let props = session.video.properties
+    if let adDisplayContainer = props[kBCOVDAIVideoPropertiesKeyAdDisplayContainer] as? IMAAdDisplayContainer{
+        adDisplayContainer.unregisterAllFriendlyObstructions()
+    }
+}
+</code></pre>
 
 <h2>AirPlay</h2>
 
@@ -556,22 +468,24 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 
 <p>If you are using a VAST configuration you will need to use this <code>BCOVCuePointProgressPolicy</code>:</p>
 
-<pre><code>BCOVCuePointProgressPolicy *policy = [BCOVCuePointProgressPolicy progressPolicyProcessingCuePoints:BCOVProgressPolicyProcessFinalCuePoint resumingPlaybackFrom:BCOVProgressPolicyResumeFromLastProcessedCuePoint ignoringPreviouslyProcessedCuePoints:YES];
+<pre><code>let policy = BCOVCuePointProgressPolicy(processingCuePoints: .processFinalCuePoint,
+                                        resumingPlaybackFrom: .fromLastProcessedCuePoint,
+                                        ignoringPreviouslyProcessedCuePoints: true)
 </code></pre>
 
 <h2>Audience Segment Targeting</h2>
 
 <p>If you&rsquo;d like to use Audience Segment Targeting with your IMA VAST ad requests you can do so by using the <code>updateAudienceSegmentTargetingValues</code> on <code>BCOVPlaybackController</code>. For example:</p>
 
-<pre><code>[playbackController updateAudienceSegmentTargetingValues:@{
-    @"account_id":@"11223344",
-    @"account_type":@"premium""
-}];
+<pre><code>playbackController.updateAudienceSegmentTargetingValues([
+    "account_id": "11223344",
+    "account_type": "premium"
+])
 </code></pre>
 
 <p>These values will be appended to the <code>cust_params</code> query paramater of the IMA ad request URL. For example:</p>
 
-<p>The URL <code>http://pubads.g.doubleclick.net/gampad/ads</code> would become <code>http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium</code>.</p>
+<p>The URL <a href="http://pubads.g.doubleclick.net/gampad/ads"><code>http://pubads.g.doubleclick.net/gampad/ads</code></a> would become <a href="http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium"><code>http://pubads.g.doubleclick.net/gampad/ads?cust_params=account_id%3D11223344%26account_type%3Dpremium</code></a>.</p>
 
 <h2>AVPlayerViewController Support</h2>
 
@@ -579,28 +493,24 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 
 <p>If you&rsquo;d like to display your own Ad UI during ad playback you can use the <code>playbackController:playbackSession:didReceiveLifecycleEvent:</code> delegate method. Here is an example:</p>
 
-<pre><code>#pragma mark BCOVPlaybackControllerDelegate
+<pre><code>// MARK: BCOVPlaybackControllerDelegate
+func playbackController(_ controller: BCOVPlaybackController,
+                        playbackSession session: BCOVPlaybackSession,
+                        didReceive lifecycleEvent: BCOVPlaybackSessionLifecycleEvent) {
 
-- (void)playbackController:(id&lt;BCOVPlaybackController&gt;)controller playbackSession:(id&lt;BCOVPlaybackSession&gt;)session didReceiveLifecycleEvent:(BCOVPlaybackSessionLifecycleEvent *)lifecycleEvent
-{
-    ...
-
-    if ([lifecycleEvent.eventType isEqualToString:kBCOVIMALifecycleEventAdsManagerDidReceiveAdEvent])
-    {
-        IMAAdEvent *adEvent = lifecycleEvent.properties[@"adEvent"];
+    if kBCOVDAILifecycleEventAdsManagerDidReceiveAdEvent == lifecycleEvent.eventType {
+        if let adEvent = lifecycleEvent.properties["adEvent"] as? IMAAdEvent {
+            switch adEvent.type {
+                case .STARTED:
+                    displayAdUI()
+                case .COMPLETE:
+                    hideAdUI()
+                default:
+                    break
+            }
+        }
     }
 
-    switch (adEvent.type)
-    {
-        case kIMAAdEvent_STARTED:
-            [self displayAdUI:adEvent.ad.duration];
-            break;
-        case kIMAAdEvent_COMPLETE:
-            [self hideAdUI];
-            break;
-        default:
-            break;
-    }
 }
 </code></pre>
 
@@ -664,7 +574,7 @@ id&lt;BCOVPlaybackSessionProvider&gt; imaSessionProvider =
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2024 Brightcove. All rights reserved. Updated: 2024-07-18</p>
+							<p class="copyright">Copyright &copy; 2024 Brightcove. All rights reserved. Updated: 2024-11-14</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

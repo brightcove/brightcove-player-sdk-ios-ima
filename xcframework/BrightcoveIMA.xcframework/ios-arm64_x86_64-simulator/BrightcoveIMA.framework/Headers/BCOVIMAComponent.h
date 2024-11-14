@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <BrightcovePlayerSDK/BrightcovePlayerSDK.h>
+@import BrightcovePlayerSDK;
 
 @class BCOVIMAAdsRequestPolicy;
 @class IMAAdsRenderingSettings;
