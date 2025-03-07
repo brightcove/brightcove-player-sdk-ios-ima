@@ -1,4 +1,4 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 7.0.1.10
+# IMA Plugin for Brightcove Player SDK for iOS, version 7.0.2.12
 
 ## Installation
 
@@ -35,7 +35,7 @@ To add the IMA Plugin for Brightcove Player SDK to your project manually:
 1. Download the [Brightcove Player SDK][bcovsdkrelease] framework.
 1. Download the [IMA Plugin for Brightcove Player SDK][bcoveimarelease] framework.
 1. Download the [Google IMA][googleima] framework.
-1. On the "General" tab of your application target, add the **dynamic** framework, `BrightcovePlayerSDK.framework` or `BrightcovePlayerSDK.xcframework`, from the Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The universal Framework and XCFramework are found in the ios/dynamic directory of the download. The _Embed_ setting must be "_Embed & Sign_".
+1. On the "General" tab of your application target, add the **dynamic** framework, `BrightcovePlayerSDK.framework` or `BrightcovePlayerSDK.xcframework`, from the Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The universal Framework and XCFramework are found in the ios directory of the download. The _Embed_ setting must be "_Embed & Sign_".
 1. On the "General" tab of your application target, add `BrightcoveIMA.framework` or `BrightcoveIMA.xcframework` from the IMA Plugin for Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting must be "_Embed & Sign_".
 1. On the "General" tab of your application target, add `GoogleInteractiveMediaAds.xcframework` from the Google IMA download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting for the XCFrameworks must be "_Embed & Sign_".
 1. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.
@@ -370,7 +370,7 @@ If you are using more than one plugin to the Brightcove Player SDK for iOS that 
 
 When composing session providers, the session preloading can be enabled from [`BCOVBasicSessionProvider`][basicprovider]; however, preloading sessions with IMA plugin is **strongly discouraged** due to a bug in the Google IMA SDK when having multiple AVPlayers in memory.
 
-[basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/ios/BrightcovePlayerSDK.framework/Headers/BrightcovePlayerSDK-Swift.h#L312-L325
+[basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/ios/BrightcovePlayerSDK.framework/Headers/BrightcovePlayerSDK-Swift.h#L407-L420
 
 ## Registering Ad Overlays
 
