@@ -1,10 +1,10 @@
-# IMA Plugin for Brightcove Player SDK for iOS, version 7.2.9.31
+# IMA Plugin for Brightcove Player SDK for iOS, version 7.2.10.32
 
 ## Installation
 
 IMA Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The IMA plugin supports version 3.26.1 of the Google IMA SDK for iOS and version 4.15.1 of the Google IMA SDK for tvOS.
+The IMA plugin supports version 3.26.1 of the Google IMA SDK for iOS and version 4.16.0 of the Google IMA SDK for tvOS.
 
 ### CocoaPods
 
