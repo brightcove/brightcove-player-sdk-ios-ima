@@ -1,6 +1,0 @@
-framework module BrightcoveIMA {
-  umbrella header "BrightcoveIMA.h"
-  export *
-
-  module * { export * }
-}
