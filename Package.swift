@@ -11,12 +11,17 @@ let BrightcovePlayerSDK = Package(
     products: [
         .library(
             name: "BrightcoveIMA",
-            targets: ["BrightcoveIMA"])
+            targets: ["BrightcoveIMA", "BrightcoveIMADeprecationNotice"])
     ],
     targets: [
         .binaryTarget(
             name: "BrightcoveIMA",
             path: "xcframework/BrightcoveIMA.xcframework"
+        ),
+        .target(
+            name: "BrightcoveIMADeprecationNotice",
+            path: "DeprecationNotice",
+            exclude: ["Notice.m"]
         )
     ]
 )
