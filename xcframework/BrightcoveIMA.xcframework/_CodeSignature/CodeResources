@@ -6,7 +6,7 @@
 	<dict>
 		<key>ios-arm64/BrightcoveIMA.framework/BrightcoveIMA</key>
 		<data>
-		V65+qLMmAFzbDCcxS4agEWBWNek=
+		3H1ha7hFN25l3OnSmh/ReM5SykE=
 		</data>
 		<key>ios-arm64/BrightcoveIMA.framework/Headers/BCOVIMAAdsRequestPolicy.h</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>ios-arm64/BrightcoveIMA.framework/Info.plist</key>
 		<data>
-		4DAmKmI1zYxkUI4zoYHt5z84nQs=
+		2bOcsJTGlw/1/f0QGkNfDk/sneo=
 		</data>
 		<key>ios-arm64/BrightcoveIMA.framework/Modules/module.modulemap</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BrightcoveIMA.framework/BrightcoveIMA</key>
 		<data>
-		NA3MmXm/DfjjRWzq70ab1ky0XhY=
+		pW2sYHlam+w/9w/sM2rvbiRKajQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BrightcoveIMA.framework/Headers/BCOVIMAAdsRequestPolicy.h</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BrightcoveIMA.framework/Info.plist</key>
 		<data>
-		Xq2Rif8s+WGMeHptg/IEqGxVD/4=
+		EhaBj+byrI5MF7YJTYyQjrrMFNI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BrightcoveIMA.framework/Modules/module.modulemap</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>tvos-arm64/BrightcoveIMA.framework/BrightcoveIMA</key>
 		<data>
-		KKvPZ/47iVN+3O/V5zPxCwnmkJo=
+		SENJWT9WGYkh+tE9TF9MOf1Zwik=
 		</data>
 		<key>tvos-arm64/BrightcoveIMA.framework/Headers/BCOVIMAAdsRequestPolicy.h</key>
 		<data>
@@ -82,7 +82,7 @@
 		</data>
 		<key>tvos-arm64/BrightcoveIMA.framework/Info.plist</key>
 		<data>
-		cZ6muHWUcFInFi5/JOpcONgniOY=
+		nqNgs4kFyIcMA4cSpoq/3N2ditE=
 		</data>
 		<key>tvos-arm64/BrightcoveIMA.framework/Modules/module.modulemap</key>
 		<data>
@@ -90,7 +90,7 @@
 		</data>
 		<key>tvos-arm64_x86_64-simulator/BrightcoveIMA.framework/BrightcoveIMA</key>
 		<data>
-		2MjI8teZhtKC2fy0HH48uf304ws=
+		3+XjG3SYgUCKo6WGWWKpIuV+ksI=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/BrightcoveIMA.framework/Headers/BCOVIMAAdsRequestPolicy.h</key>
 		<data>
@@ -110,7 +110,7 @@
 		</data>
 		<key>tvos-arm64_x86_64-simulator/BrightcoveIMA.framework/Info.plist</key>
 		<data>
-		FIpDlHuY6wlIFAOS8WyEeVFqQQk=
+		fdePpBYoUU9W3whAQALcN31v4EY=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/BrightcoveIMA.framework/Modules/module.modulemap</key>
 		<data>
@@ -123,7 +123,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			o0w4qQK18eVwmA9FFhzHmEasPDXLN/b7hk/332pyD9I=
+			RL52O3BhLHHEypVyOVzzT2LggYOkZEbrUICfPYt76qA=
 			</data>
 		</dict>
 		<key>ios-arm64/BrightcoveIMA.framework/Headers/BCOVIMAAdsRequestPolicy.h</key>
@@ -158,7 +158,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Fcgzz/i0HVm0Axw5RTeM5V4IW5HmgiRztBqsb08MUIA=
+			sAr9NEGNh+Ty8Yge4EdHPOn5cNogYcbrWcFxnX3bRPc=
 			</data>
 		</dict>
 		<key>ios-arm64/BrightcoveIMA.framework/Modules/module.modulemap</key>
@@ -172,7 +172,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Cy//hZiWMCKz9Mw2kLcWmC5SbYmjqKAkYk6ONuRQUXg=
+			5oYosrENLhd3VSa89SN1987hI3SlpgZMZNvqBhDOjR8=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BrightcoveIMA.framework/Headers/BCOVIMAAdsRequestPolicy.h</key>
@@ -207,7 +207,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			5ZY+YHydxmcpcUtVaBiwkJhIKn3qp6XbVbidnRwMRnw=
+			Z5XcC8vLWv5zBX7Ce7IYh23bKC50zlMo4Mjaftlg5vk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BrightcoveIMA.framework/Modules/module.modulemap</key>
@@ -221,7 +221,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			WzWqrHrotq1LGElJOWxMRg0f7Fm6FgsWK7FIVn8B54o=
+			oPj8AGfiAAovYzozgglWdGhNwahU3SJBb9LVPyyp6oQ=
 			</data>
 		</dict>
 		<key>tvos-arm64/BrightcoveIMA.framework/Headers/BCOVIMAAdsRequestPolicy.h</key>
@@ -256,7 +256,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z46yI1tDkHiWHi6zFcJFUs8EuFO06JRznT62Jsunepg=
+			ehhgWyNLSmaDBIEEgeLLI5+x1sOKW7Ogaftb1Lh2Z+A=
 			</data>
 		</dict>
 		<key>tvos-arm64/BrightcoveIMA.framework/Modules/module.modulemap</key>
@@ -270,7 +270,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cM52h25eKpHiuTSHF6gA8wPbfPtLOD1Wn+tfYPNs578=
+			mDQOnyfC7khZqYlZBkj0F+6BTL5eKlji7CnUY0rZuLw=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/BrightcoveIMA.framework/Headers/BCOVIMAAdsRequestPolicy.h</key>
@@ -305,7 +305,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GWvMsJ1YXW/nCMf6SAYldToYcuM/orbM2zraF570uVc=
+			bk9emjj4z5LoopjZTTMIdudg6MNe8beDbfDyktlDgqk=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/BrightcoveIMA.framework/Modules/module.modulemap</key>
